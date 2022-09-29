@@ -1,10 +1,8 @@
 # Visual Project Management Web Application
 
-## Project summary
+## Project Summary
 
-### One-sentence description of the project
-
-TODO: A 20-second elevator pitch of your project - its core idea summarized in one sentence.
+A web application that allows users to create and manage projects more efficiently according to the theory of Virtual Project Management. 
 
 ### Additional information about the project
 
@@ -25,7 +23,6 @@ TODO: List which add-ons are included in the project, and the purpose each add-o
 TODO: Describe the installation process (making sure you mention `bundle install`).
 Instructions need to be such that a user can just copy/paste the commands to get things set up and running. 
 
-
 ## Functionality
 
 TODO: Write usage instructions. Structuring it as a walkthrough can help structure this section,
@@ -36,10 +33,7 @@ and showcase your features.
 TODO: Describe any known issues, bugs, odd behaviors or code smells. 
 Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
 
-
 ## Contributing
-
-TODO: Leave the steps below if you want others to contribute to your project.
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
