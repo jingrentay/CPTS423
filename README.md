@@ -6,32 +6,32 @@ A web application that allows users to create and manage projects more efficient
 
 ### Additional information about the project
 
-TODO: Write a compelling/creative/informative project description / summary
+Visual Project Management allows users to track the progress of one or multiple of their projects using the VPM method. They can create and add tasks to a project, as well as add an aggressive estimate for each task. The system calculates a buffer for the project and uses these estimates to plot the last known "Completed Task" on a Fever Chart. This helps users view whether their project is very late (black zone), falling behind (red zone), or on track (green zone). Users can also create organizations and roles to help organize who contributes to a project, along with many more features. 
 
 ## Installation
 
 ### Prerequisites
 
-TODO: List what a user needs to have installed before running the installation instructions below (e.g., git, which versions of Ruby/Rails)
+* Node.js 16.17.1
+* Access to MongoDB and authorized credentials for the database.
+* Git
 
-### Add-ons
-
-TODO: List which add-ons are included in the project, and the purpose each add-on serves in your app.
+### Add-Ons
 
 ### Installation Steps
 
-TODO: Describe the installation process (making sure you mention `bundle install`).
-Instructions need to be such that a user can just copy/paste the commands to get things set up and running. 
+1. Download the project as a zip file and open it. 
+2. Run `npm install` to download the necessary node dependencies.
 
 ## Functionality
 
-TODO: Write usage instructions. Structuring it as a walkthrough can help structure this section,
-and showcase your features.
+1. Open a terminal in /VPM/server. 
+2. Run `npm start`. The server should be running on http://localhost:5000.
+3. Open a terminal in /VPM/client.
+4. Run `npm start`. The client should be running on http://localhost:3000.
+5. A browser should pop up displaying the VPM webpage. 
 
 ## Known Problems
-
-TODO: Describe any known issues, bugs, odd behaviors or code smells. 
-Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
 
 ## Contributing
 
@@ -43,11 +43,9 @@ Provide steps to reproduce the problem and/or name a file or a function where th
 
 ## Additional Documentation
 
-TODO: Provide links to additional documentation that may exist in the repo, e.g.,
-  * Sprint reports
-  * User links
+  * Sprint Report 1: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-1-Report.md
+  * Project Report Documentation: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/tree/main/Docs/Report
 
 ## License
 
-If you haven't already, add a file called `LICENSE.txt` with the text of the appropriate license.
-We recommend using the MIT license: <https://choosealicense.com/licenses/mit/>
+TODO: Add `LICENSE.txt` 
