@@ -27,9 +27,9 @@ Here are links to the issues that we completed in this sprint:
 
 ## Code Files for Review
 
-*[App.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/client/src/App.js)
-*[index.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/server/index.js)
-*[FeverChart.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/client/src/components/FeverChart.js)
+* [App.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/client/src/App.js)
+* [index.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/server/index.js)
+* [FeverChart.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/client/src/components/FeverChart.js)
  
 ## Retrospective Summary
 Here's what went well:
