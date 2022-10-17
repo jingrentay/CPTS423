@@ -1,14 +1,18 @@
 import React from 'react'
-import FeverChart from './components/FeverChart';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import LoginPage from './pages/LoginPage'
+import ProjectHomePage from './pages/ProjectHomePage'
+import ErrorPage from './pages/ErrorPage'
 
 const App = () => {
     return (
-        <div>
-            <h1>Virtual Project Management</h1>
-            <div class="chart-container" style={{position: 'relative', height: '20vh', width: '40vw'}}>
-                <FeverChart/>
-            </div>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<LoginPage />}/>
+                <Route path="projects" element={<ProjectHomePage />}/>
+                <Route path="*" element={<ErrorPage />}/>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
