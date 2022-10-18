@@ -20,14 +20,14 @@ Visual Project Management allows users to track the progress of one or multiple 
 
 ### Installation Steps
 
-1. Download the project as a zip file and open it. 
+1. Download the project as a zip file and open it in its own folder. 
 2. Run `npm install` to download the necessary node dependencies.
 
 ## Functionality
 
-1. Open a terminal in /VPM/server. 
+1. Open a terminal in /VPMApp/server. 
 2. Run `npm start`. The server should be running on http://localhost:5000.
-3. Open a terminal in /VPM/client.
+3. Open a terminal in /VPMApp/client.
 4. Run `npm start`. The client should be running on http://localhost:3000.
 5. A browser should pop up displaying the VPM webpage. 
 
