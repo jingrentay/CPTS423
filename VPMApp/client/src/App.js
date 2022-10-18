@@ -1,13 +1,22 @@
 import React from 'react'
-import FeverChart from './components/FeverChart';
+import {useState} from 'react'
+//import FeverChart from './components/FeverChart';
 
+
+
+async function registerUser(event) {
+    event.preventDefault()
+    fetch('http://localhost:3000')
+}
 const App = () => {
     return (
         <div>
-            <h1>Virtual Project Management</h1>
-            <div class="chart-container" style={{position: 'relative', height: '20vh', width: '40vw'}}>
-                <FeverChart/>
-            </div>
+            <h1>Register</h1>
+            <form>
+                <input type="text" placeholder="Name" />
+                <input type="email" placeholder="Email" />
+                <input type="password" placeholder="Password" />
+            </form>
         </div>
     );
 }

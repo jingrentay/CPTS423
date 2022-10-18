@@ -1,0 +1,20 @@
+{
+  "name": "wsuetm-pmwebapp",
+  "version": "1.0.0",
+  "description": "A web application that allows users to create and manage projects more efficiently according to the theory of Virtual Project Management.",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/issues"
+  },
+  "homepage": "https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp#readme"
+}
