@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, Toolbar, Typography, Box } from '@mui/material'
 import { Link } from 'react-router-dom'
 import FeverChart from '../components/FeverChart'
-import { Container } from '@mui/system'
 
 const ProjectHomePage = () => {
     return (
@@ -17,10 +16,10 @@ const ProjectHomePage = () => {
                     </Button>
                 </Toolbar>
             </Box>
-            <div class="chart-container" style={{position: 'relative', height: '20vh', width: '40vw'}}>
-                <Container> 
+            <div style={{ paddingTop: '25px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div class="chart-container" style={{ position: 'relative', height: '20vh', width: '40vw' }}>
                     <FeverChart/>
-                </Container>
+                </div>
             </div>
         </div>
     );
