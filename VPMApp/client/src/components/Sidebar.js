@@ -16,7 +16,7 @@ const Sidebar = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem key="Projects" disablePadding >
-                    <ListItemButton>
+                    <ListItemButton component={Link} to="/archive">
                         <ListItemIcon sx={{ ml: 1, color: 'white' }}> <InventoryIcon/> </ListItemIcon>
                         <ListItemText sx={{ color: 'white' }}> Archive </ListItemText>
                     </ListItemButton>
