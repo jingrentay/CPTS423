@@ -14,6 +14,12 @@ const theme = createTheme({
           dark: '#002336',
           contrastText: '#fff',
         },
+        success: {
+          light: '#99d066',
+          main: '#689f38',
+          dark: '#387002',
+          contrastText: '#fff',
+        }
     },
     components: {
         MuiDrawer: {

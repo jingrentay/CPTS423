@@ -9,21 +9,21 @@ const Sidebar = () => {
     return (
         <Box sx={{ overflow: 'auto' }}>
             <List>
-                <ListItem key="Projects" disablePadding >
+                <ListItem key="Projects">
                     <ListItemButton component={Link} to="/projects">
-                        <ListItemIcon sx={{ ml: 1, color: 'white' }}> <FolderIcon/> </ListItemIcon>
+                        <ListItemIcon sx={{ color: 'white' }}> <FolderIcon/> </ListItemIcon>
                         <ListItemText sx={{ color: 'white' }}> Projects </ListItemText>
                     </ListItemButton>
                 </ListItem>
-                <ListItem key="Projects" disablePadding >
-                    <ListItemButton>
-                        <ListItemIcon sx={{ ml: 1, color: 'white' }}> <InventoryIcon/> </ListItemIcon>
+                <ListItem key="Archive">
+                    <ListItemButton component={Link} to="/archive">
+                        <ListItemIcon sx={{ color: 'white' }}> <InventoryIcon/> </ListItemIcon>
                         <ListItemText sx={{ color: 'white' }}> Archive </ListItemText>
                     </ListItemButton>
                 </ListItem>
-                <ListItem key="Projects" disablePadding >
+                <ListItem key="Settings">
                     <ListItemButton>
-                        <ListItemIcon sx={{ ml: 1, color: 'white' }}> <SettingsIcon /> </ListItemIcon>
+                        <ListItemIcon sx={{ color: 'white' }}> <SettingsIcon /> </ListItemIcon>
                         <ListItemText sx={{ color: 'white' }}> Settings </ListItemText>
                     </ListItemButton>
                 </ListItem>
