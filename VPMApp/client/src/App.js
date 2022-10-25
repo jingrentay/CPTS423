@@ -4,12 +4,6 @@ import LoginPage from './pages/LoginPage'
 import ProjectHomePage from './pages/ProjectHomePage'
 import ErrorPage from './pages/ErrorPage'
 
-
-
-async function registerUser(event) {
-    event.preventDefault()
-    fetch('http://localhost:3000')
-}
 const App = () => {
     return (
         <BrowserRouter>
