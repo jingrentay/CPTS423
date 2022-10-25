@@ -5,7 +5,7 @@ export default (projects = [], action) => {
         case 'GET_ALL_PROJECTS':
             return action.payload;
         case 'CREATE_PROJECT':
-            return projects;
+            return [...projects, action.payload];
         default:
             return projects;
     }
