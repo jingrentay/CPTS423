@@ -9,7 +9,7 @@ import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { createProject } from '../../actions/projectActions'
 
-const ProjectFormPage = () => {
+const ProjectEditPage = () => {
     const [projectData, setProjectData] = useState({ projectName: '', projDescription: '', });
     const dispatch = useDispatch();
 
@@ -19,15 +19,16 @@ const ProjectFormPage = () => {
         this.setState({showSaved: true})
     };
 
-    return (
+    return(
         <>
-            <ThemeProvider theme={theme}>
-            <Navigation/>
+            <ThemeProvider theme={theme}></ThemeProvider>
+            <Navigation key='nav' />
             <Container sx={{ width: 700, ml: 25, mt: 10 }}>
                 <form autoComplete='off' noValidate>
-                    <Typography variant='h5'> Create a Project </Typography>
-                    <TextField sx={{ mt: 3 }} name='project name' variant='filled' label='Project Name' fullWidth value={projectData.projectName} onChange={(e) => setProjectData({ ...projectData, projectName: e.target.value })}/>
-                    <TextField sx={{ mt: 3 }}name='project description' variant='filled' label='Project Description' fullWidth value={projectData.projDescription} onChange={(e) => setProjectData({ ...projectData, projDescription: e.target.value })}/>
+                    <Typography variant='h5'> Edit Project </Typography>
+                    <TextField sx={{ mt: 3 }} name='project name' variant='filled' label='New Project Name' fullWidth value={projectData.projectName} onChange={(e) => setProjectData({ ...projectData, projectName: e.target.value })}/>
+                    <TextField sx={{ mt: 3 }}name='project description' variant='filled' label='New Project Description' fullWidth value={projectData.projDescription} onChange={(e) => setProjectData({ ...projectData, projDescription: e.target.value })}/>
+                    <Typography variant='h6' marginTop={3}> Edit time  </Typography>
                     <FormControl sx={{ width: 652, mt: 3 }}>
                         <InputLabel id="timeUnitsLabel">Time Units</InputLabel>
                         <Select labelId="timeUnitsLabel" label="Time Units">
@@ -44,19 +45,26 @@ const ProjectFormPage = () => {
                             New Task 
                         </Button>
                     </Box>
+                    <Box sx={{ display: 'flex', mt: 3 }}>
+                        <Typography variant='h6'> Remove Tasks </Typography>
+                        <Button sx={{ ml: 2 }} size="small" variant="contained" color="success" startIcon={<AddCircleOutlineIcon/>}> 
+                            Remove Task 
+                        </Button>
+                    </Box>
                     <Box sx={{ mt: 3 }}>
                         <Button size="medium" variant="contained" onClick={handleSubmit}>
-                            Create Project
+                            Save
                         </Button>
-                        <Button component={Link} to="/projects" size="medium" variant="contained" sx={{ ml: 2 }}>
-                            Back to Projects
+                        <Button component={Link} to="/projects/view" size="medium" variant="contained" sx={{ ml: 2 }}>
+                            Back to View 
                         </Button>
                     </Box>
                 </form>
             </Container>
-            </ThemeProvider>
         </>
+            
+    
     );
 }
 
-export default ProjectFormPage;
+export default ProjectEditPage;
