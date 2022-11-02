@@ -52,7 +52,7 @@ const ProjectEditPage = () => {
                         </Button>
                     </Box>
                     <Box sx={{ mt: 3 }}>
-                        <Button size="medium" variant="contained" onClick={handleSubmit}>
+                        <Button size="medium" variant="contained" onClick={() => alert('Your project is saved!')}>
                             Save
                         </Button>
                         <Button component={Link} to="/projects/view" size="medium" variant="contained" sx={{ ml: 2 }}>

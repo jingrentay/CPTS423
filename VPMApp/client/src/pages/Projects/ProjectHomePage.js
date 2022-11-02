@@ -21,9 +21,6 @@ const ProjectHomePage = () => {
             <Button key='new-project-button' component={Link} to="/projects/create" size="medium" variant="contained" sx={{ ml: 28, mt: 10 }}>
                 New Project
             </Button>
-            <Button key='view-project-button' component={Link} to="/projects/view" size="medium" variant="contained" sx={{ml:3, mt:10}}>
-                View/Edit Project
-            </Button>
             <Container> 
             <div key='chart-padding' style={{ paddingLeft: '200px', paddingTop: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
@@ -42,7 +39,7 @@ const ProjectHomePage = () => {
                                 <Typography> Project ID: </Typography>
                                 </Grid>
                             <Grid item xs={1}>
-                            <IconButton > <InfoIcon fontSize='large' /> </IconButton>
+                            <IconButton key='view-project-button' component={Link} to="/projects/view" > <InfoIcon fontSize='large' /> </IconButton>
                             </Grid>
                         </Grid>
                     </CardContent>
