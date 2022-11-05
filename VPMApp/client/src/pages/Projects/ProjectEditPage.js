@@ -1,23 +1,14 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ThemeProvider } from '@mui/material/styles'
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { createProject } from '../../actions/projectActions'
 
 const ProjectEditPage = () => {
     const [projectData, setProjectData] = useState({ projectName: '', projDescription: '', });
-    const dispatch = useDispatch();
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        dispatch(createProject(projectData))
-        this.setState({showSaved: true})
-    };
 
     return(
         <>
