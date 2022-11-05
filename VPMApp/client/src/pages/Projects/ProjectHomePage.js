@@ -1,73 +1,59 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { Skeleton, Button, Grid, Card, CardContent, Container, Typography, IconButton, Box } from '@mui/material'
+import React, { useState } from 'react'
+import { Box, Tabs, Tab, Typography } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
-import { useSelector } from 'react-redux'
-import InfoIcon from '@mui/icons-material/Info';
-import { useDispatch } from 'react-redux'
+import PropTypes from 'prop-types';
 
 import theme from '../../theme.js'
-import FeverChart from '../../components/FeverChart'
 import Navigation from '../../components/Navigation'
-import { getProjects } from '../../features/projectSlice'
+import InPlanningTab from './InPlanningTab.js'
+import InProgressTab from './InProgressTab.js'
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+  };
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div role="tabpanel" hidden={value !== index} id={`simple-tabpanel-${index}`} {...other} >
+        {value === index && (
+          <Box sx={{ p: 3 }}>
+            <Typography component='span'>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+}
 
 const ProjectHomePage = () => {
 
-    const dispatch = useDispatch();
+    const [value, setValue] = useState(0);
 
-    useEffect(() => {
-        dispatch(getProjects());
-    }, [dispatch]);
-
-    const { projects, loadingAll } = useSelector((store) => store.projects)
-
-    if (loadingAll) {
-        return (
-            <>
-                <ThemeProvider theme={theme}>
-                    <Navigation key='nav' />
-                    <Box sx={{ width: 600, ml: 28, mt: 10 }}>
-                        <Skeleton />
-                        <Skeleton animation="wave" />
-                        <Skeleton animation={false} />
-                    </Box>
-                </ThemeProvider>
-            </>
-        )
-    }
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
 
     return (
         <>
         <ThemeProvider key='theme-provider' theme={theme}>
             <Navigation key='nav' />
-            <Button key='new-project-button' component={Link} to="/projects/create" size="medium" variant="contained" sx={{ ml: 28, mt: 10 }}>
-                New Project
-            </Button>
-            <Container> 
-            <div key='chart-padding' style={{ paddingLeft: '200px', paddingTop: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                    <FeverChart/>
-                </div>
-            </div>
-            <Typography style={{ paddingLeft: '200px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} variant='h4' sx={{ mt: 3 }}> Projects </Typography>
-            {projects.map((project) => (
-                <Card key={project.projectName} sx={{ ml: 41, mt: 3, width: 700, height: 85, backgroundColor: '#A0A0A0' }}>
-                    <CardContent>
-                        <Grid container>
-                            <Grid item xs={11}>
-                                <Box sx={{ display: 'flex'}}>
-                                    <Typography variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
-                                </Box>
-                                <Typography> Project ID: {project.projectID} </Typography>
-                                </Grid>
-                            <Grid item xs={1}>
-                            <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`} > <InfoIcon fontSize='large' /> </IconButton>
-                            </Grid>
-                        </Grid>
-                    </CardContent>
-                </Card>
-            ))}
-            </Container>
+            <Box sx={{ width: '84%', ml: 27, mt: 9 }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs value={value} onChange={handleChange}>
+                        <Tab label="In Planning"  />
+                        <Tab label="In Progress"  />
+                    </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                    <InPlanningTab />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <InProgressTab />
+                </TabPanel>
+            </Box>
         </ThemeProvider>
         </>
     );
