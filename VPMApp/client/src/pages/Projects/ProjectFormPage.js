@@ -7,16 +7,20 @@ import { ThemeProvider } from '@mui/material/styles'
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { createProject } from '../../actions/projectActions'
+import { createProject } from '../../features/projectSlice'
 
 const ProjectFormPage = () => {
-    const [projectData, setProjectData] = useState({ projectName: '', projDescription: '', });
+    
+    const setProjectID = () => {
+        return 0
+    } 
+
+    const [newProject, setNewProject] = useState({ projectID: setProjectID(), projectName: '', projDescription: '', });
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(createProject(projectData))
-        this.setState({showSaved: true})
+        dispatch(createProject(newProject))
     };
 
     return (
@@ -26,8 +30,8 @@ const ProjectFormPage = () => {
             <Container sx={{ width: 700, ml: 25, mt: 10 }}>
                 <form autoComplete='off' noValidate>
                     <Typography variant='h5'> Create a Project </Typography>
-                    <TextField sx={{ mt: 3 }} name='project name' variant='filled' label='Project Name' fullWidth value={projectData.projectName} onChange={(e) => setProjectData({ ...projectData, projectName: e.target.value })}/>
-                    <TextField sx={{ mt: 3 }}name='project description' variant='filled' label='Project Description' fullWidth value={projectData.projDescription} onChange={(e) => setProjectData({ ...projectData, projDescription: e.target.value })}/>
+                    <TextField sx={{ mt: 3 }} name='project name' variant='filled' label='Project Name' fullWidth value={newProject.projectName} onChange={(e) => setNewProject({ ...newProject, projectName: e.target.value })}/>
+                    <TextField sx={{ mt: 3 }}name='project description' variant='filled' label='Project Description' fullWidth value={newProject.projDescription} onChange={(e) => setNewProject({ ...newProject, projDescription: e.target.value })}/>
                     <FormControl sx={{ width: 652, mt: 3 }}>
                         <InputLabel id="timeUnitsLabel">Time Units</InputLabel>
                         <Select labelId="timeUnitsLabel" label="Time Units">
