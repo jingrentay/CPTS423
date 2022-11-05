@@ -23,6 +23,16 @@ const ProjectFormPage = () => {
         dispatch(createProject(newProject))
     };
 
+    // need fields for
+    //      - project name
+    //      - project description
+    //      - duration units (hours, minutes, days, weeks)
+    // 
+    //      - aggressive duration 
+    //      - predicted completion 
+    //      - add tasks 
+
+
     return (
         <>
             <ThemeProvider theme={theme}>
