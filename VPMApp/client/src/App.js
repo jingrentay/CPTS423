@@ -18,7 +18,7 @@ const App = () => {
                 <Route path="projects" element={<ProjectHomePage />}/>
                 <Route path="projects/create" element={<ProjectFormPage />}/>
                 <Route path="projects/view/:id" element={<ProjectViewPage />}/>
-                <Route path="projects/edit" element={<ProjectEditPage/>}/>
+                <Route path="projects/edit/:id" element={<ProjectEditPage/>}/>
                 <Route path="archive" element={<ArchivePage />}/>
                 <Route path="*" element={<ErrorPage />}/>
             </Routes>

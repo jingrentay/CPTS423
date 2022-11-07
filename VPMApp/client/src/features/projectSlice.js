@@ -38,6 +38,20 @@ export const createProject = createAsyncThunk(
     }
 )
 
+export const updateProject = createAsyncThunk(
+    'projects/updateProject', 
+    async (project) => {
+        try {
+            console.log(project)
+            const { data } = await api.updateProject(project.projectID, project)
+            console.log(data)
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
 const projectSlice = createSlice({
     name: 'projects',
     initialState: {
@@ -69,6 +83,9 @@ const projectSlice = createSlice({
                 store.loadingOne = false
             })
             .addCase(createProject.fulfilled, (store, action) => {
+                console.log(action.payload)
+            })
+            .addCase(updateProject.fulfilled, (store, action) => {
                 console.log(action.payload)
             })
     },

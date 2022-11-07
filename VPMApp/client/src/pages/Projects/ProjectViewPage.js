@@ -49,7 +49,7 @@ const ProjectViewPage = () => {
                 <Typography variant='subtitle1' marginTop={1}> Tasks </Typography>
             </Container>
             <Box>
-                <Button key='edit-project-button' component={Link} to="/projects/edit" size="medium" variant="contained" sx={{ ml: 28, mt: 3 }}>
+                <Button key='edit-project-button' component={Link} to={`/projects/edit/${project[0].projectID}`} size="medium" variant="contained" sx={{ ml: 28, mt: 3 }}>
                     Edit
                 </Button>
                 <Button key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" sx={{ ml: 3, mt: 3 }}>

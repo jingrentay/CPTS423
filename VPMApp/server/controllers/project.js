@@ -33,3 +33,17 @@ export const createProject = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+
+// Update a single project
+export const updateProject = async (req, res) => {
+    const { id} = req.params
+    const project = req.body
+    try {
+        console.log(id)
+        console.log(req.body)
+        const updatedProject = await Project.findOneAndUpdate(id,project)
+        res.status(201).json(updatedProject);
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+}

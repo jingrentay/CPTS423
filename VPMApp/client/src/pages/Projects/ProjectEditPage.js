@@ -1,35 +1,47 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ThemeProvider } from '@mui/material/styles'
+import { useDispatch, useSelector } from 'react-redux'
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
+import { getProject } from '../../features/projectSlice'
+import { updateProject } from '../../features/projectSlice'
 
 const ProjectEditPage = () => {
-    const [projectData, setProjectData] = useState({ projectName: '', projDescription: '', });
+    const { id } = useParams()
+    const dispatch = useDispatch()
+
+    console.log(id)
+
+
+    // For getting single project based on id 
+    useEffect( () => {
+        dispatch(getProject(id));
+    }, [dispatch, id]);
+
+    const [updateCurrentProject, updateProjectData] = useState({ projectID: id , projectName: '', projDescription: ''});
+    const { project} = useSelector((store) => store.projects)
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(updateCurrentProject)
+        dispatch(updateProject(updateCurrentProject))
+    };
 
     return(
         <>
-            <ThemeProvider theme={theme}></ThemeProvider>
+            <ThemeProvider theme={theme}>
             <Navigation key='nav' />
             <Container sx={{ width: 700, ml: 25, mt: 10 }}>
                 <form autoComplete='off' noValidate>
                     <Typography variant='h5'> Edit Project </Typography>
-                    <TextField sx={{ mt: 3 }} name='project name' variant='filled' label='New Project Name' fullWidth value={projectData.projectName} onChange={(e) => setProjectData({ ...projectData, projectName: e.target.value })}/>
-                    <TextField sx={{ mt: 3 }}name='project description' variant='filled' label='New Project Description' fullWidth value={projectData.projDescription} onChange={(e) => setProjectData({ ...projectData, projDescription: e.target.value })}/>
+                    <TextField sx={{ mt: 3 }} id='project name' variant='filled' label='New Project Name' fullWidth defaultValue={project[0].projectName} onChange={(e) => updateProjectData({...updateCurrentProject,  projectName: e.target.value })}/>
+                    <TextField sx={{ mt: 3 }} id='project description' variant='filled' label='New Project Description' fullWidth defaultValue={project[0].projDescription} onChange={(e) => updateProjectData({...updateCurrentProject,  projDescription: e.target.value })}/>
                     <Typography variant='h6' marginTop={3}> Edit time  </Typography>
-                    <FormControl sx={{ width: 652, mt: 3 }}>
-                        <InputLabel id="timeUnitsLabel">Time Units</InputLabel>
-                        <Select labelId="timeUnitsLabel" label="Time Units">
-                            <MenuItem value=''><em>None</em></MenuItem>
-                            <MenuItem value='Hours'>Hours</MenuItem>
-                            <MenuItem value='Minutes'>Minutes</MenuItem>
-                            <MenuItem value='Days'>Days</MenuItem>
-                            <MenuItem value='Weeks'>Weeks</MenuItem>
-                        </Select>
-                    </FormControl>
+                    
                     <Box sx={{ display: 'flex', mt: 3 }}>
                         <Typography variant='h6'> Add Tasks </Typography>
                         <Button sx={{ ml: 2 }} size="small" variant="contained" color="success" startIcon={<AddCircleOutlineIcon/>}> 
@@ -43,15 +55,16 @@ const ProjectEditPage = () => {
                         </Button>
                     </Box>
                     <Box sx={{ mt: 3 }}>
-                        <Button size="medium" variant="contained" onClick={() => alert('Your project is saved!')}>
+                        <Button type="submit" size="medium" variant="contained" onClick={handleSubmit}>
                             Save
                         </Button>
-                        <Button component={Link} to="/projects/view" size="medium" variant="contained" sx={{ ml: 2 }}>
+                        <Button component={Link} to={`/projects/view/${project[0].projectID}`} size="medium" variant="contained" sx={{ ml: 2 }}>
                             Back to View 
                         </Button>
                     </Box>
                 </form>
             </Container>
+            </ThemeProvider>
         </>
             
     
