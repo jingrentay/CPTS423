@@ -8,7 +8,8 @@ import ProjectViewPage from './pages/Projects/ProjectViewPage'
 import ProjectEditPage from './pages/Projects/ProjectEditPage'
 import ArchivePage from './pages/Archive/ArchivePage'
 import ErrorPage from './pages/ErrorPage'
-
+import Listing from './pages/Projects/ProjectForm'
+import Detailpage from './pages/Projects/ProjectDetailsPage'
 
 const App = () => {
     return (
@@ -17,6 +18,8 @@ const App = () => {
                 <Route path="/" element={<LoginPage />}/>
                 <Route path="projects" element={<ProjectHomePage />}/>
                 <Route path="projects/create" element={<ProjectFormPage />}/>
+                <Route path="projects/listing" element={<Listing />}/>
+                <Route path="/details" element={<Detailpage />}/>
                 <Route path="projects/view/:id" element={<ProjectViewPage />}/>
                 <Route path="projects/edit" element={<ProjectEditPage/>}/>
                 <Route path="archive" element={<ArchivePage />}/>

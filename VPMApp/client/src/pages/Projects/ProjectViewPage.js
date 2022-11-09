@@ -46,6 +46,7 @@ const ProjectViewPage = () => {
                 <TextField sx={{ mt: 3 }} id="project name" label="Name" defaultValue={project[0].projectName} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project id" label="ID" defaultValue={project[0].projectID} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project description" label="Description" defaultValue={project[0].projDescription} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="aggressrive duration" label="Duration" defaultValue={project[0].projDuration} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <Typography variant='subtitle1' marginTop={1}> Tasks </Typography>
             </Container>
             <Box>
