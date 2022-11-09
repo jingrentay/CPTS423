@@ -47,3 +47,17 @@ export const updateProject = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+
+// Update a single project
+export const deleteProject = async (req, res) => {
+    const { id} = req.params
+    const project = req.body
+    try {
+        console.log(id)
+        console.log(req.body)
+        const deletedProject = await Project.findOneAndDelete(id,project)
+        res.status(201).json(deletedProject);
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+}
