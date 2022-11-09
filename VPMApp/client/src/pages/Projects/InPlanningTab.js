@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getProjects } from '../../features/projectSlice'
+import { deleteProject } from '../../features/projectSlice'
 
 const InPlanningTab = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,14 @@ const InPlanningTab = () => {
     }, [dispatch]);
 
     const { projects, loadingAll } = useSelector((store) => store.projects)
+
+    const { project} = useSelector((store) => store.projects)
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(project)
+        dispatch(deleteProject(project))
+    };
 
     if (loadingAll) {
         return (
@@ -56,7 +65,7 @@ const InPlanningTab = () => {
                                     </Grid>
                                 <Grid item xs={2}>
                                 <Box sx={{ display: 'flex'}}>
-                                    <IconButton key='delete-project-button' sx={{ ml: 1}}> 
+                                    <IconButton key='delete-project-button' onClick={handleSubmit} sx={{ ml: 1}}> 
                                         <DeleteIcon fontSize='large' /> 
                                     </IconButton>
                                     <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`}> 
