@@ -1,0 +1,63 @@
+sidebar .list-group-item{
+
+    background-color: transparent !important;
+}
+
+.sidebar_a{
+
+    position: relative !important;
+    background: #ededed;
+    padding: 10px;
+    
+
+}
+
+
+.searchbox {
+position: relative !important;
+
+width: 100% !important;
+height: 40px !important;
+/* UI Properties */
+
+border: 1px solid #E3E5EE;
+border-radius: 32px !important;
+margin: 10px 0px !important;
+
+
+
+}
+.Iosearch{
+
+position: absolute;
+right: 25px;
+top: 25px;
+cursor: pointer;
+
+}
+
+.sidebar{ 
+   
+    height: 100%;
+    width: 100%;
+
+   
+    background: #fff;
+}
+body{
+
+  background: #EEF5F9;
+  
+}
+
+
+.henny{
+    
+
+    
+background: #FFFFFF 0% 0% no-repeat padding-box !important;
+box-shadow: 0px 3px 6px #00000029 !important;
+border: 1px solid #E1E1E1 !important;
+border-radius: 8px !important;
+opacity: 1 !important;
+}
