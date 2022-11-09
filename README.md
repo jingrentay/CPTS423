@@ -13,10 +13,12 @@ Visual Project Management allows users to track the progress of one or multiple 
 ### Prerequisites
 
 * Node.js 16.17.1
-* Access to MongoDB and authorized credentials for the database.
+* Access to MongoDB Cloud Atlas and authorized credentials for the database.
 * Git
 
 ### Add-Ons
+
+* MaterialUI: library of React UI components for creating a clean and functional user interface (part of node dependencies - run `npm install` to download).
 
 ### Installation Steps
 
@@ -49,4 +51,4 @@ Visual Project Management allows users to track the progress of one or multiple 
 
 ## License
 
-TODO: Add `LICENSE.txt` 
+TODO: Add `LICENSE.txt` - license TBD at conclusion of the project
