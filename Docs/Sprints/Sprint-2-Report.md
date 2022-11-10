@@ -2,7 +2,7 @@
 
 ## What's New (User Facing)
 
-There have added various features and components that have brought us closer to the desired web app.
+We have added various features and components that have brought us closer to the desired web app.
 
 *  We now have a fully functional database with which we are able to send and receive data between MongoDB and the React app. The "create project" page, edit page, and view pages function such that a user can create, view, and edit a project with the correct data from the database.
 * A Login page and an Archive page, as well as tabs for "In Planning" and "In Progress" projects, have been added.
