@@ -57,7 +57,7 @@ export const deleteProject = createAsyncThunk(
     async (project) => {
         try {
             console.log(project)
-            const { data } = await api.updateProject(project.projectID, project)
+            const { data } = await api.deleteProject(project.projectID, project)
             console.log(data)
             return data;
         } catch (error) {

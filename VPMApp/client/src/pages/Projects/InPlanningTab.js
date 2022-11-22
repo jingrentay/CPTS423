@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
 import { useDispatch } from 'react-redux'
-import DeleteIcon from '@mui/icons-material/Delete';
+
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -21,13 +21,9 @@ const InPlanningTab = () => {
 
     const { projects, loadingAll } = useSelector((store) => store.projects)
 
-    const { project} = useSelector((store) => store.projects)
+    
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(project)
-        dispatch(deleteProject(project))
-    };
+    
 
     if (loadingAll) {
         return (
@@ -65,9 +61,6 @@ const InPlanningTab = () => {
                                     </Grid>
                                 <Grid item xs={2}>
                                 <Box sx={{ display: 'flex'}}>
-                                    <IconButton key='delete-project-button' onClick={handleSubmit} sx={{ ml: 1}}> 
-                                        <DeleteIcon fontSize='large' /> 
-                                    </IconButton>
                                     <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`}> 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>

@@ -5,11 +5,13 @@ import { ThemeProvider } from '@mui/material/styles'
 import { useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
 import { useDispatch } from 'react-redux'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import FeverChart from '../../components/FeverChart'
 import { getProjects } from '../../features/projectSlice'
+import { deleteProject } from '../../features/projectSlice'
 
 const InProgressTab = () => {
     const dispatch = useDispatch();
@@ -21,6 +23,14 @@ const InProgressTab = () => {
     }, [dispatch]);
 
     const { projects, loadingAll } = useSelector((store) => store.projects)
+
+    
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(projects)
+        dispatch(deleteProject(projects))
+    };
 
     if (loadingAll) {
         return (
@@ -52,16 +62,21 @@ const InProgressTab = () => {
                     <Card key={project.projectName} sx={{ml: 28, mt: 3, width: 700, height: 85, backgroundColor: color }}>
                         <CardContent>
                             <Grid container>
-                                <Grid item xs={11}>
+                                <Grid item xs={8}>
                                     <Box sx={{ display: 'flex'}}>
                                         <Typography variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
                                     </Box>
                                     <Typography> Project ID: {project.projectID} </Typography>
                                     </Grid>
-                                <Grid item xs={1}>
-                                <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`} > 
-                                    <InfoIcon fontSize='large' /> 
-                                </IconButton>
+                                <Grid item xs={2}>
+                                    <IconButton key='delete-project-button' onClick={handleSubmit}> 
+                                            <DeleteIcon fontSize='large' /> 
+                                    </IconButton>
+                                </Grid>
+                                <Grid item xs={2}>
+                                    <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`} > 
+                                        <InfoIcon fontSize='large' /> 
+                                    </IconButton>
                                 </Grid>
                             </Grid>
                         </CardContent>
