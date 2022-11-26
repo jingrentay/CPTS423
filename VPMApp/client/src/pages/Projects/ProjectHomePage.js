@@ -12,7 +12,7 @@ TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.number.isRequired,
     value: PropTypes.number.isRequired,
-  };
+};
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -43,8 +43,8 @@ const ProjectHomePage = () => {
             <Box sx={{ width: '84%', ml: 27, mt: 9 }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange}>
-                        <Tab label="In Planning"  />
-                        <Tab label="In Progress"  />
+                        <Tab label="In Planning"  sx={{ maxWidth: 150 }} />
+                        <Tab label="In Progress"  sx={{ maxWidth: 150 }} />
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>

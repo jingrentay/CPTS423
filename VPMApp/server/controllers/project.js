@@ -11,11 +11,41 @@ export const getProjects = async (req, res) => {
     }
 }
 
+// Get all projects "in planning"
+export const getPlanningProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({ projectStage: 0 })
+        res.status(200).json(projects)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+} 
+
+// Get all projects "in progress"
+export const getProgressProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({ projectStage: 1 })
+        res.status(200).json(projects)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+// Get all archived projects
+export const getArchivedProjects = async (req, res) => {
+    try {
+        const projects = await Project.find({ projectStage: 2 })
+        res.status(200).json(projects)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
 // Get one project by ID
 export const getProject = async (req, res) => {
     const { id } = req.params
     try {
-        const project = await Project.find({ projectID: id})
+        const project = await Project.findOne({ projectID: id })
         res.status(200).json(project)
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -36,26 +66,21 @@ export const createProject = async (req, res) => {
 
 // Update a single project
 export const updateProject = async (req, res) => {
-    const { id} = req.params
+    const { id } = req.params
     const project = req.body
     try {
-        console.log(id)
-        console.log(req.body)
-        const updatedProject = await Project.findOneAndUpdate(id,project)
+        const updatedProject = await Project.findOneAndUpdate({ projectID: id }, project)
         res.status(201).json(updatedProject);
     } catch (error) {
         res.status(409).json({ message: error.message })
     }
 }
 
-// Update a single project
+// Delete a project
 export const deleteProject = async (req, res) => {
-    const { id} = req.params
-    const project = req.body
+    const { id } = req.params
     try {
-        console.log(id)
-        console.log(req.body)
-        const deletedProject = await Project.findOneAndDelete(id,project)
+        const deletedProject = await Project.findByIdAndDelete(id)
         res.status(201).json(deletedProject);
     } catch (error) {
         res.status(409).json({ message: error.message })

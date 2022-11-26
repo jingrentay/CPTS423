@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Skeleton, Box, Button, Container, TextField, Typography } from '@mui/material'
+import { Skeleton, Box, Button, Container, TextField, Typography, InputAdornment } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -14,14 +14,14 @@ const ProjectViewPage = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    console.log(id)
-
     // For getting single project based on id 
     useEffect( () => {
         dispatch(getProject(id));
     }, [dispatch, id]);
 
     const { project, loadingOne } = useSelector((store) => store.projects)
+
+    console.log(project)
 
     if (loadingOne) {
         return (
@@ -42,29 +42,30 @@ const ProjectViewPage = () => {
         <>
             <ThemeProvider theme={theme}>
             <Navigation key='nav' />
-            <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'right', justifyContent: 'right' }}>
-                <div key='chart-contain' style={{ position: 'absolute', width: '40vw', top:'200px', right:'100px' }}>
-                    <FeverChart/>
-                </div>
-            </div>
-            <Container sx={{ width: 600, ml: 25, mt: 10 }}>
-                <Typography variant='h5'> Project Details </Typography>
-                <TextField sx={{ mt: 2 }} id="project-id" label="ID" variant="filled" defaultValue={project[0].projectID} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 3 }} id="project-name" label="Name" variant="filled" defaultValue={project[0].projectName} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="project-description" label="Description" variant="filled" defaultValue={project[0].projDescription} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="manager-name" label="Manager Name" variant="filled" defaultValue={project[0].projectManager} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="start-date" label="Start Date" variant="filled" defaultValue={project[0].projectDateCreated} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="aggressive-duration" label="Date of Predicted Completion" variant="filled" defaultValue={project[0].predictedCompletion} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <Typography variant='subtitle1' marginTop={1}> Tasks </Typography>
-            </Container>
-            <Box>
-                <Button key='edit-project-button' component={Link} to={`/projects/edit/${project[0].projectID}`} size="medium" variant="contained" sx={{ ml: 28, mt: 3 }}>
+            <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
+                <Typography variant='h5' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
+                <Button sx={{ mr: 2 }} key='edit-project-button' component={Link} to={`/projects/edit/${project.projectID}`} size="medium" variant="contained" >
                     Edit
                 </Button>
-                <Button key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" sx={{ ml: 3, mt: 3 }}>
+                <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" >
                     Back
                 </Button>
             </Box>
+            <Container sx={{ width: 600, ml: 27 }}>
+                { project.projectStage !== 0 && 
+                    <div key='chart-padding' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
+                            <FeverChart/>
+                        </div>
+                    </div>
+                }
+                <TextField sx={{ mt: 2 }} id="project-name" label="Name" variant="filled" defaultValue={project.projectName} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="project-id" label="ID" variant="filled" defaultValue={project.projectID} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="project-description" label="Description" variant="filled" defaultValue={project.projDescription} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="aggressive-duration" label="Aggressive Duration" variant="filled" defaultValue={project.projectDuration} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={project.predictedCompletion} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <Typography variant='h6' sx={{ mt: 2, mb: 4 }}> Tasks </Typography>
+            </Container>
             </ThemeProvider>
         </>
     );

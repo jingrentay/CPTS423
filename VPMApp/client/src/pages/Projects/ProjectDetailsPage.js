@@ -1,7 +1,5 @@
 import React from 'react'
 import "../Projects/ProjectHomePage";
-import ProjectHomePage from '../Projects/ProjectHomePage';
-import ProjectForm from "../Projects/ProjectForm";
 import FeverChart from '../../components/FeverChart';
 
 export default function Detailpage(){
@@ -12,7 +10,6 @@ export default function Detailpage(){
          <>
        
          <div className="detail_1"> 
-         <ProjectForm/> 
          
          </div>
         

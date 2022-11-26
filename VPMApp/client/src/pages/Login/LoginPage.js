@@ -30,7 +30,7 @@ function LoginPage() {
                 <input type="password" placeholder="user name" className="name"/>
                 </div>
                 <div className="login-button">
-                <Button component={Link} to="/projects/create" size="medium" variant="contained" >
+                <Button component={Link} to="/projects" size="medium" variant="contained" >
                 Login
                </Button>
                </div>

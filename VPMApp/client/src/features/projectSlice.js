@@ -13,6 +13,42 @@ export const getProjects = createAsyncThunk(
     }
 )
 
+export const getPlanningProjects = createAsyncThunk(
+    'projects/getPlanningProjects', 
+    async () => {
+        try {
+            const { data } = await api.getPlanningProjects();
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
+export const getProgressProjects = createAsyncThunk(
+    'projects/getProgressProjects', 
+    async () => {
+        try {
+            const { data } = await api.getProgressProjects();
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
+export const getArchivedProjects = createAsyncThunk(
+    'projects/getArchivedProjects', 
+    async () => {
+        try {
+            const { data } = await api.getArchivedProjects();
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
 export const getProject = createAsyncThunk(
     'projects/getProject', 
     async (id) => {
@@ -54,11 +90,9 @@ export const updateProject = createAsyncThunk(
 
 export const deleteProject = createAsyncThunk(
     'projects/deleteProject', 
-    async (project) => {
+    async (id) => {
         try {
-            console.log(project)
-            const { data } = await api.deleteProject(project.projectID, project)
-            console.log(data)
+            const { data } = await api.deleteProject(id)
             return data;
         } catch (error) {
             console.log(error.message)
@@ -73,10 +107,11 @@ const projectSlice = createSlice({
         project: {},
         loadingOne: true,
         loadingAll: true,
+        loadingDelete: true, 
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getProjects.pending, (store, action) => {
+            .addCase(getProjects.pending, (store, action) => {              // get all projects
                 store.loadingAll = true
             })
             .addCase(getProjects.fulfilled, (store, action) => {
@@ -86,7 +121,37 @@ const projectSlice = createSlice({
             .addCase(getProjects.rejected, (store, action) => {
                 store.loadingAll = false
             })
-            .addCase(getProject.pending, (store, action) => {
+            .addCase(getPlanningProjects.pending, (store, action) => {      // get "in planning" projects
+                store.loadingAll = true
+            })
+            .addCase(getPlanningProjects.fulfilled, (store, action) => {
+                store.loadingAll = false
+                store.projects = action.payload
+            })
+            .addCase(getPlanningProjects.rejected, (store, action) => {
+                store.loadingAll = false
+            })
+            .addCase(getProgressProjects.pending, (store, action) => {      // get "in progress" projects
+                store.loadingAll = true
+            })
+            .addCase(getProgressProjects.fulfilled, (store, action) => {
+                store.loadingAll = false
+                store.projects = action.payload
+            })
+            .addCase(getProgressProjects.rejected, (store, action) => {
+                store.loadingAll = false
+            })
+            .addCase(getArchivedProjects.pending, (store, action) => {      // get archived projects
+                store.loadingAll = true
+            })
+            .addCase(getArchivedProjects.fulfilled, (store, action) => {
+                store.loadingAll = false
+                store.projects = action.payload
+            })
+            .addCase(getArchivedProjects.rejected, (store, action) => {
+                store.loadingAll = false
+            })
+            .addCase(getProject.pending, (store, action) => {               // get one project
                 store.loadingOne = true
             })
             .addCase(getProject.fulfilled, (store, action) => {
@@ -96,14 +161,25 @@ const projectSlice = createSlice({
             .addCase(getProject.rejected, (store, action) => {
                 store.loadingOne = false
             })
-            .addCase(createProject.fulfilled, (store, action) => {
+            .addCase(createProject.fulfilled, (store, action) => {          // create a project
                 console.log(action.payload)
             })
-            .addCase(updateProject.fulfilled, (store, action) => {
+            .addCase(updateProject.fulfilled, (store, action) => {          // update a project
                 console.log(action.payload)
             })
-            .addCase(deleteProject.fulfilled, (store, action) => {
-                console.log(action.payload)
+            .addCase(deleteProject.pending, (store, action) => {            // delete a project
+                store.loadingAll = true
+            })
+            .addCase(deleteProject.fulfilled, (store, action) => {          // delete a project
+                store.loadingAll = false
+                const id = action.meta.arg
+                console.log(id)
+                if (id) {
+                    store.projects = store.projects.filter((project) => project._id !== id)
+                }
+            })
+            .addCase(deleteProject.rejected, (store, action) => {
+                store.loadingAll = false
             })
     },
 });
