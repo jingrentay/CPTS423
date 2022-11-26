@@ -10,27 +10,21 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import FeverChart from '../../components/FeverChart'
-import { getProjects } from '../../features/projectSlice'
+import { getProgressProjects } from '../../features/projectSlice'
 import { deleteProject } from '../../features/projectSlice'
 
 const InProgressTab = () => {
     const dispatch = useDispatch();
 
-    
-
     useEffect(() => {
-        dispatch(getProjects());
+        dispatch(getProgressProjects());
     }, [dispatch]);
 
     const { projects, loadingAll } = useSelector((store) => store.projects)
 
-    
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(projects)
-        dispatch(deleteProject(projects))
-    };
+    const handleDeleteProject = (id) => {
+        dispatch(deleteProject(id))
+    }
 
     if (loadingAll) {
         return (
@@ -47,33 +41,31 @@ const InProgressTab = () => {
         )
     }
 
-    let color = '#A0A0A0'
-
     return (
         <>
-        <ThemeProvider key='theme-provider' theme={theme}>
+        <ThemeProvider key='theme-provider' theme={theme} >
             <Navigation key='nav' />
             <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                    <FeverChart/>
+                    <FeverChart />
                 </div>
             </div>
                 {projects.map((project) => (
-                    <Card key={project.projectName} sx={{ml: 28, mt: 3, width: 700, height: 85, backgroundColor: color }}>
+                    <Card key={project.projectName} sx={{ml: 28, mt: 3, width: 700, height: 85, backgroundColor: '#A0A0A0' }}>
                         <CardContent>
                             <Grid container>
-                                <Grid item xs={8}>
+                                <Grid item xs={10}>
                                     <Box sx={{ display: 'flex'}}>
                                         <Typography variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
                                     </Box>
                                     <Typography> Project ID: {project.projectID} </Typography>
                                     </Grid>
-                                <Grid item xs={2}>
-                                    <IconButton key='delete-project-button' onClick={handleSubmit}> 
-                                            <DeleteIcon fontSize='large' /> 
+                                <Grid item xs={1}>
+                                    <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
+                                        <DeleteIcon fontSize='large' /> 
                                     </IconButton>
-                                </Grid>
-                                <Grid item xs={2}>
+                                 </Grid>
+                                <Grid item xs={1}>
                                     <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`} > 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>

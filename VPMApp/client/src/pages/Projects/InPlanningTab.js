@@ -5,25 +5,25 @@ import { ThemeProvider } from '@mui/material/styles'
 import { useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
 import { useDispatch } from 'react-redux'
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { getProjects } from '../../features/projectSlice'
+import { getPlanningProjects } from '../../features/projectSlice'
 import { deleteProject } from '../../features/projectSlice'
 
 const InPlanningTab = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getProjects());
+        dispatch(getPlanningProjects());
     }, [dispatch]);
 
     const { projects, loadingAll } = useSelector((store) => store.projects)
 
-    
-
-    
+    const handleDeleteProject = (id) => {
+        dispatch(deleteProject(id))
+    }
 
     if (loadingAll) {
         return (
@@ -40,8 +40,6 @@ const InPlanningTab = () => {
         )
     }
 
-    let color = '#A0A0A0'
-
     return (
         <>
         <ThemeProvider key='theme-provider' theme={theme}>
@@ -50,7 +48,7 @@ const InPlanningTab = () => {
                 New Project
             </Button>
                 {projects.map((project) => (
-                    <Card key={project.projectName} sx={{ mt: 3, width: 700, height: 85, backgroundColor: color }}>
+                    <Card key={project.projectName} sx={{ mt: 3, width: 700, height: 85, backgroundColor: '#A0A0A0' }}>
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={10}>
@@ -58,13 +56,16 @@ const InPlanningTab = () => {
                                         <Typography variant='h6' sx={{ flexGrow: 1 }}> {project.projectName} </Typography>
                                     </Box>
                                     <Typography> Project ID: {project.projectID} </Typography>
-                                    </Grid>
-                                <Grid item xs={2}>
-                                <Box sx={{ display: 'flex'}}>
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
+                                        <DeleteIcon fontSize='large' /> 
+                                    </IconButton>
+                                 </Grid>
+                                <Grid item xs={1}>
                                     <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`}> 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
-                                </Box>
                                 </Grid>
                             </Grid>
                         </CardContent>
