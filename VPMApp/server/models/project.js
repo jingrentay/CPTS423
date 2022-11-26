@@ -4,15 +4,16 @@ const projectSchema = mongoose.Schema({
     projectName: String,
     projDescription: String,
     projectID: Number,
-    projectManager: String,
+    projectTimeUnits: String,
+    predictedCompletion: Date,
+    projectDuration: Number,
+    projectStage: Number,               // in planning, in progress, archive
+    tasks: [],
+
+    projectManager: String,             // todo 
     projectDateCreated: Date,
     projectStartDate: Date,
-    predictedCompletion: Date,
-    tasks: [], 
-    projectDuration: Number,
-    projectTimeUnits: String,
     projectStatus: String,              // red, green, black     
-    projectStage: String,               // in planning, in progress, archive
 });
 
 const Project = mongoose.model('Project', projectSchema);
