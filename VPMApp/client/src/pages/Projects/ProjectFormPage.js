@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Box, Button, Container, Dialog, DialogContent, DialogTitle, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Box, Button, Container, Dialog, DialogContent, DialogTitle, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton, Grid, Card, CardContent } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ThemeProvider } from '@mui/material/styles'
+import InfoIcon from '@mui/icons-material/Info';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -57,7 +58,7 @@ const ProjectFormPage = () => {
     const handleSaveNewTask = () => {
         newProject.tasks.push(newTask)
         setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
-        console.log(newProject)
+        console.log(newProject.tasks)
         handleCloseTaskDialog()
     }
 
@@ -83,7 +84,7 @@ const ProjectFormPage = () => {
                     <TextField sx={{ mt: 3 }} name='predicted completion' variant='outlined' label='Predicted Completion' fullWidth value={newProject.predictedCompletion} InputProps={{ readOnly: true }} />
                     <Box sx={{ display: 'flex', mt: 3 }}>
                         <Typography variant='h6'> Add Tasks </Typography>
-                        <Button sx={{ ml: 2, width: 160, height: 40 }} size="small" variant="contained" color="success" startIcon={<AddCircleOutlineIcon />} onClick={handleOpenTaskDialog}> 
+                        <Button sx={{ ml: 2, width: 130, height: 35 }} size="small" variant="contained" color="success" startIcon={<AddCircleOutlineIcon />} onClick={handleOpenTaskDialog}> 
                             New Task 
                         </Button>
                         <Dialog open={dialogOpen} onClose={handleCloseTaskDialog} >
@@ -101,7 +102,26 @@ const ProjectFormPage = () => {
                             </DialogActions>
                         </Dialog>
                     </Box>
-                    <Box sx={{ mt: 3 }}>
+                    {newProject.tasks.map((task) => (
+                            <Card key={task.taskName} sx={{ mt: 3, width: 500, height: 85, backgroundColor: '#E0E0E0' }}>
+                                <CardContent>
+                                    <Grid container>
+                                        <Grid item xs={10.5}>
+                                            <Box sx={{ display: 'flex' }}>
+                                                <Typography variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
+                                            </Box>
+                                            <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
+                                        </Grid>
+                                        <Grid item xs={1.5}>
+                                            <IconButton key='view-task-button' > 
+                                                <InfoIcon fontSize='large' /> 
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    <Box sx={{ mt: 3, mb: 8 }}>
                         <Button size="medium" variant="contained" onClick={handleSubmit} sx={{ width: 180, height: 40 }}>
                             Create Project
                         </Button>
