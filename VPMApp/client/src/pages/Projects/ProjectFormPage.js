@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Box, Button, Container, Dialog, DialogContent, DialogTitle, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton, Grid, Card, CardContent } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -45,9 +45,12 @@ const ProjectFormPage = () => {
     
     const dispatch = useDispatch();
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(createProject(newProject))
+        navigate('/projects');
     };
 
     const handleOpenTaskDialog = () => {
@@ -121,7 +124,7 @@ const ProjectFormPage = () => {
                         </Dialog>
                     </Box>
                     {newProject.tasks.map((task) => (
-                            <Card key={task.taskName} sx={{ mt: 3, width: 500, height: 85, backgroundColor: '#E0E0E0' }}>
+                            <Card key={task.taskName} sx={{ mt: 3, width: 550, height: 90, backgroundColor: '#E0E0E0' }}>
                                 <CardContent>
                                     <Grid container>
                                         <Grid item xs={10}>
@@ -131,13 +134,13 @@ const ProjectFormPage = () => {
                                             <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
                                         </Grid>
                                         <Grid item xs={1}>
-                                            <IconButton key='delete-project-button' onClick={() => handleOpenDeleteDialog(task.taskName)} > 
-                                                <DeleteIcon fontSize='large' /> 
+                                            <IconButton sx={{width:"50px"}} onClick={() => handleOpenDeleteDialog(task.taskName)} aria-label="delete" > 
+                                                <DeleteIcon size="large"/> 
                                             </IconButton>
                                         </Grid>
                                         <Grid item xs={1}>
-                                            <IconButton key='view-task-button' > 
-                                                <InfoIcon fontSize='large' /> 
+                                            <IconButton sx={{width:"50px"}} > 
+                                                <InfoIcon size="large"/> 
                                             </IconButton>
                                         </Grid>
                                     </Grid>

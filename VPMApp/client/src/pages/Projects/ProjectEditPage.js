@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton, Card, Grid, CardContent } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ThemeProvider } from '@mui/material/styles'
@@ -29,10 +29,13 @@ const ProjectEditPage = () => {
 
     const { project } = useSelector((store) => store.projects)
 
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(updatedProject)
         dispatch(updateProject(updatedProject))
+        navigate('/projects')
     };
 
     return(

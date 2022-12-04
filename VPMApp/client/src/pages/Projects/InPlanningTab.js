@@ -7,6 +7,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import { useDispatch } from 'react-redux'
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getPlanningProjects } from '../../features/projectSlice'
@@ -58,7 +59,7 @@ const InPlanningTab = () => {
                                     <Typography> Project ID: {project.projectID} </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
+                                    <IconButton sx={{width:'50px'}} key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
                                         <DeleteIcon fontSize='large' /> 
                                     </IconButton>
                                  </Grid>
