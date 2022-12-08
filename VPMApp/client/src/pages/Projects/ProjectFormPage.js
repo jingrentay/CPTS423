@@ -33,14 +33,16 @@ const ProjectFormPage = () => {
         projectTimeUnits: '',
         predictedCompletion: new Date(),
         projectStage: 0,   // in planning
-        tasks: []
+        tasks: [], 
+        chartData: [ { x: 0, y: 0 } ]
     });
 
     const [newTask, setNewTask] = useState({
         taskID: setTaskID(), 
         taskName: '', 
         taskDescription: '',
-        taskDuration: 0
+        taskDuration: 0,
+        complete: false,
     });
     
     const dispatch = useDispatch();
@@ -127,20 +129,20 @@ const ProjectFormPage = () => {
                             <Card key={task.taskName} sx={{ mt: 3, width: 550, height: 90, backgroundColor: '#E0E0E0' }}>
                                 <CardContent>
                                     <Grid container>
-                                        <Grid item xs={10}>
+                                        <Grid item xs={9.5}>
                                             <Box sx={{ display: 'flex' }}>
                                                 <Typography variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
                                             </Box>
                                             <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
                                         </Grid>
-                                        <Grid item xs={1}>
+                                        <Grid item xs={1.25}>
                                             <IconButton sx={{width:"50px"}} onClick={() => handleOpenDeleteDialog(task.taskName)} aria-label="delete" > 
-                                                <DeleteIcon size="large"/> 
+                                                <DeleteIcon fontSize="large"/> 
                                             </IconButton>
                                         </Grid>
-                                        <Grid item xs={1}>
+                                        <Grid item xs={1.25}>
                                             <IconButton sx={{width:"50px"}} > 
-                                                <InfoIcon size="large"/> 
+                                                <InfoIcon fontSize="large"/> 
                                             </IconButton>
                                         </Grid>
                                     </Grid>

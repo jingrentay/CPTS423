@@ -7,7 +7,6 @@ import InfoIcon from '@mui/icons-material/Info';
 import { useDispatch } from 'react-redux'
 import DeleteIcon from '@mui/icons-material/Delete';
 
-
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getPlanningProjects } from '../../features/projectSlice'

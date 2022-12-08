@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
+import CheckIcon from '@mui/icons-material/Check';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -21,6 +22,12 @@ const ProjectViewPage = () => {
     }, [dispatch, id]);
 
     const { project, loadingOne } = useSelector((store) => store.projects)
+    const [taskList,  setTaskList] = useState([])
+    const handleCompleteTask = () => {
+        // calculate the time (% buffer consumed / % project completed)
+
+        // update task completed
+    }
 
     console.log(project)
 
@@ -56,7 +63,7 @@ const ProjectViewPage = () => {
                 {project.projectStage !== 0 && 
                     <div key='chart-padding' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                            <FeverChart/>
+                            <FeverChart plotData={project.chartData} />
                         </div>
                     </div>
                 }
@@ -68,7 +75,31 @@ const ProjectViewPage = () => {
                 {project.tasks.length !== 0 &&
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
                 }
-                {project.tasks.map((task) => (
+                {project.projectStage !== 0 && project.tasks.map((task) => (
+                    <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.complete ? '#56AB2B' : '#E34129' }}>
+                        <CardContent>
+                            <Grid container>
+                                <Grid item xs={9.5}>
+                                    <Box sx={{ display: 'flex' }}>
+                                        <Typography variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
+                                     </Box>
+                                    <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
+                                </Grid>
+                                <Grid item xs={1.25}>
+                                    <IconButton key='view-task-button' > 
+                                        <InfoIcon fontSize='large' /> 
+                                    </IconButton>
+                                </Grid>
+                                <Grid item xs={1.25}>
+                                    <IconButton key='complete-task' onClick={handleCompleteTask}> 
+                                        <CheckIcon fontSize='large' /> 
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                ))}    
+                {project.projectStage === 0 && project.tasks.map((task) => (
                     <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: '#C0C0C0' }}>
                         <CardContent>
                             <Grid container>
@@ -86,7 +117,7 @@ const ProjectViewPage = () => {
                             </Grid>
                         </CardContent>
                     </Card>
-                ))}           
+                ))}        
             </Container>
             </ThemeProvider>
         </>
