@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import AutoIncrement from "mongoose-sequence";
+
 
 const projectSchema = mongoose.Schema({
     projectName: String,
@@ -16,6 +18,8 @@ const projectSchema = mongoose.Schema({
     projectStatus: String,              // red, green, black     
 });
 
+
 const Project = mongoose.model('Project', projectSchema);
+
 
 export default Project;

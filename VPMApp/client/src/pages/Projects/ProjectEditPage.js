@@ -34,6 +34,7 @@ const ProjectEditPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(updatedProject)
+       
         dispatch(updateProject(updatedProject))
         navigate('/projects')
     };
@@ -45,7 +46,7 @@ const ProjectEditPage = () => {
             <Container sx={{ width: 600, ml: 25, mt: 10 }}>
                 <form autoComplete='off' noValidate>
                     <Typography variant='h5'> Edit Project </Typography>
-                    <TextField sx={{ mt: 3 }} id='new-name' variant='filled' label='Project Name' fullWidth defaultValue={project.projectName} onChange={(e) => setUpdatedProject({...updatedProject,  projectName: e.target.value })}/>
+                    <TextField sx={{ mt: 3 }} id='new-name' variant='filled' label='Project Name' fullWidth defaultValue={project.projectName} onChange={(e) => setUpdatedProject({...updatedProject,  projectName: e.target.value })} />
                     <TextField sx={{ mt: 3 }} id='new-description' variant='filled' label='Project Description' fullWidth defaultValue={project.projDescription} onChange={(e) => setUpdatedProject({...updatedProject,  projDescription: e.target.value })}/>
                     <FormControl sx={{ width: 550, mt: 3 }}>
                         <InputLabel id="timeUnitsLabel">Task Units</InputLabel>

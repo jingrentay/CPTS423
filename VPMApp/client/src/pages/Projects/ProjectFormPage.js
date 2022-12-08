@@ -7,14 +7,17 @@ import { ThemeProvider } from '@mui/material/styles'
 import InfoIcon from '@mui/icons-material/Info';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { createProject } from '../../features/projectSlice'
 
 const ProjectFormPage = () => {
     
+    
+
     const setProjectID = () => {
-        return 0
+        return 0 
     } 
 
     const setTaskID = () => {
