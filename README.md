@@ -45,9 +45,11 @@ Visual Project Management allows users to track the progress of one or multiple 
 
 ## Additional Documentation
 
-  * Sprint Report 1: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-1-Report.md
-  * Sprint Report 2: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-2-Report.md
-  * Project Report Documentation: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/tree/main/Docs/Report
+  * [Sprint Report 1](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-1-Report.md)
+  * [Sprint Report 2](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-2-Report.md)
+  * [Sprint Report 3](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-3-Report.md)
+  * [Sprint Demo Videos](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/)
+  * [Project Report Documentation](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/tree/main/Docs/Report)
 
 ## License
 

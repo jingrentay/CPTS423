@@ -58,7 +58,7 @@ const InPlanningTab = () => {
                                     <Typography> Project ID: {project.projectID} </Typography>
                                 </Grid>
                                 <Grid item xs={1}>
-                                    <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
+                                    <IconButton sx={{width:'50px'}} key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
                                         <DeleteIcon fontSize='large' /> 
                                     </IconButton>
                                  </Grid>
