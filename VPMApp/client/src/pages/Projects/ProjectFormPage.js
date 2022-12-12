@@ -12,11 +12,11 @@ import { createProject } from '../../features/projectSlice'
 const ProjectFormPage = () => {
     
     const setProjectID = () => {
-        return 0
+        return Math.random()
     } 
 
     const setTaskID = () => {
-        return 0
+        return Math.random()
     } 
 
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -44,7 +44,13 @@ const ProjectFormPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(createProject(newProject))
+        console.log(newProject)
+
     };
+
+    React.useEffect(()=>{
+        //console.log(newProject)
+    },[newProject])
 
     const handleOpenTaskDialog = () => {
         setDialogOpen(true);
@@ -55,9 +61,17 @@ const ProjectFormPage = () => {
     }
 
     const handleSaveNewTask = () => {
-        newProject.tasks.push(newTask)
+        //newProject.tasks.push(newTask)
+        setNewProject({ projectID: setProjectID(), 
+            projectName: newProject.projectName, 
+            projDescription: newProject.projDescription, 
+            projectDuration: newTask.taskDuration,
+            projectTimeUnits: newProject.projectTimeUnits,
+            predictedCompletion: new Date(),
+            projectStage: newProject.projectStage,   // in planning
+            tasks: newTask})
         setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
-        console.log(newProject)
+        //console.log(newTask)
         handleCloseTaskDialog()
     }
 
@@ -79,7 +93,7 @@ const ProjectFormPage = () => {
                             <MenuItem value={'Weeks'}>Weeks</MenuItem>
                         </Select>
                     </FormControl>
-                    <TextField sx={{ mt: 3 }} name='aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={newProject.projectDuration} InputProps={{ readOnly: true }} />
+                    <TextField sx={{ mt: 3 }} name='aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={newProject.tasks.taskDuration} InputProps={{ readOnly: true }} />
                     <TextField sx={{ mt: 3 }} name='predicted completion' variant='outlined' label='Predicted Completion' fullWidth value={newProject.predictedCompletion} InputProps={{ readOnly: true }} />
                     <Box sx={{ display: 'flex', mt: 3 }}>
                         <Typography variant='h6'> Add Tasks </Typography>
