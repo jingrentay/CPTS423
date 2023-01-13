@@ -7,7 +7,7 @@ const projectSchema = mongoose.Schema({
     projectTimeUnits: String,
     predictedCompletion: Date,
     projectDuration: Number,
-    projectStage: Number,               // in planning, in progress, archive
+    projectStage: Number,               // in planning (0), in progress (1), archive (2)
     tasks: [],
     chartData: [ { x: 0, y: 0 } ],
 

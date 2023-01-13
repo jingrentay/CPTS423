@@ -14,11 +14,11 @@ import { createProject } from '../../features/projectSlice'
 const ProjectFormPage = () => {
     
     const setProjectID = () => {
-        return Math.random()
+        return Math.floor(Math.random() * 20);
     } 
 
     const setTaskID = () => {
-        return Math.random()
+        return Math.floor(Math.random() * 20);
     } 
 
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -52,12 +52,7 @@ const ProjectFormPage = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(createProject(newProject))
-<<<<<<< HEAD
-        console.log(newProject)
-
-=======
         navigate('/projects');
->>>>>>> 09a4456e448e54b6d9d1f426dcc63b0750fcd513
     };
 
     React.useEffect(()=>{
@@ -93,11 +88,7 @@ const ProjectFormPage = () => {
             projectStage: newProject.projectStage,   // in planning
             tasks: newTask})
         setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
-<<<<<<< HEAD
-        //console.log(newTask)
-=======
         console.log(newProject.tasks)
->>>>>>> 09a4456e448e54b6d9d1f426dcc63b0750fcd513
         handleCloseTaskDialog()
     }
 

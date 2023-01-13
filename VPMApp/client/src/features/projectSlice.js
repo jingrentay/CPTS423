@@ -175,6 +175,7 @@ const projectSlice = createSlice({
                 const id = action.meta.arg
                 console.log(id)
                 if (id) {
+                    // remove deleted project
                     store.projects = store.projects.filter((project) => project._id !== id)
                 }
             })
