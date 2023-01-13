@@ -58,7 +58,7 @@ const ProjectEditPage = () => {
                     </FormControl>
                     <TextField sx={{ mt: 3 }} name='aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={project.projectDuration} InputProps={{ readOnly: true }}/>
                     
-                    <TextField sx={{ mt: 3 }} id='new-predicted-completion' variant='filled' label='Predicted Completion' InputProps={{ readOnly: true }} fullWidth defaultValue={project.predictedCompletion} />
+                    <TextField sx={{ mt: 3 }} id='new-predicted-completion' variant='filled' label='Predicted Completion' InputProps={{ readOnly: true }} fullWidth defaultValue={new Date(project.predictedCompletion)} />
                     
                     <Box sx={{ display: 'flex', mt: 3, mb: 2 }}>
                         <Typography variant='h6'> Tasks </Typography>
