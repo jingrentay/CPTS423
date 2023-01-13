@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton, Card, Grid, CardContent } from '@mui/material'
+import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Skeleton, TextField, Typography, IconButton, Card, Grid, CardContent } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,22 +14,16 @@ import { updateProject } from '../../features/projectSlice'
 const ProjectEditPage = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     // For getting single project based on id 
     useEffect( () => {
         dispatch(getProject(id));
     }, [dispatch, id]);
 
-    const [updatedProject, setUpdatedProject] = useState({ 
-        projectID: id, 
-        projectName: '', 
-        projDescription: '',
-        projectTimeUnits: '',
-    });
+    const { project, loadingOne } = useSelector((store) => store.projects)
 
-    const { project } = useSelector((store) => store.projects)
-
-    const navigate = useNavigate();
+    const [updatedProject, setUpdatedProject] = useState(project);
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -37,6 +31,21 @@ const ProjectEditPage = () => {
         dispatch(updateProject(updatedProject))
         navigate('/projects')
     };
+
+    if (loadingOne) {
+        return (
+            <>
+                <ThemeProvider theme={theme}>
+                    <Navigation key='nav' />
+                    <Box sx={{ width: 600, ml: 28, mt: 10 }}>
+                        <Skeleton />
+                        <Skeleton animation="wave" />
+                        <Skeleton animation={false} />
+                    </Box>
+                </ThemeProvider>
+            </>
+        )
+    }
 
     return(
         <>
