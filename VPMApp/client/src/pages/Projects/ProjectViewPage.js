@@ -60,16 +60,20 @@ const ProjectViewPage = () => {
             <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
                 <Typography variant='h5' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
                 { project.projectStage === 0 &&
-                    <Button onClick={() => handleStartProject()} size="medium" variant="contained" sx={{ backgroundColor: "#689f38", mt: 1, mr: 2 }}> 
+                    <Button onClick={() => handleStartProject()} size="medium" variant="contained" sx={{ backgroundColor: "#689f38", mr: 2 }}> 
                         Start 
                     </Button>
                 }
-                <Button sx={{ mr: 2 }} key='edit-project-button' component={Link} to={`/projects/edit/${project.projectID}`} size="small" variant="contained" >
-                    Edit
-                </Button>
-                <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" >
-                    Back
-                </Button>
+                { project.projectStage !== 2 &&
+                    <div>
+                    <Button sx={{ mr: 2 }} key='edit-project-button' component={Link} to={`/projects/edit/${project.projectID}`} size="medium" variant="contained" >
+                        Edit
+                    </Button>
+                    <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" >
+                        Back
+                    </Button>
+                    </div>
+                }
             </Box>
             <Container sx={{ width: 600, ml: 27, mb: 6 }}>
                 {project.projectStage !== 0 && 
