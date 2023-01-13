@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,13 +8,14 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { getProject } from '../../features/projectSlice'
+import { getProject, updateProject } from '../../features/projectSlice'
 import FeverChart from '../../components/FeverChart'
 
 const ProjectViewPage = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     // For getting single project based on id 
     useEffect( () => {
@@ -22,14 +23,20 @@ const ProjectViewPage = () => {
     }, [dispatch, id]);
 
     const { project, loadingOne } = useSelector((store) => store.projects)
-    const [taskList,  setTaskList] = useState([])
+
+    //const [taskList,  setTaskList] = useState([])
+
     const handleCompleteTask = () => {
         // calculate the time (% buffer consumed / % project completed)
 
         // update task completed
     }
 
-    console.log(project)
+    const handleStartProject = () => {
+        const editedProject = {...project, projectStage: 1, projectStartDate: new Date()}
+        dispatch(updateProject(editedProject))
+        navigate('/projects');
+    }
 
     if (loadingOne) {
         return (
@@ -52,7 +59,12 @@ const ProjectViewPage = () => {
             <Navigation key='nav' />
             <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
                 <Typography variant='h5' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
-                <Button sx={{ mr: 2 }} key='edit-project-button' component={Link} to={`/projects/edit/${project.projectID}`} size="medium" variant="contained" >
+                { project.projectStage === 0 &&
+                    <Button onClick={() => handleStartProject()} size="medium" variant="contained" sx={{ backgroundColor: "#689f38", mt: 1, mr: 2 }}> 
+                        Start 
+                    </Button>
+                }
+                <Button sx={{ mr: 2 }} key='edit-project-button' component={Link} to={`/projects/edit/${project.projectID}`} size="small" variant="contained" >
                     Edit
                 </Button>
                 <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" >

@@ -2,16 +2,14 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Skeleton, Grid, Card, CardContent, Typography, IconButton, Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
-import { useDispatch } from 'react-redux'
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import FeverChart from '../../components/FeverChart'
-import { getProgressProjects } from '../../features/projectSlice'
-import { deleteProject } from '../../features/projectSlice'
+import { getProgressProjects, deleteProject } from '../../features/projectSlice'
 
 const InProgressTab = () => {
     const dispatch = useDispatch();
