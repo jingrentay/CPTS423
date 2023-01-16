@@ -72,7 +72,7 @@ const InProgressTab = () => {
                                     </IconButton>
                                  </Grid>
                                 <Grid item xs={1}>
-                                    <IconButton key='view-project-button' component={Link} to={`/projects/view/${project.projectID}`} > 
+                                    <IconButton key='view-project-button' component={Link} to={`/projects/view/progress/${project.projectID}`} > 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                 </Grid>
