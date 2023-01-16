@@ -98,7 +98,7 @@ const ProjectEditPage = () => {
                         <Button type="submit" size="medium" variant="contained" onClick={handleSubmit}>
                             Save
                         </Button>
-                        <Button component={Link} to={`/projects/view/${project.projectID}`} size="medium" variant="outlined" sx={{ ml: 2 }}>
+                        <Button component={Link} to={`/projects/view/planning/${project.projectID}`} size="medium" variant="outlined" sx={{ ml: 2 }}>
                             Back to View 
                         </Button>
                     </Box>
