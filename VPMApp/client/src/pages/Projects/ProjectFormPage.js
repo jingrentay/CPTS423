@@ -56,8 +56,8 @@ const ProjectFormPage = () => {
     };
 
     React.useEffect(()=>{
-        //console.log(newProject)
-    },[newProject])
+        console.log('new task', newTask)
+    },[newProject, newTask])
 
     const handleOpenTaskDialog = () => {
         setDialogOpen(true);
@@ -79,16 +79,18 @@ const ProjectFormPage = () => {
 
     const handleSaveNewTask = () => {
         //newProject.tasks.push(newTask)
-        setNewProject({ projectID: setProjectID(), 
-            projectName: newProject.projectName, 
-            projDescription: newProject.projDescription, 
-            projectDuration: newTask.taskDuration,
-            projectTimeUnits: newProject.projectTimeUnits,
-            predictedCompletion: new Date(),
-            projectStage: newProject.projectStage,   // in planning
-            tasks: newTask})
-        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
-        console.log(newProject.tasks)
+        // setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
+        // setNewProject({ 
+        //     projectID: setProjectID(), 
+        //     projectName: newProject?.projectName, 
+        //     projDescription: newProject?.projDescription, 
+        //     projectDuration: newTask.taskDuration,
+        //     projectTimeUnits: newProject?.projectTimeUnits,
+        //     predictedCompletion: new Date(),
+        //     projectStage: newProject?.projectStage,   // in planning
+        //     tasks: newTask
+        // })
+        // console.log('new pro', newProject)
         handleCloseTaskDialog()
     }
 
@@ -137,7 +139,7 @@ const ProjectFormPage = () => {
                             </DialogActions>
                         </Dialog>
                     </Box>
-                    {newProject.tasks.map((task) => (
+                    {newProject?.tasks?.map((task) => (
                             <Card key={task.taskName} sx={{ mt: 3, width: 550, height: 90, backgroundColor: '#E0E0E0' }}>
                                 <CardContent>
                                     <Grid container>
