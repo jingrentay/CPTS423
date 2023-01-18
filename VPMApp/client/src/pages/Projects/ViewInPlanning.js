@@ -9,7 +9,6 @@ import CheckIcon from '@mui/icons-material/Check';
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getProject, updateProject } from '../../features/projectSlice'
-import FeverChart from '../../components/FeverChart'
 
 const ViewInPlanningPage = () => {
 
