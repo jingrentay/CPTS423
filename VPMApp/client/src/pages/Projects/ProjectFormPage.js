@@ -73,6 +73,14 @@ const ProjectFormPage = () => {
         setTaskToDelete('')
     }
 
+    const handleOpenInfoDialog = () => {
+        setDialogOpen(true);
+    }
+
+    const handleCloseInfoDialog = () => {
+        setDialogOpen(false);
+    }
+
     const handleSaveNewTask = () => {
         newProject.tasks.push(newTask)
         setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
@@ -141,8 +149,8 @@ const ProjectFormPage = () => {
                                             </IconButton>
                                         </Grid>
                                         <Grid item xs={1.25}>
-                                            <IconButton sx={{width:"50px"}} > 
-                                                <InfoIcon fontSize="large"/> 
+                                            <IconButton sx={{width:"50px"}} onClick={() => handleOpenInfoDialog(task.taskName)}> 
+                                                <InfoIcon fontSize="large"/ > 
                                             </IconButton>
                                         </Grid>
                                     </Grid>

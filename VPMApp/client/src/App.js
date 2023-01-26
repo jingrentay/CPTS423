@@ -2,7 +2,6 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import LoginPage from './pages/Login/LoginPage'
-
 import ProjectHomePage from './pages/Projects/ProjectHomePage'
 import ProjectFormPage from './pages/Projects/ProjectFormPage'
 import ProjectViewPage from './pages/Projects/ProjectViewPage'
@@ -15,6 +14,7 @@ import ViewInProgressPage from './pages/Projects/ViewInProgress'
 
 import Listing from './pages/Projects/ProjectForm'
 import Detailpage from './pages/Projects/ProjectDetailsPage'
+import Auth from './pages/Auth/Auth'
 
 const App = () => {
     return (
