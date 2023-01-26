@@ -23,6 +23,12 @@ const ViewInProgressPage = () => {
     }, [dispatch, id]);
 
     const { project, loadingOne } = useSelector((store) => store.projects)
+    console.log('in planning', project)
+    let taskDurations = []
+    project?.tasks?.forEach(element => {
+        taskDurations?.push(parseInt(element.taskDuration))
+    })
+    const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
 
     //const [taskList,  setTaskList] = useState([])
 
@@ -68,8 +74,8 @@ const ViewInProgressPage = () => {
                 <TextField sx={{ mt: 2 }} id="project-name" label="Name" variant="filled" defaultValue={project.projectName} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project-id" label="ID" variant="filled" defaultValue={project.projectID} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project-description" label="Description" variant="filled" defaultValue={project.projDescription} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="aggressive-duration" label="Aggressive Duration" variant="filled" defaultValue={project.projectDuration} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(project.predictedCompletion)} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="aggressive-duration" disabled label="Aggressive Duration" variant="filled" defaultValue={totalTaskDuration} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(project.predictedCompletion)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 {project.tasks.length !== 0 &&
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
                 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Box, Button, Container, Dialog, DialogContent, DialogTitle, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton, Grid, Card, CardContent } from '@mui/material'
@@ -10,6 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { createProject } from '../../features/projectSlice'
+import { getDate } from '../../utils.js';
 
 const ProjectFormPage = () => {
     
@@ -24,6 +25,7 @@ const ProjectFormPage = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
     const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
     const [taskToDelete, setTaskToDelete] = useState('')
+    const [totalDuration, setTotalDuration ] = useState(null)
 
     const [newProject, setNewProject] = useState({ 
         projectID: setProjectID(), 
@@ -42,7 +44,7 @@ const ProjectFormPage = () => {
         taskName: '', 
         taskDescription: '',
         taskDuration: 0,
-        complete: false,
+        complete: false
     });
     
     const dispatch = useDispatch();
@@ -72,13 +74,28 @@ const ProjectFormPage = () => {
         setDeleteWarningOpen(false);
         setTaskToDelete('')
     }
+    let taskDurations = []
 
     const handleSaveNewTask = () => {
+        console.log('new task', newTask)
         newProject.tasks.push(newTask)
         setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
+        newProject?.tasks?.forEach(element => {
+            console.log(element.taskDuration)
+            taskDurations?.push(parseInt(element.taskDuration))
+        })
+        const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
         console.log(newProject.tasks)
+        setTotalDuration(totalTaskDuration)
+        let duration = getDate(totalTaskDuration, newProject?.projectTimeUnits)
+        setNewProject({
+            ...newProject, predictedCompletion: duration
+        })
+        console.log('duration', duration)
         handleCloseTaskDialog()
     }
+    
+    useEffect(() => {}, [totalDuration])
 
     const handleDeleteTask = () => {
         setNewProject({...newProject, tasks: newProject.tasks.filter((task) => task.taskName !== taskToDelete)})
@@ -103,8 +120,8 @@ const ProjectFormPage = () => {
                             <MenuItem value={'Weeks'}>Weeks</MenuItem>
                         </Select>
                     </FormControl>
-                    <TextField sx={{ mt: 3 }} name='aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={newProject.projectDuration} InputProps={{ readOnly: true }} />
-                    <TextField sx={{ mt: 3 }} name='predicted completion' variant='outlined' label='Predicted Completion' fullWidth value={newProject.predictedCompletion} InputProps={{ readOnly: true }} />
+                    <TextField sx={{ mt: 3 }} name='aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={totalDuration} disabled InputLabelProps={{shrink: true}}/>
+                    <TextField sx={{ mt: 3 }} name='predicted completion' variant='outlined' label='Predicted Completion' fullWidth value={newProject.predictedCompletion} disabled InputLabelProps={{ shrink: true }} />
                     <Box sx={{ display: 'flex', mt: 3 }}>
                         <Typography variant='h6'> Add Tasks </Typography>
                         <Button sx={{ ml: 2, width: 130, height: 35 }} size="small" variant="contained" color="success" startIcon={<AddCircleOutlineIcon />} onClick={handleOpenTaskDialog}> 
