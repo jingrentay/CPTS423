@@ -8,7 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import FeverChart from '../../components/FeverChart'
+import MultiFeverChart from '../../components/MultiFeverChart'
 import { getProgressProjects, deleteProject } from '../../features/projectSlice'
 
 const InProgressTab = () => {
@@ -40,11 +40,7 @@ const InProgressTab = () => {
     }
 
     const plotData = [
-        { x: 0, y: 0},
-        { x: 30, y: 10}, 
-        { x: 60, y: 20},
-        { x: 90, y: 35},
-        { x: 100, y: 100},
+        { x: 0, y: 0}, 
       ]
 
     return (
@@ -53,7 +49,7 @@ const InProgressTab = () => {
             <Navigation key='nav' />
             <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                    <FeverChart plotData={plotData} />
+                    <MultiFeverChart plotData={plotData} />
                 </div>
             </div>
                 {projects.map((project) => (
