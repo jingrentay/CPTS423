@@ -20,6 +20,7 @@ const options = {
 
 const FeverChart = ({plotData}) => {
 
+  // eslint-disable-next-line
   const [chartData, setChartData] = useState({
     datasets: [
       {

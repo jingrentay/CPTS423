@@ -4,7 +4,6 @@ import { Skeleton, Box, Button, Container, TextField, Typography, InputAdornment
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
-import CheckIcon from '@mui/icons-material/Check';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -22,22 +21,25 @@ const ViewInPlanningPage = () => {
         dispatch(getProject(id));
     }, [dispatch, id]);
 
+    // State for current "in planning" project viewed
     const { project, loadingOne } = useSelector((store) => store.projects)
-    let taskDurations = []
-    project?.tasks?.forEach(element => {
-        taskDurations?.push(parseInt(element.taskDuration))
-    })
-    const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
-    
 
+    // Display the correct predicted completion 
+    let predCompletion = getDate(project?.projectDuration, project?.projectTimeUnits)
+    
+    // Handle the start of a project when user clicks button 
     const handleStartProject = () => {
-        console.log('project', project)
-        let duration = getDate(totalTaskDuration, project?.projectTimeUnits)
-        const editedProject = {...project, projectStage: 1, projectStartDate: duration}
+        const editedProject = {
+            ...project, 
+            projectStage: 1, 
+            projectStartDate: new Date(),
+            predictedCompletion: getDate(project?.projectDuration, project?.projectTimeUnits) 
+        }
         dispatch(updateProject(editedProject))
         navigate('/projects');
     }
 
+    // Render UI
     if (loadingOne) {
         return (
             <>
@@ -73,8 +75,8 @@ const ViewInPlanningPage = () => {
                 <TextField sx={{ mt: 2 }} id="project-name" label="Name" variant="filled" defaultValue={project.projectName} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project-id" label="ID" variant="filled" defaultValue={project.projectID} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project-description" label="Description" variant="filled" defaultValue={project.projDescription} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="aggressive-duration" disabled label="Aggressive Duration" variant="filled" defaultValue={totalTaskDuration} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(project?.predictedCompletion)} disabled InputLabelProps={{ shrink: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="aggressive-duration" disabled label="Aggressive Duration" variant="filled" defaultValue={project.projectDuration} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(predCompletion)} disabled InputLabelProps={{ shrink: true }} fullWidth margin='dense' />
                 {project.tasks.length !== 0 &&
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
                 } 

@@ -13,20 +13,26 @@ import { createProject } from '../../features/projectSlice'
 import { getDate } from '../../utils.js';
 
 const ProjectFormPage = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
+    // Set the unique task IDs and projectIDs 
+    // TODO: make this not random and truly unique
     const setProjectID = () => {
         return Math.floor(Math.random() * 20);
     } 
-
     const setTaskID = () => {
         return Math.floor(Math.random() * 20);
     } 
 
+    // State variables
     const [dialogOpen, setDialogOpen] = useState(false)
     const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
     const [taskToDelete, setTaskToDelete] = useState('')
     const [totalDuration, setTotalDuration ] = useState(null)
 
+    // Data object to hold new input for project
     const [newProject, setNewProject] = useState({ 
         projectID: setProjectID(), 
         projectName: '', 
@@ -39,6 +45,7 @@ const ProjectFormPage = () => {
         chartData: [ { x: 0, y: 0 } ]
     });
 
+    // Data object for a new task
     const [newTask, setNewTask] = useState({
         taskID: setTaskID(), 
         taskName: '', 
@@ -46,62 +53,62 @@ const ProjectFormPage = () => {
         taskDuration: 0,
         complete: false
     });
-    
-    const dispatch = useDispatch();
 
-    const navigate = useNavigate();
-
+    // Handle the creation of a project in the database
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(createProject(newProject))
         navigate('/projects');
     };
 
+    // Open and close the dialog for creating a new task
     const handleOpenTaskDialog = () => {
         setDialogOpen(true);
     }
-
     const handleCloseTaskDialog = () => {
         setDialogOpen(false);
     }
 
+    // Open and close the dialog for deleting a task
     const handleOpenDeleteDialog = (name) => {
         setTaskToDelete(name)
         setDeleteWarningOpen(true);
     }
-
     const handleCloseDeleteDialog = () => {
         setDeleteWarningOpen(false);
         setTaskToDelete('')
     }
-    let taskDurations = []
 
-    const handleSaveNewTask = () => {
-        console.log('new task', newTask)
-        newProject.tasks.push(newTask)
-        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
-        newProject?.tasks?.forEach(element => {
-            console.log(element.taskDuration)
-            taskDurations?.push(parseInt(element.taskDuration))
-        })
-        const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
-        console.log(newProject.tasks)
-        setTotalDuration(totalTaskDuration)
-        let duration = getDate(totalTaskDuration, newProject?.projectTimeUnits)
-        setNewProject({
-            ...newProject, predictedCompletion: duration
-        })
-        console.log('duration', duration)
-        handleCloseTaskDialog()
-    }
-    
-    useEffect(() => {}, [totalDuration])
-
+    // Handle the deletion of a task from the working task list 
     const handleDeleteTask = () => {
         setNewProject({...newProject, tasks: newProject.tasks.filter((task) => task.taskName !== taskToDelete)})
         handleCloseDeleteDialog()
     }
 
+    // Add the task durations for the aggressive duration 
+    let taskDurations = []
+
+    // Handle the saving of a new task in the project
+    // Update the aggressive duration and predicted completion in the UI
+    const handleSaveNewTask = () => {
+        // push new task to project task list and reset task object to empty
+        newProject.tasks.push(newTask)
+        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
+
+        // calculate aggressive duration and predicted completion 
+        newProject?.tasks?.forEach(element => { taskDurations?.push(parseInt(element.taskDuration)) })
+        const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
+        setTotalDuration(totalTaskDuration)
+        let predCompletion = getDate(totalTaskDuration, newProject?.projectTimeUnits)
+        
+        // update project 
+        setNewProject({...newProject, projectDuration: totalTaskDuration, predictedCompletion: predCompletion})
+        handleCloseTaskDialog()
+    }
+    
+    useEffect(() => {}, [totalDuration])
+
+    // Render the UI
     return (
         <>
             <ThemeProvider theme={theme}>
@@ -120,7 +127,7 @@ const ProjectFormPage = () => {
                             <MenuItem value={'Weeks'}>Weeks</MenuItem>
                         </Select>
                     </FormControl>
-                    <TextField sx={{ mt: 3 }} name='aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={totalDuration} disabled InputLabelProps={{shrink: true}}/>
+                    <TextField sx={{ mt: 3 }} name='aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={newProject.projectDuration} disabled InputLabelProps={{shrink: true}}/>
                     <TextField sx={{ mt: 3 }} name='predicted completion' variant='outlined' label='Predicted Completion' fullWidth value={newProject.predictedCompletion} disabled InputLabelProps={{ shrink: true }} />
                     <Box sx={{ display: 'flex', mt: 3 }}>
                         <Typography variant='h6'> Add Tasks </Typography>

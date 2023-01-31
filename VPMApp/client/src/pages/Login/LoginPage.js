@@ -5,6 +5,7 @@ import profile from "../Login/assets/profile.jpeg";
 import email from "../Login/assets/email.jpg";
 import pass from "../Login/assets/password.png";
 import "../Login/LoginPage.css";
+
 function LoginPage() {
     return (
         
@@ -16,8 +17,6 @@ function LoginPage() {
                 <img src={profile} alt="profile" className="profile"/>
                 </div>
                 </div>
-
-
         
                 <div>
                 <h1>Login Page</h1>
@@ -36,21 +35,13 @@ function LoginPage() {
                </div>
                
                <p className="link">
-                <a href="#">Forgot password ?</a> Or<a href="#">  Sign Up</a>
+                <a href="/">Forgot password ?</a> Or<a href="/">  Sign Up</a>
               </p>
             
             </div>
             </div>
             </div>
             </div>
- 
-        
-       
-     
-   
-    
-            
-        
     );
 }
 
