@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
-    "test" : "mocha --recursive --exit"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
