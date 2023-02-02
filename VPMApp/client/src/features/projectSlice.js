@@ -88,6 +88,19 @@ export const updateProject = createAsyncThunk(
     }
 )
 
+export const completeTask = createAsyncThunk(
+    'projects/completeTask', 
+    async ({project, task, timeDifference}) => {
+        try {
+            console.log(project, task, timeDifference)
+            const { data } = await api.completeTask(project.projectID, project, task, timeDifference)
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
 export const deleteProject = createAsyncThunk(
     'projects/deleteProject', 
     async (id) => {

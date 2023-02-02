@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 import Project from '../models/project.js'
 
+import { taskCalculations } from './task.js'
+
 // Get all projects 
 export const getProjects = async (req, res) => {
     try {
@@ -71,6 +73,22 @@ export const updateProject = async (req, res) => {
     try {
         const updatedProject = await Project.findOneAndUpdate({ projectID: id }, project)
         res.status(201).json(updatedProject);
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+}
+
+// Complete a task
+export const completeTask = async (req, res) => {
+    const { id } = req.params
+    const { project, task, timeDifference } = req.body
+
+    const updatedProject = await taskCalculations(project, task, timeDifference)
+
+    try {
+        const data = await Project.findOneAndUpdate({ projectID: id }, updatedProject)
+        console.log('project', updatedProject)
+        res.status(201).json(data);
     } catch (error) {
         res.status(409).json({ message: error.message })
     }

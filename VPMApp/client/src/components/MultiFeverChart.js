@@ -19,7 +19,8 @@ const options = {
 };
 
 const MultiFeverChart = ({plotData}) => {
-
+  
+  // eslint-disable-next-line
   const [chartData, setChartData] = useState({
     datasets: [
       {
