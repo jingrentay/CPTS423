@@ -42,7 +42,9 @@ const ProjectFormPage = () => {
         predictedCompletion: new Date(),
         projectStage: 0,   // in planning
         tasks: [], 
-        chartData: [ { x: 0, y: 0 } ]
+        chartData: [ { x: 0, y: 0 } ],
+        lastKnownCompletion: { x: 0, y: 0 },
+        completedTasks: []
     });
 
     // Data object for a new task
