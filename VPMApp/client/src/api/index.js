@@ -9,5 +9,7 @@ export const getArchivedProjects = () => axios.get(`${url}/archived`)
 
 export const fetchProject = (id) => axios.get(`${url}/${id}`)
 export const createProject = (project) => axios.post(url, project)
-export const updateProject = (id, project) => axios.patch(`${url}/${id}`,project)
-export const deleteProject = (id) => axios.delete(`${url}/${id}`)
+export const updateProject = (id, project) => axios.patch(`${url}/${id}`, project)
+export const deleteProject = (id) => axios.delete(`${url}/${id}`) 
+
+export const completeTask = (id, project, task, timeDifference) => axios.patch(`${url}/task/${id}`, { project, task, timeDifference })
