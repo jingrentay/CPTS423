@@ -39,13 +39,17 @@ const InProgressTab = () => {
         )
     }
 
+    const plotData = [
+        {x: 0, y: 0}
+    ]
+
     return (
         <>
         <ThemeProvider key='theme-provider' theme={theme} >
             <Navigation key='nav' />
             <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                    <MultiFeverChart plotData={projects?.map((project) => project.lastKnownCompletion)} />
+                    <MultiFeverChart plotData={plotData} />
                 </div>
             </div>
                 {projects.map((project) => (
