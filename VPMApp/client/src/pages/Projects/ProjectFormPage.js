@@ -93,7 +93,7 @@ const ProjectFormPage = () => {
     const handleSaveNewTask = () => {
         // push new task to project task list and reset task object to empty
         newProject.tasks.push(newTask)
-        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0})
+        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0, complete: false })
 
         // calculate aggressive duration and predicted completion 
         newProject?.tasks?.forEach(element => { taskDurations?.push(parseInt(element.taskDuration)) })

@@ -9,7 +9,7 @@ import moment from 'moment';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { getProject } from '../../features/projectSlice'
+import { getProject, updateProject } from '../../features/projectSlice'
 import FeverChart from '../../components/FeverChart'
 
 const ViewInProgressPage = () => {
@@ -17,52 +17,94 @@ const ViewInProgressPage = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
 
+    const { project, loadingOne } = useSelector((store) => store.projects)
+    const [updatedProject, setUpdatedProject] = useState(project)
+
+    const [completedTasksList, setCompletedTasksList] = useState(project.completedTasks)
+    const [incompleteTasksList, setIncompleteTasksList] = useState(project.tasks)
+    const [newChartData, setNewChartData] = useState(project.chartData)
+
     // For getting single project based on id 
     useEffect( () => {
         dispatch(getProject(id));
     }, [dispatch, id]);
 
-    const { project, loadingOne } = useSelector((store) => store.projects)
-    const [updatedProject, setUpdatedProject] = useState(project)
+    // re-renders when updatedProject is changed
+    useEffect(() => {
+        if (project) setUpdatedProject(project);
+        if (project) setCompletedTasksList(project.completedTasks);
+        if (project) setIncompleteTasksList(project.tasks);
+        if (project) setNewChartData(project.chartData);
+    }, [project])
+
+    useEffect(() => {
+        //console.log('complete', completedTasksList)
+        //console.log('incomplete', incompleteTasksList)
+        setUpdatedProject({...project, completedTasks: completedTasksList, tasks: incompleteTasksList, chartData: newChartData})
+    }, [completedTasksList, incompleteTasksList, newChartData, project])
+
+    const handleCompleteTask = async(task) => {
+        // update completed tasks
+        // eslint-disable-next-line
+        const a = await updateCompletedTasks(task)
+        // Update project and refresh page
+        // eslint-disable-next-line
+        const b = await handleCalculations(task)
+        dispatch(updateProject(updatedProject))
+    }
+
+    const updateCompletedTasks = async(task) => {
+        setCompletedTasksList([...completedTasksList, {
+            complete: true, 
+            taskDescription: task.taskDescription,
+            taskName: task.taskName, 
+            taskID: task.taskID,
+            taskDuration: task.taskDuration,
+            taskCompletion: new Date()
+        }])
+        setIncompleteTasksList(incompleteTasksList.filter((t) => t.taskID !== task.taskID))
+    }
 
     // Make calculations when completing a task
-    const handleCompleteTask = (task) => {
+    const handleCalculations = async(task) => {
 
         // 1. record the new date and get the start date
         var startDate = moment(project.projectStartDate)
         var currentDate = moment().utcOffset('+8:00')
-        
-        console.log('start', startDate)
-        console.log('current', currentDate)
+
+        console.log('complete', completedTasksList)
+        console.log('incomplete', incompleteTasksList)
 
         // add task to completed tasks
-        const completedTasksList = [...project.completedTasks, task]
-        setUpdatedProject({...updatedProject, completedTasks: completedTasksList})
+        setUpdatedProject(updatedProject => {return {...updatedProject, completedTasks: completedTasksList}})
 
         // 2. get difference 
         var diff = currentDate.diff(startDate, project.projectTimeUnits.toLowerCase(), true)
+        console.log('diff', diff)
 
         // 3. % time taken = diff / aggressive duration 
         var percentTimeTaken = diff / project.projectDuration
+        console.log('% time taken', percentTimeTaken)
 
         // 4. % project complete = (add aggressive duration of tasks completed) / aggressive duration
         let duration = (completedTasksList.map((task) => task.taskDuration)).reduce((a, b) => a + b, 0)
         var percentProjectComplete = duration / project.projectDuration
+        console.log('% project complete', percentProjectComplete)
 
         // 5. % buffer consumed = 2 * (% time - % project complete)
         var percentBufferConsumed = 2 * (percentTimeTaken - percentProjectComplete)
+        console.log('% buffer consumed', percentBufferConsumed)
 
         // 6. Create plot point { x: , y: }
         // x-value is % project complete, y-value is the % buffer consumed
         let plotPoint = { x: percentProjectComplete, y: percentBufferConsumed }
         const newChartData = [...project.chartData, plotPoint]
-        setUpdatedProject({...updatedProject, chartData: newChartData})
+        setUpdatedProject(updatedProject => {return {...updatedProject, chartData: newChartData}})
 
+        console.log('plot point', plotPoint)
 
-
-        // TODO 7. Update project status (green, red, black)
+        // TODO Update project status (green, red, black)
         // make sure tasks/project is the correct color on the UI
-
     }
 
     if (loadingOne) {
@@ -122,7 +164,7 @@ const ViewInProgressPage = () => {
                                     </IconButton>
                                 </Grid>
                                 <Grid item xs={1.25}>
-                                    <IconButton key='complete-task' onClick={() => {handleCompleteTask(task)}}> 
+                                    <IconButton key='complete-task' onClick={() => { handleCompleteTask(task)}}> 
                                         <CheckIcon fontSize='large' /> 
                                     </IconButton>
                                 </Grid>
