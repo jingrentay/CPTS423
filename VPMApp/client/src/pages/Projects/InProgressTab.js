@@ -14,11 +14,11 @@ import { getProgressProjects, deleteProject } from '../../features/projectSlice'
 const InProgressTab = () => {
     const dispatch = useDispatch();
 
+    const { projects, loadingAll } = useSelector((store) => store.projects)
+
     useEffect(() => {
         dispatch(getProgressProjects());
     }, [dispatch]);
-
-    const { projects, loadingAll } = useSelector((store) => store.projects)
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))
@@ -39,17 +39,13 @@ const InProgressTab = () => {
         )
     }
 
-    const plotData = [
-        { x: 0, y: 0}, 
-      ]
-
     return (
         <>
         <ThemeProvider key='theme-provider' theme={theme} >
             <Navigation key='nav' />
             <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                    <MultiFeverChart plotData={plotData} />
+                    <MultiFeverChart plotData={projects?.map((project) => project.lastKnownCompletion)} />
                 </div>
             </div>
                 {projects.map((project) => (

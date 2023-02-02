@@ -11,6 +11,7 @@ const projectSchema = mongoose.Schema({
     tasks: [],
     completedTasks: [],
     chartData: [ { x: 0, y: 0 } ],
+    lastKnownCompletion: {},
 
     projectManager: String,             // todo 
     projectDateCreated: Date,

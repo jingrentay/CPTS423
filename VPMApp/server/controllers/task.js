@@ -14,7 +14,8 @@ export const taskCalculations = async (project, task, timeDifference) => {
             taskDuration: task.taskDuration,
             taskCompletion: new Date() 
         }],
-        tasks: project.tasks.filter((t) => t.taskID !== task.taskID)
+        tasks: project.tasks.filter((t) => t.taskID !== task.taskID),
+        lastKnownCompletion: { x: percentComplete * 100, y: bufferConsumed * 100 }
     }
 }
 
