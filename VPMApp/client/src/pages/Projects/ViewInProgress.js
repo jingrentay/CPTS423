@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
 import CheckIcon from '@mui/icons-material/Check';
+import moment from 'moment';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -34,7 +35,7 @@ const ViewInProgressPage = () => {
 
     const handleCompleteTask = () => {
         // calculate the time (% buffer consumed / % project completed)
-
+       
         // update task completed
     }
 
