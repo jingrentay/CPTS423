@@ -45,10 +45,11 @@ Visual Project Management allows users to track the progress of one or multiple 
 
 ## Additional Documentation
 
-  * [Sprint Report 1](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-1-Report.md)
-  * [Sprint Report 2](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-2-Report.md)
-  * [Sprint Report 3](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Sprint-3-Report.md)
-  * [Sprint Demo Videos](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/)
+  * [Sprint Report 1 - Fall](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Fall/Sprint-1-Report.md)
+  * [Sprint Report 2 - Fall](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Fall/Sprint-2-Report.md)
+  * [Sprint Report 3 - Fall](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Fall/Sprint-3-Report.md)
+  * [Sprint Report 1 - Spring](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/Spring/Sprint-1-Report.md)
+  * [Sprint Demo Videos and Reports](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/Docs/Sprints/)
   * [Project Report Documentation](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/tree/main/Docs/Report)
 
 ## License
