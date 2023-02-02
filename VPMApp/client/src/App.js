@@ -16,11 +16,13 @@ import Listing from './pages/Projects/ProjectForm'
 import Detailpage from './pages/Projects/ProjectDetailsPage'
 import Auth from './pages/Auth/Auth'
 
+
 const App = () => {
     return (
+        
         <BrowserRouter>
             <Routes>
-                <Route path="/" element={<LoginPage />}/>
+                <Route path="/" element={<Auth />}/>
                 <Route path="projects" element={<ProjectHomePage />}/>
                 <Route path="projects/create" element={<ProjectFormPage />}/>
                 <Route path="projects/listing" element={<Listing />}/>
