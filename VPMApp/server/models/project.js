@@ -10,6 +10,7 @@ const projectSchema = mongoose.Schema({
     projectStage: Number,               // in planning (0), in progress (1), archive (2)
     tasks: [],
     completedTasks: [],
+    numTasks: Number,
     chartData: [ { x: 0, y: 0 } ],
     lastKnownCompletion: {},
 

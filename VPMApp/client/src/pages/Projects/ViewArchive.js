@@ -55,7 +55,10 @@ const ViewArchiveProjectPage = () => {
                 {project.projectStage === 2 && 
                     <div key='chart-padding' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                            <FeverChart plotData={project.chartData} />
+                            <FeverChart 
+                                plotData={project.chartData} 
+                                labelData={project?.completedTasks.map((task) => task.taskName? task.taskName : "Null")}
+                            />
                         </div>
                     </div>
                 }
@@ -68,7 +71,7 @@ const ViewArchiveProjectPage = () => {
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
                 }
                 {project.projectStage === 2 && project.completedTasks.map((task) => (
-                    <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.complete ? '#56AB2B' : '#E34129' }}>
+                    <Card key={task.taskID} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.complete ? '#56AB2B' : '#E34129' }}>
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={10.5}>

@@ -11,6 +11,15 @@ const options = {
   plugins: {
     legend: {
        display: false
+    },
+    tooltip: {
+      callbacks: {
+          label: function(chart) {
+              let label = chart.dataset.labels[chart.dataIndex];
+              label += " (Completion: " + Math.trunc(chart.parsed.x) + "%, Buffer: " + Math.trunc(chart.parsed.y) + "%)";
+              return label;
+          }
+      }
     }
   },
   animation: {
@@ -18,10 +27,11 @@ const options = {
   }
 };
 
-const MultiFeverChart = ({plotData}) => {
+const MultiFeverChart = ({plotData, labelData}) => {
   
   // eslint-disable-next-line
   const [chartData, setChartData] = useState({
+    labels: labelData,
     datasets: [
       {
         label: 'project data',
@@ -30,6 +40,7 @@ const MultiFeverChart = ({plotData}) => {
         borderColor: "rgb(0, 0, 0)",
         showLine: false,
         data: plotData,
+        labels: labelData,
       },
       {
         label: 'green zone',

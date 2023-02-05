@@ -87,7 +87,6 @@ export const completeTask = async (req, res) => {
 
     try {
         const data = await Project.findOneAndUpdate({ projectID: id }, updatedProject)
-        console.log('project', updatedProject)
         res.status(201).json(data);
     } catch (error) {
         res.status(409).json({ message: error.message })

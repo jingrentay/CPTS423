@@ -5,7 +5,7 @@ export const taskCalculations = async (project, task, timeDifference) => {
 
     return {
         ...project,  
-        chartData: [...project.chartData, { x: percentComplete * 100, y: bufferConsumed * 100 }],
+        chartData: [...project.chartData, { x: percentComplete * 100.0, y: bufferConsumed * 100.0 }],
         completedTasks: [...project.completedTasks, { 
             complete: true, 
             taskDescription: task.taskDescription,
@@ -15,8 +15,14 @@ export const taskCalculations = async (project, task, timeDifference) => {
             taskCompletion: new Date() 
         }],
         tasks: project.tasks.filter((t) => t.taskID !== task.taskID),
-        lastKnownCompletion: { x: percentComplete * 100, y: bufferConsumed * 100 }
+        lastKnownCompletion: { x: percentComplete * 100.0, y: bufferConsumed * 100.0 },
+        projectStage: await isArchived(project)
     }
+}
+
+const isArchived = async(project) => {
+    if (project.completedTasks.length + 1 === project.numTasks) return 2
+    return 1
 }
 
 const calculatePercentages = async(project, task, timeDifference) => {
