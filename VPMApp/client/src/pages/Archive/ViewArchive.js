@@ -66,12 +66,15 @@ const ViewArchiveProjectPage = () => {
                 <TextField sx={{ mt: 2 }} id="project-id" label="ID" variant="filled" defaultValue={project.projectID} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project-description" label="Description" variant="filled" defaultValue={project.projDescription} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="aggressive-duration" label="Aggressive Duration" variant="filled" defaultValue={project.projectDuration} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="date-created" label="Date Created" variant="filled" defaultValue={new Date(project.projectDateCreated)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="start-date" label="Start Date" variant="filled" defaultValue={new Date(project.projectStartDate)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(project.predictedCompletion)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="actual-completion" label="Date Completed" variant="filled" defaultValue={new Date(project.dateCompleted)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 {project.completedTasks.length !== 0 &&
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
                 }
                 {project.projectStage === 2 && project.completedTasks.map((task) => (
-                    <Card key={task.taskID} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.complete ? '#56AB2B' : '#E34129' }}>
+                    <Card key={task.taskID} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.taskStatus? task.taskStatus : '#C0C0C0' }}>
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={10.5}>
