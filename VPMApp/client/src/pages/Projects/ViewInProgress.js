@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Dialog, DialogActions, DialogTitle, Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +16,7 @@ const ViewInProgressPage = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const { project, loadingOne } = useSelector((store) => store.projects)
 
@@ -36,6 +37,11 @@ const ViewInProgressPage = () => {
         // complete the task and update project with new data
         dispatch(completeTask({project, task, timeDifference}))
         handleOpenTaskDialog()
+
+        if (project.completedTasks.length + 1 === project.numTasks) {
+            navigate('/archive')
+            alert('Project moved to archive.')
+        }
     }
 
     // Open and close the dialog for completing a task
@@ -45,6 +51,8 @@ const ViewInProgressPage = () => {
     const handleCloseTaskDialog = () => {
         setDialogOpen(false);
     }
+
+    console.log(project)
 
     if (loadingOne) {
         return (
@@ -75,7 +83,10 @@ const ViewInProgressPage = () => {
                 {project.projectStage === 1 && 
                     <div key='chart-padding' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
-                            <FeverChart plotData={project.chartData} />
+                            <FeverChart 
+                                plotData={project.chartData} 
+                                labelData={project?.completedTasks.map((task) => task.taskName? task.taskName : "Null")}
+                            />
                         </div>
                     </div>
                 }

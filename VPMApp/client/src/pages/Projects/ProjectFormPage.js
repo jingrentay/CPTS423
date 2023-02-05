@@ -44,7 +44,8 @@ const ProjectFormPage = () => {
         tasks: [], 
         chartData: [ { x: 0, y: 0 } ],
         lastKnownCompletion: { x: 0, y: 0 },
-        completedTasks: []
+        completedTasks: [],
+        numTasks: 0
     });
 
     // Data object for a new task
@@ -104,7 +105,7 @@ const ProjectFormPage = () => {
         let predCompletion = getDate(totalTaskDuration, newProject?.projectTimeUnits)
         
         // update project 
-        setNewProject({...newProject, projectDuration: totalTaskDuration, predictedCompletion: predCompletion})
+        setNewProject({...newProject, projectDuration: totalTaskDuration, predictedCompletion: predCompletion, numTasks: newProject.numTasks + 1})
         handleCloseTaskDialog()
     }
     

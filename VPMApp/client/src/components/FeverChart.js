@@ -11,6 +11,17 @@ const options = {
   plugins: {
     legend: {
        display: false
+    },
+    tooltip: {
+      callbacks: {
+          label: function(chart) {
+              let label = chart.dataset.labels[chart.dataIndex - 1];
+              if (chart.parsed.x === 0 && chart.parsed.y === 0) 
+                return 'Start (Completion: 0%, Buffer: 0%'
+              label += " (Completion: " + Math.trunc(chart.parsed.x) + "%, Buffer: " + Math.trunc(chart.parsed.y) + "%)";
+              return label;
+          }
+      }
     }
   },
   animation: {
@@ -18,7 +29,7 @@ const options = {
   }
 };
 
-const FeverChart = ({plotData}) => {
+const FeverChart = ({plotData, labelData}) => {
 
   // eslint-disable-next-line
   const [chartData, setChartData] = useState({
@@ -30,6 +41,7 @@ const FeverChart = ({plotData}) => {
         borderColor: "rgb(0, 0, 0)",
         showLine: true,
         data: plotData,
+        labels: labelData,
       },
       {
         label: 'green zone',
