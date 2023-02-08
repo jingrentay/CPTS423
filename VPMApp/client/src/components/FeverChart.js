@@ -17,7 +17,7 @@ const options = {
           label: function(chart) {
               let label = chart.dataset.labels[chart.dataIndex - 1];
               if (chart.parsed.x === 0 && chart.parsed.y === 0) 
-                return 'Start (Completion: 0%, Buffer: 0%'
+                return 'Start (Completion: 0%, Buffer: 0%)'
               label += " (Completion: " + Math.trunc(chart.parsed.x) + "%, Buffer: " + Math.trunc(chart.parsed.y) + "%)";
               return label;
           }

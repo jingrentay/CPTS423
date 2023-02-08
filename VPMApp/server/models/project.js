@@ -6,6 +6,7 @@ const projectSchema = mongoose.Schema({
     projectID: Number,
     projectTimeUnits: String,
     predictedCompletion: Date,
+    projectStartDate: Date, 
     projectDuration: Number,
     projectStage: Number,               // in planning (0), in progress (1), archive (2)
     tasks: [],
@@ -13,11 +14,9 @@ const projectSchema = mongoose.Schema({
     numTasks: Number,
     chartData: [ { x: 0, y: 0 } ],
     lastKnownCompletion: {},
-
-    projectManager: String,             // todo 
-    projectDateCreated: Date,
-    projectStartDate: Date,
-    projectStatus: String,              // red, green, black     
+    projectStatus: String,              // red, green, black 
+    projectDateCreated: Date,   
+    dateCompleted: Date,
 });
 
 const Project = mongoose.model('Project', projectSchema);

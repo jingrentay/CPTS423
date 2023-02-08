@@ -46,7 +46,9 @@ const ProjectFormPage = () => {
         chartData: [ { x: 0, y: 0 } ],
         lastKnownCompletion: { x: 0, y: 0 },
         completedTasks: [],
-        numTasks: 0
+        numTasks: 0, 
+        projectStatus: '#56AB2B',  // green
+        projectDateCreated: new Date()
     });
 
     // Data object for a new task
@@ -55,7 +57,8 @@ const ProjectFormPage = () => {
         taskName: '', 
         taskDescription: '',
         taskDuration: 0,
-        complete: false
+        complete: false,
+        taskStatus: '#56AB2B',  // green,
     });
 
     // Handle the creation of a project in the database

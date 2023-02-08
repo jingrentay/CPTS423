@@ -52,7 +52,7 @@ const InProgressTab = () => {
                 </div>
             </div>
                 {projects.map((project) => (
-                    <Card key={project.projectName} sx={{ml: 28, mt: 3, width: 700, height: 85, backgroundColor: '#A0A0A0' }}>
+                    <Card key={project.projectName} sx={{ml: 28, mt: 3, width: 700, height: 85, backgroundColor: project.projectStatus }}>
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={10}>

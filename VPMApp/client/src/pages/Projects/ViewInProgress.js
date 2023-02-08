@@ -99,7 +99,7 @@ const ViewInProgressPage = () => {
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Incomplete Tasks </Typography>
                 }
                 {project.projectStage === 1 && project.tasks.map((task) => (
-                    <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.complete ? '#E34129' : '#56AB2B' }}>
+                    <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: project.projectStatus? project.projectStatus : '#C0C0C0' }}>
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={9.5}>
@@ -126,7 +126,7 @@ const ViewInProgressPage = () => {
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Complete Tasks </Typography>
                 }
                 {project.projectStage === 1 && project.completedTasks.map((task) => (
-                    <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.complete ? '#56AB2B' : '#E34129' }}>
+                    <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: task.taskStatus? task.taskStatus : '#C0C0C0' }}>
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={10.5}>
