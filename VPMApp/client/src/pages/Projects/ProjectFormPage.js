@@ -28,6 +28,7 @@ const ProjectFormPage = () => {
 
     // State variables
     const [dialogOpen, setDialogOpen] = useState(false)
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
     const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
     const [taskToDelete, setTaskToDelete] = useState('')
     const [totalDuration, setTotalDuration ] = useState(null)
@@ -70,6 +71,15 @@ const ProjectFormPage = () => {
     }
     const handleCloseTaskDialog = () => {
         setDialogOpen(false);
+    }
+
+    //Open and close for showing info/description of a created task
+    const handleOpenTaskInfoDialog = () => {
+        setInfoDialogOpen(true);
+    }
+
+    const handleCloseTaskInfoDialog = () => {
+        setInfoDialogOpen(false);
     }
 
     // Open and close the dialog for deleting a task
@@ -168,7 +178,7 @@ const ProjectFormPage = () => {
                                             </IconButton>
                                         </Grid>
                                         <Grid item xs={1.25}>
-                                            <IconButton sx={{width:"50px"}} > 
+                                            <IconButton sx={{width:"50px"}} onClick={() => handleOpenTaskInfoDialog(task.taskName)}> 
                                                 <InfoIcon fontSize="large"/> 
                                             </IconButton>
                                         </Grid>

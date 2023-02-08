@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card } from '@mui/material'
+import { Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
@@ -26,6 +26,18 @@ const ViewInPlanningPage = () => {
 
     // Display the correct predicted completion 
     let predCompletion = getDate(project?.projectDuration, project?.projectTimeUnits)
+
+    // State for the info of tasks 
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+
+    //Open and close for showing info/description of a created task
+    const handleOpenTaskInfoDialog = () => {
+        setInfoDialogOpen(true);
+    }
+
+    const handleCloseTaskInfoDialog = () => {
+        setInfoDialogOpen(false);
+    }
     
     // Handle the start of a project when user clicks button 
     const handleStartProject = () => {
@@ -91,9 +103,18 @@ const ViewInPlanningPage = () => {
                                     <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
                                 </Grid>
                                 <Grid item xs={1.25}>
-                                    <IconButton key='view-task-button' > 
+                                    <IconButton key='view-task-button' onClick={() => handleOpenTaskInfoDialog()}> 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
+                                    <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
+                                        <DialogTitle>Task Info</DialogTitle>
+                                        <DialogContent>
+                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={task.taskID} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={task.taskName} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={task.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={task.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                        </DialogContent>
+                                    </Dialog>
                                 </Grid>
                             </Grid>
                         </CardContent>

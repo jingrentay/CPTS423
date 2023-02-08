@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Skeleton, TextField, Typography, IconButton, Card, Grid, CardContent } from '@mui/material'
+import { Box, Button, Container, FormControl, InputLabel, MenuItem, Select, Skeleton, TextField, Typography, IconButton, Card, Grid, CardContent, Dialog, DialogContent, DialogTitle, DialogActions } from '@mui/material'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -31,6 +32,35 @@ const ProjectEditPage = () => {
         dispatch(updateProject(updatedProject))
         navigate('/projects')
     };
+
+    const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
+    const [taskToDelete, setTaskToDelete] = useState('')
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+
+    // Open and close the dialog for deleting a task
+    const handleOpenDeleteDialog = (name) => {
+        setTaskToDelete(name)
+        setDeleteWarningOpen(true);
+    }
+    const handleCloseDeleteDialog = () => {
+        setDeleteWarningOpen(false);
+        setTaskToDelete('')
+    }
+
+     //Open and close for showing info/description of a created task
+     const handleOpenTaskInfoDialog = () => {
+        setInfoDialogOpen(true);
+    }
+
+    const handleCloseTaskInfoDialog = () => {
+        setInfoDialogOpen(false);
+    }
+
+    const handleDeleteTask = () => {
+        setUpdatedProject({...updatedProject, tasks: updatedProject.tasks.filter((task) => task.taskName !== taskToDelete)})
+        console.log(updatedProject.tasks)
+        handleCloseDeleteDialog()
+    }
 
     if (loadingOne) {
         return (
@@ -79,21 +109,44 @@ const ProjectEditPage = () => {
                         <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: '#C0C0C0' }}>
                             <CardContent>
                                 <Grid container>
-                                    <Grid item xs={10.75}>
+                                    <Grid item xs={9.5}>
                                         <Box sx={{ display: 'flex' }}>
                                             <Typography variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
                                         </Box>
                                         <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
                                     </Grid>
                                     <Grid item xs={1.25}>
-                                        <IconButton key='view-task-button' > 
+                                            <IconButton sx={{width:"50px"}} onClick={() => handleOpenDeleteDialog(task.taskName)} aria-label="delete"> 
+                                                <DeleteIcon fontSize="large"/> 
+                                            </IconButton>
+                                    </Grid>
+                                    <Grid item xs={1.25}>
+                                        <IconButton sx={{width:"50px"}} onClick={() => handleOpenTaskInfoDialog(task.taskName)}> 
                                             <InfoIcon fontSize='large' /> 
                                         </IconButton>
+                                        <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
+                                        <DialogTitle>Task Info</DialogTitle>
+                                        <DialogContent>
+                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={task.taskID} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={task.taskName} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={task.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={task.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                        </DialogContent>
+                                        </Dialog> 
                                     </Grid>
                                 </Grid>
                             </CardContent>
                         </Card>
-                    ))} 
+                    ))}
+                    <Dialog open={deleteWarningOpen} onClose={handleCloseDeleteDialog} >
+                            <DialogTitle> Are you sure you want to delete this task? </DialogTitle>
+                            <DialogActions>
+                                <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Button variant="contained" sx={{ mb: 1, width: 100, height: 35 }} onClick={handleDeleteTask} > Yes </Button>
+                                    <Button variant="outlined" sx={{ mb: 1, ml: 2, width: 100, height: 35 }} onClick={handleCloseDeleteDialog} > No </Button>
+                                 </Container>
+                            </DialogActions>
+                    </Dialog>
                     <Box sx={{ mt: 3, mb: 8 }}>
                         <Button type="submit" size="medium" variant="contained" onClick={handleSubmit}>
                             Save
