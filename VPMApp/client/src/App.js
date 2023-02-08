@@ -11,10 +11,10 @@ import ErrorPage from './pages/ErrorPage'
 
 import ViewInPlanningPage from './pages/Projects/ViewInPlanning'
 import ViewInProgressPage from './pages/Projects/ViewInProgress'
+import ViewArchiveProjectPage from './pages/Archive/ViewArchive'
 
 import Listing from './pages/Projects/ProjectForm'
 import Detailpage from './pages/Projects/ProjectDetailsPage'
-import ViewArchiveProjectPage from './pages/Projects/ViewArchive'
 
 const App = () => {
     return (
