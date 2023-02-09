@@ -103,7 +103,7 @@ const ViewInPlanningPage = () => {
                                     <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
                                 </Grid>
                                 <Grid item xs={1.25}>
-                                    <IconButton key='view-task-button' onClick={() => handleOpenTaskInfoDialog()}> 
+                                    <IconButton key='view-task-button' onClick={() => handleOpenTaskInfoDialog(task.taskID)}> 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
