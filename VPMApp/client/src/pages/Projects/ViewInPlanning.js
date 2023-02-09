@@ -30,8 +30,23 @@ const ViewInPlanningPage = () => {
     // State for the info of tasks 
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 
+    const [taskPopup, setTaskPopup] = useState({
+        taskName: '', 
+        taskDescription: '',
+        taskID: 0,
+        taskDuration: 0,
+    })
+
     //Open and close for showing info/description of a created task
-    const handleOpenTaskInfoDialog = () => {
+    const handleOpenTaskInfoDialog = (id) => {
+        let task = project?.tasks.filter((task) => task.taskID === id)
+        console.log(task)
+        setTaskPopup({
+            taskName: task[0].taskName,
+            taskDescription: task[0].taskDescription,
+            taskID: task[0].taskID,
+            taskDuration: task[0].taskDuration,
+        })
         setInfoDialogOpen(true);
     }
 
@@ -109,10 +124,10 @@ const ViewInPlanningPage = () => {
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
                                         <DialogTitle>Task Info</DialogTitle>
                                         <DialogContent>
-                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={task.taskID} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={task.taskName} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={task.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={task.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
                                         </DialogContent>
                                     </Dialog>
                                 </Grid>
