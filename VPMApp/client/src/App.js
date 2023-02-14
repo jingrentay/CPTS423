@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import LoginPage from './pages/Login/LoginPage'
+import SignUpPage from './pages/Login/SignUpPage'
+import SettingsPage from './pages/Settings/SettingsPage'
 
 import ProjectHomePage from './pages/Projects/ProjectHomePage'
 import ProjectFormPage from './pages/Projects/ProjectFormPage'
@@ -21,6 +23,7 @@ const App = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<LoginPage />}/>
+                <Route path="/signup" element={<SignUpPage />}/>
                 <Route path="projects" element={<ProjectHomePage />}/>
                 <Route path="projects/create" element={<ProjectFormPage />}/>
                 <Route path="projects/listing" element={<Listing />}/>
@@ -30,6 +33,7 @@ const App = () => {
                 <Route path="projects/view/archive/:id" element={<ViewArchiveProjectPage />}/>
                 <Route path="projects/edit/:id" element={<ProjectEditPage/>}/>
                 <Route path="archive" element={<ArchivePage />}/>
+                <Route path="/settings" element={<SettingsPage />}/>
                 <Route path="*" element={<ErrorPage />}/>
             </Routes>
         </BrowserRouter>

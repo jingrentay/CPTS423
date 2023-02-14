@@ -22,7 +22,7 @@ const Sidebar = () => {
                     </ListItemButton>
                 </ListItem>
                 <ListItem key="Settings">
-                    <ListItemButton>
+                    <ListItemButton component={Link} to="/settings">
                         <ListItemIcon sx={{ color: 'white' }}> <SettingsIcon /> </ListItemIcon>
                         <ListItemText sx={{ color: 'white' }}> Settings </ListItemText>
                     </ListItemButton>
