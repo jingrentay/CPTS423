@@ -14,12 +14,12 @@ import { deleteProject } from '../../features/projectSlice'
 
 const InPlanningTab = () => {
     const dispatch = useDispatch();
+    
+    const { projects, loadingAll } = useSelector((store) => store.projects)
 
     useEffect(() => {
         dispatch(getPlanningProjects());
-    }, [dispatch]);
-
-    const { projects, loadingAll } = useSelector((store) => store.projects)
+    }, []);
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))

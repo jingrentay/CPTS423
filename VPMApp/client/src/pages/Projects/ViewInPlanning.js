@@ -9,6 +9,7 @@ import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getProject, updateProject } from '../../features/projectSlice'
 import { getDate } from '../../utils.js'
+import { createProject } from '../../features/projectSlice'
 
 const ViewInPlanningPage = () => {
 
@@ -82,12 +83,37 @@ const ViewInPlanningPage = () => {
         )
     }
 
+    const handleDuplicateProject = () => {
+        console.log('project', project)
+        const reqData = {
+            projectID: project?.projectID + 100, 
+            projectName: project?.projectName + "(Duplicate)", 
+            projDescription: project?.projectDescription, 
+            projectDuration: project?.projectDuration,
+            projectTimeUnits: project?.projectTimeUnits,
+            predictedCompletion: project?.predictedCompletion,
+            projectStage: project?.projectStage,   // in planning
+            tasks: project?.tasks, 
+            chartData: project?.chartData,
+            lastKnownCompletion: project?.lastKnownCompletion,
+            completedTasks: project?.completedTasks,
+            numTasks: project?.numTasks, 
+            projectStatus: project?.projectStatus,  // green
+            projectDateCreated: project?.projectDateCreated
+        }
+        dispatch(createProject(reqData))
+        navigate('/projects');
+    }
+
     return(
         <>
             <ThemeProvider theme={theme}>
             <Navigation key='nav' />
             <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
                 <Typography variant='h5' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
+                <Button onClick={() => handleDuplicateProject()} size="medium" variant="contained" sx={{ backgroundColor: "lightcoral", mr: 2 }}> 
+                    Duplicate 
+                </Button>
                 <Button onClick={() => handleStartProject()} size="medium" variant="contained" sx={{ backgroundColor: "#689f38", mr: 2 }}> 
                     Start 
                 </Button>
