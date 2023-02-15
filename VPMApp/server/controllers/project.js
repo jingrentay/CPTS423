@@ -27,10 +27,26 @@ export const getPlanningProjects = async (req, res) => {
 export const getProgressProjects = async (req, res) => {
     try {
         const projects = await Project.find({ projectStage: 1 })
-        res.status(200).json(projects)
+        const taskList = await filterTasks(projects)
+        res.status(200).json({projects: projects, taskList: taskList})
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
+}
+
+const filterTasks = async(projects) => {
+    const taskList = []
+    projects.forEach(project => {
+        project.tasks.forEach(task => {
+            taskList.push({
+                ...task, 
+                projectID: project.projectID, 
+                status: project.projectStatus,
+                _id: project._id,
+            })
+        })
+    });
+    return taskList
 }
 
 // Get all archived projects

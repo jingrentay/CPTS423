@@ -12,9 +12,10 @@ import MultiFeverChart from '../../components/MultiFeverChart'
 import { getProgressProjects, deleteProject } from '../../features/projectSlice'
 
 const InProgressTab = () => {
+
     const dispatch = useDispatch();
 
-    const { projects, loadingAll } = useSelector((store) => store.projects)
+    const { projects, loadingAll, taskList } = useSelector((store) => store.projects)
 
     useEffect(() => {
         dispatch(getProgressProjects());
@@ -43,6 +44,10 @@ const InProgressTab = () => {
         <>
         <ThemeProvider key='theme-provider' theme={theme} >
             <Navigation key='nav' />
+            { projects.length === 0 &&
+                <Typography sx={{ mt: 2 }} variant='h5'> You have no projects currently in progress. </Typography>
+            }
+            { projects.length > 0 && 
             <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
                     <MultiFeverChart 
@@ -51,30 +56,72 @@ const InProgressTab = () => {
                     />
                 </div>
             </div>
-                {projects.map((project) => (
-                    <Card key={project.projectName} sx={{ml: 28, mt: 3, width: 700, height: 85, backgroundColor: project.projectStatus }}>
-                        <CardContent>
-                            <Grid container>
-                                <Grid item xs={10}>
-                                    <Box sx={{ display: 'flex'}}>
-                                        <Typography variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
-                                    </Box>
-                                    <Typography> Project ID: {project.projectID} </Typography>
-                                    </Grid>
-                                <Grid item xs={1}>
-                                    <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
-                                        <DeleteIcon fontSize='large' /> 
-                                    </IconButton>
-                                 </Grid>
-                                <Grid item xs={1}>
-                                    <IconButton key='view-project-button' component={Link} to={`/projects/view/progress/${project.projectID}`} > 
-                                        <InfoIcon fontSize='large' /> 
-                                    </IconButton>
+            }
+            <Box sx={{ flexGrow: 1 }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Grid container spacing={1}>
+                    <Grid container item spacing={6}>
+                        <Grid item xs={1}/>
+                        <Grid item xs={5}>
+                            { projects.length > 0 && 
+                                <Typography sx={{ mt: 2 }} variant='h5'> Projects </Typography>
+                            }
+                            {projects.map((project) => (
+                                <Grid item>
+                                <Card key={project.projectID} style={{display: 'flex', width: '100%'}} sx={{ mt: 2, height: 85, backgroundColor: project.projectStatus }}>
+                                    <CardContent style={{display: 'flex', width: '100%'}}>
+                                        <Grid container >
+                                            <Grid item xs={9}>
+                                                <Box sx={{ display: 'flex'}}>
+                                                    <Typography variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
+                                                </Box>
+                                                <Typography> Project ID: {project.projectID} </Typography>
+                                                </Grid>
+                                            <Grid item xs={1.5}>
+                                                <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
+                                                    <DeleteIcon fontSize='large' /> 
+                                                </IconButton>
+                                            </Grid>
+                                            <Grid item xs={1.5}>
+                                                <IconButton key='view-project-button' component={Link} to={`/projects/view/progress/${project.projectID}`} > 
+                                                    <InfoIcon fontSize='large' /> 
+                                                </IconButton>
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
                                 </Grid>
-                            </Grid>
-                        </CardContent>
-                    </Card>
-                ))}
+                            ))}
+                        </Grid>
+                        <Grid item xs={5}>
+                            { taskList.length > 0 &&
+                                <Typography sx={{ mt: 2 }} variant='h5'> Task Priority List </Typography>
+                            }
+                            {taskList.map((task) => (
+                                <Grid item>
+                                <Card key={task.taskID} style={{display: 'flex', width: '100%'}} sx={{ mt: 2, height: 85, backgroundColor: task.status }}>
+                                    <CardContent style={{display: 'flex', width: '100%'}}>
+                                        <Grid container >
+                                            <Grid item xs={10}>
+                                                <Box sx={{ display: 'flex'}}>
+                                                    <Typography variant='h6' sx={{ flexGrow: 1}}> {task.taskName} </Typography>
+                                                </Box>
+                                                <Typography> Task ID: {task.taskID}, Project ID: {task.projectID} </Typography>
+                                                </Grid>
+                                            <Grid item xs={2}>
+                                                <IconButton key='view-project-button' component={Link} to={`/projects/view/progress/${task.projectID}`} > 
+                                                    <InfoIcon fontSize='large' /> 
+                                                </IconButton>
+                                            </Grid>
+                                        </Grid>
+                                    </CardContent>
+                                </Card>
+                                </Grid>
+                            ))}
+                        </Grid>
+                        <Grid item xs={1}/>
+                    </Grid>
+                </Grid>
+            </Box>
         </ThemeProvider>
         </>
     );

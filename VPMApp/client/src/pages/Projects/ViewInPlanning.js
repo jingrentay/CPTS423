@@ -87,7 +87,7 @@ const ViewInPlanningPage = () => {
         console.log('project', project)
         const reqData = {
             projectID: project?.projectID + 100, 
-            projectName: project?.projectName + "(Duplicate)", 
+            projectName: project?.projectName + " (Duplicate)", 
             projDescription: project?.projectDescription, 
             projectDuration: project?.projectDuration,
             projectTimeUnits: project?.projectTimeUnits,
@@ -111,7 +111,7 @@ const ViewInPlanningPage = () => {
             <Navigation key='nav' />
             <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
                 <Typography variant='h5' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
-                <Button onClick={() => handleDuplicateProject()} size="medium" variant="contained" sx={{ backgroundColor: "lightcoral", mr: 2 }}> 
+                <Button onClick={() => handleDuplicateProject()} size="medium" variant="contained" sx={{ backgroundColor: '#fca72f', mr: 2 }}> 
                     Duplicate 
                 </Button>
                 <Button onClick={() => handleStartProject()} size="medium" variant="contained" sx={{ backgroundColor: "#689f38", mr: 2 }}> 
@@ -134,7 +134,7 @@ const ViewInPlanningPage = () => {
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
                 } 
                 {project.projectStage === 0 && project.tasks.map((task) => (
-                    <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: '#C0C0C0' }}>
+                    <Card key={task.taskID} sx={{ mb: 3, width: 550, height: 85, backgroundColor: '#C0C0C0' }}>
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={10.75}>
@@ -148,7 +148,7 @@ const ViewInPlanningPage = () => {
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
-                                        <DialogTitle>Task Info</DialogTitle>
+                                        <DialogTitle>Task Details</DialogTitle>
                                         <DialogContent>
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
                                             <TextField sx={{ mb: 2 }} name='task id' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
