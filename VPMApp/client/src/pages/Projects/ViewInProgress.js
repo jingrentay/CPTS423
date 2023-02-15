@@ -65,8 +65,6 @@ const ViewInProgressPage = () => {
         setInfoDialogOpen(false);
     }
 
-    
-
     const handleCompleteTask = (task) => {
         // record the new date and get the start date
         var startDate = moment(project.projectStartDate)
@@ -91,7 +89,6 @@ const ViewInProgressPage = () => {
     const handleCloseTaskDialog = () => {
         setDialogOpen(false);
     }
-
 
     if (loadingOne) {
         return (
@@ -188,7 +185,7 @@ const ViewInProgressPage = () => {
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
-                                        <DialogTitle>Task Info</DialogTitle>
+                                        <DialogTitle>Task Details</DialogTitle>
                                         <DialogContent>
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>

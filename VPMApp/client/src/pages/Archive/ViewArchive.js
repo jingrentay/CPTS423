@@ -30,6 +30,7 @@ const ViewArchiveProjectPage = () => {
         taskDescription: '',
         taskID: 0,
         taskDuration: 0,
+        taskCompletion: new Date(),
     })
 
     //Open and close for showing info/description of a created task
@@ -40,6 +41,7 @@ const ViewArchiveProjectPage = () => {
             taskDescription: task[0].taskDescription,
             taskID: task[0].taskID,
             taskDuration: task[0].taskDuration,
+            taskCompletion: task[0].taskCompletion,
         })
         setInfoDialogOpen(true);
     }
@@ -94,7 +96,6 @@ const ViewArchiveProjectPage = () => {
                 <TextField sx={{ mt: 2 }} id="aggressive-duration" label="Aggressive Duration" variant="filled" defaultValue={project.projectDuration} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="date-created" label="Date Created" variant="filled" defaultValue={new Date(project.projectDateCreated)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="start-date" label="Start Date" variant="filled" defaultValue={new Date(project.projectStartDate)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(project.predictedCompletion)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="actual-completion" label="Date Completed" variant="filled" defaultValue={new Date(project.dateCompleted)} InputLabelProps={{shrink: true}} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 {project.completedTasks.length !== 0 &&
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
@@ -114,12 +115,13 @@ const ViewArchiveProjectPage = () => {
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
-                                        <DialogTitle>Task Info</DialogTitle>
+                                        <DialogTitle>Task Details</DialogTitle>
                                         <DialogContent>
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
                                             <TextField sx={{ mb: 2 }} name='task id' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>)}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>)}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task completed' variant='filled' label='Date Completed' fullWidth value={new Date(taskPopup.taskCompletion)} InputProps={{readOnly:true}} margin='dense'/>
                                         </DialogContent>
                                     </Dialog>
                                 </Grid>

@@ -30,7 +30,7 @@ export const getProgressProjects = createAsyncThunk(
     async () => {
         try {
             const { data } = await api.getProgressProjects();
-            return data;
+            return { projects: data.projects, taskList: data.taskList };
         } catch (error) {
             console.log(error.message)
         }
@@ -120,6 +120,7 @@ const projectSlice = createSlice({
         loadingOne: true,
         loadingAll: true,
         loadingDelete: true, 
+        taskList: [],
     },
     extraReducers: (builder) => {
         builder
@@ -148,7 +149,8 @@ const projectSlice = createSlice({
             })
             .addCase(getProgressProjects.fulfilled, (store, action) => {
                 store.loadingAll = false
-                store.projects = action.payload
+                store.projects = action.payload.projects
+                store.taskList = action.payload.taskList
             })
             .addCase(getProgressProjects.rejected, (store, action) => {
                 store.loadingAll = false
@@ -189,6 +191,9 @@ const projectSlice = createSlice({
                 if (id) {
                     // remove deleted project
                     store.projects = store.projects.filter((project) => project._id !== id)
+                    if (store.taskList) {
+                        store.taskList = store.taskList.filter((task) => task._id !== id)
+                    }
                 }
             })
             .addCase(deleteProject.rejected, (store, action) => {

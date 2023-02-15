@@ -19,7 +19,7 @@ const InPlanningTab = () => {
 
     useEffect(() => {
         dispatch(getPlanningProjects());
-    }, []);
+    }, [dispatch]);
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))
