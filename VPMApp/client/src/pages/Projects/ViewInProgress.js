@@ -11,6 +11,8 @@ import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getProject, completeTask } from '../../features/projectSlice'
 import FeverChart from '../../components/FeverChart'
+import { getDate, getTimeDiff } from '../../utils.js'
+import { Modal } from 'react-bootstrap'
 
 const ViewInProgressPage = () => {
 
@@ -19,13 +21,45 @@ const ViewInProgressPage = () => {
     const navigate = useNavigate()
 
     const { project, loadingOne } = useSelector((store) => store.projects)
-
+    let allTasks = []
+    
+    project?.tasks?.length > 0 && project?.tasks?.forEach(element => {
+        allTasks.push({
+            task: element.taskName,
+            time: getTimeDiff(project.projectStartDate, element.taskDuration, project?.projectTimeUnits)
+        })
+    })
+   
+    let sum = 0;
+    let result = allTasks?.map(task => 
+        sum += task.time
+    )
+    let resultArr = allTasks.map((obj, i) => ({...obj, newTime: result[i]}))
+    console.log('in progress', resultArr)
     const [dialogOpen, setDialogOpen] = useState(false)
 
     // For getting single project based on id 
     useEffect( () => {
         dispatch(getProject(id));
     }, [dispatch, id, dialogOpen]);
+    const showAlert = () => {
+        let completedTasks = 0;
+        for(let i=0; i<resultArr.length; i++){
+            const task= allTasks[i];
+            setTimeout(() => {
+                <Modal show={true}>
+                    <div>{`Time exceeded for ${task.task}`}</div>
+                </Modal>
+                completedTasks++;
+                // if(completedTasks === resultArr.length){
+                //     alert("All tasks has been finished!")
+                // }
+            }, task.newTime)
+        }
+    }
+    useEffect(() => {
+        showAlert()
+    }, [])
 
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 
@@ -63,9 +97,7 @@ const ViewInProgressPage = () => {
 
     const handleCloseTaskInfoDialog = () => {
         setInfoDialogOpen(false);
-    }
-
-    
+    }                                                                                                                                                                                     
 
     const handleCompleteTask = (task) => {
         // record the new date and get the start date
