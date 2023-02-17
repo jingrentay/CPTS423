@@ -24,10 +24,29 @@ const SignUpPage = () => {
 
     const handleShowPassword = () => setShowPassword((show) => !show)
 
-    const handleSignUp = () => {
+    const [nameError, setNameError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
+    const [emailError, setEmailError] = useState(false)
+    const [phoneError, setPhoneError] = useState(false)
+    const [inputError, setInputError] = useState(false)
+
+    const handleTestInput = async() => {
+        // make sure the fields are all full, display error msg if not
+        if (accountInfo.name === '') { setNameError(true); setInputError(true); 
+        } else { setNameError(false); setInputError(false); }
+        if (accountInfo.email === '') { setEmailError(true);  setInputError(true); 
+        } else { setEmailError(false); setInputError(false); }
+        if (accountInfo.password === '') { setPasswordError(true);  setInputError(true); 
+        } else { setPasswordError(false); setInputError(false); }
+        if (accountInfo.phone === '') { setPhoneError(true);  setInputError(true); return true;
+        } else { setPhoneError(false); setInputError(false); }
+
+        return false;
+    }
+
+    const handleSignUp = async() => {
+        handleTestInput().then((error) => { console.log(error); !error && navigate('/'); })
         console.log(accountInfo)
-        // TODO: dispatch user info to accounts
-        navigate('/');
     }
 
     return (
@@ -42,12 +61,14 @@ const SignUpPage = () => {
                     <Box sx={{ ml: 2, mr: 2, height: '75vh' }}
 
                     >   
-                        <TextField defaultValue={accountInfo.name} name='name' variant='outlined' label='Name' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, name: e.target.value })}/>
-                        <TextField defaultValue={accountInfo.email} name='email' variant='outlined' label='Email' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, email: e.target.value })}/>
+                        <TextField error={nameError} defaultValue={accountInfo.name} name='name' variant='outlined' label='Name' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, name: e.target.value })}/>
+                        <TextField error={emailError} defaultValue={accountInfo.email} name='email' variant='outlined' label='Email' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, email: e.target.value })}/>
                         <TextField 
+                            error={passwordError}
                             defaultValue={accountInfo.password} 
                             name='password' variant='outlined' 
                             label='Password' 
+                            type={showPassword ? "text" : "password"}
                             style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} 
                             onChange={(e) => setAccountInfo({ ...accountInfo, password: e.target.value })}
                             InputProps={{
@@ -61,8 +82,11 @@ const SignUpPage = () => {
                                 </InputAdornment>)
                             }}
                         /> 
-                        <TextField defaultValue={accountInfo.phone} name='phone-number' variant='outlined' label='Phone Number' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, phone: e.target.value })}/>   
-                        <Button onClick={handleSignUp} color='success' variant="contained" fullWidth size='large' sx={{ mt: 1 }}  > Sign Up </Button>
+                        <TextField error={phoneError} defaultValue={accountInfo.phone} name='phone-number' variant='outlined' label='Phone Number' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, phone: e.target.value })}/>   
+                        { inputError &&
+                            <Typography variant='body2' color='#DF4338'> Field required. </Typography>
+                        }
+                        <Button onClick={async() => { await handleSignUp()}} color='success' variant="contained" fullWidth size='large' sx={{ mt: 1 }}  > Sign Up </Button>
                         <Button component={Link} to="/" variant="contained" fullWidth size='large' sx={{ mt: 2 }}  > Back to Login </Button>
                     </Box>            
                 </Paper>
