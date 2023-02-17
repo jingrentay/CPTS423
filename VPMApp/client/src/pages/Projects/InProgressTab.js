@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Skeleton, Grid, Card, CardContent, Typography, IconButton, Box } from '@mui/material'
+import { Skeleton, Grid, Card, CardContent, Typography, IconButton, Box, TextField, Dialog, DialogTitle, DialogContent, Divider } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useSelector, useDispatch } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
@@ -23,6 +23,31 @@ const InProgressTab = () => {
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))
+    }
+
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+
+    const [taskPopup, setTaskPopup] = useState({
+        taskName: '', 
+        taskDescription: '',
+        taskID: 0,
+        taskDuration: 0,
+    })
+
+    const handleOpenTaskInfoDialog = (id, projID) => {
+        let task = taskList?.filter((task) => task.taskID === id && task.projectID === projID)
+        setTaskPopup({
+            taskName: task[0].taskName,
+            taskDescription: task[0].taskDescription,
+            taskID: task[0].taskID,
+            taskDuration: task[0].taskDuration,
+            projectID: task[0].projectID,
+        })
+        setInfoDialogOpen(true);
+    }
+
+    const handleCloseTaskInfoDialog = () => {
+        setInfoDialogOpen(false);
     }
 
     if (loadingAll) {
@@ -67,7 +92,7 @@ const InProgressTab = () => {
                             }
                             {projects.map((project) => (
                                 <Grid item>
-                                <Card key={project.projectID} style={{display: 'flex', width: '100%'}} sx={{ mt: 2, height: 85, backgroundColor: project.projectStatus }}>
+                                <Card key={project.projectID} style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: project.projectStatus }}>
                                     <CardContent style={{display: 'flex', width: '100%'}}>
                                         <Grid container >
                                             <Grid item xs={9}>
@@ -92,25 +117,38 @@ const InProgressTab = () => {
                                 </Grid>
                             ))}
                         </Grid>
+                        <Grid item xs={0.5}>
+                            <Divider orientation='vertical' sx={{mt:4}}/>
+                        </Grid>
                         <Grid item xs={5}>
                             { taskList.length > 0 &&
                                 <Typography sx={{ mt: 2 }} variant='h5'> Task Priority List </Typography>
                             }
                             {taskList.map((task) => (
                                 <Grid item>
-                                <Card key={task.taskID} style={{display: 'flex', width: '100%'}} sx={{ mt: 2, height: 85, backgroundColor: task.status }}>
+                                <Card key={task.taskID} style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: task.status }}>
                                     <CardContent style={{display: 'flex', width: '100%'}}>
                                         <Grid container >
                                             <Grid item xs={10}>
                                                 <Box sx={{ display: 'flex'}}>
                                                     <Typography variant='h6' sx={{ flexGrow: 1}}> {task.taskName} </Typography>
                                                 </Box>
-                                                <Typography> Task ID: {task.taskID}, Project ID: {task.projectID} </Typography>
+                                                <Typography> Project ID: {task.projectID}, Task ID: {task.taskID} </Typography>
                                                 </Grid>
                                             <Grid item xs={2}>
-                                                <IconButton key='view-project-button' component={Link} to={`/projects/view/progress/${task.projectID}`} > 
+                                                <IconButton key='view-project-button' onClick={() => handleOpenTaskInfoDialog(task.taskID, task.projectID)} > 
                                                     <InfoIcon fontSize='large' /> 
                                                 </IconButton>
+                                                <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
+                                                    <DialogTitle>Task Details</DialogTitle>
+                                                    <DialogContent>
+                                                        <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
+                                                        <TextField sx={{ mb: 2 }} name='project name' variant='filled' label='Project ID' fullWidth defaultValue={taskPopup.projectID} InputProps={{readOnly:true}} margin='dense'/>
+                                                        <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
+                                                        <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
+                                                        <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                                    </DialogContent>
+                                                </Dialog>
                                             </Grid>
                                         </Grid>
                                     </CardContent>
