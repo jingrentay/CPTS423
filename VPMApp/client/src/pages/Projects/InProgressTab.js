@@ -76,7 +76,7 @@ const InProgressTab = () => {
             <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
                     <MultiFeverChart 
-                        plotData={projects?.map((project) => project.lastKnownCompletion? project.lastKnownCompletion : { x: 0, y: 0})} 
+                        plotData={projects?.map((project) => project.lastKnownCompletion? ((project.lastKnownCompletion.y > 100)? {x: project.lastKnownCompletion.x, y: 100} : project.lastKnownCompletion) : { x: 0, y: 0})} 
                         labelData={projects?.map((project) => project.projectName? project.projectName : "Null") }
                     />
                 </div>
