@@ -120,8 +120,15 @@ const ViewInProgressPage = () => {
                     <div key='chart-padding' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
                             <FeverChart 
-                                plotData={project.chartData} 
-                                labelData={project?.completedTasks.map((task) => task.taskName? task.taskName : "Null")}
+                                plotData={project.chartData.map((point) => {
+                                    if (point.y > 100) { 
+                                        return {x: point.x, y: 100} 
+                                    } 
+                                    if (point.y < 0) { 
+                                        return {x: point.x, y: 0} 
+                                    } 
+                                    return point 
+                                })} labelData={project?.completedTasks.map((task) => task.taskName? task.taskName : "Null")}
                             />
                         </div>
                     </div>
