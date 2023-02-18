@@ -1,9 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
-import { Drawer, AppBar, Toolbar, Typography, Button, Box } from '@mui/material'
+import { Drawer, AppBar, Toolbar, Typography, Button, Box, Chip } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
+import PersonIcon from '@mui/icons-material/Person';
+
 import theme from '../theme.js'
 import Sidebar from './Sidebar';
+import { Person } from '@mui/icons-material';
 
 const drawerWidth = 200;
 
@@ -24,7 +27,8 @@ const Navigation = () => {
                     <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1}}>
                         Visual Project Management
                     </Typography>
-                    <Button onClick={handleLogOut} size="medium" variant="contained" sx={{ backgroundColor: "#689f38"}}>
+                    <Chip icon={<PersonIcon />} color='primary' label="User" sx={{ backgroundColor: '#009999', mr: 3, width: 100}} />
+                    <Button onClick={handleLogOut} size="small" variant="contained" sx={{ backgroundColor: "#689f38"}}>
                         Log Out
                     </Button>
                 </Toolbar>

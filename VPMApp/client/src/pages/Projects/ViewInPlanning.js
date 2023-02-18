@@ -23,7 +23,7 @@ const ViewInPlanningPage = () => {
     }, [dispatch, id]);
 
     // State for current "in planning" project viewed
-    const { project, loadingOne } = useSelector((store) => store.projects)
+    const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
     // Display the correct predicted completion 
     let predCompletion = getDate(project?.projectDuration, project?.projectTimeUnits)
