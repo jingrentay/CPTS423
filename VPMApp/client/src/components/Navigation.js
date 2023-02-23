@@ -1,13 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
-import { Drawer, AppBar, Toolbar, Typography, Button, Box } from '@mui/material'
+import { useNavigate } from 'react-router-dom'
+import { Drawer, AppBar, Toolbar, Typography, Button, Box, Chip } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
+import PersonIcon from '@mui/icons-material/Person';
+
 import theme from '../theme.js'
 import Sidebar from './Sidebar';
 
 const drawerWidth = 200;
 
 const Navigation = () => {
+
+    const navigate = useNavigate()
+
+    const handleLogOut = () => {
+        navigate('/')
+        alert('You are now logged out.')
+    }
+
     return (
         <ThemeProvider theme={theme}>
         <Box sx={{ display: 'flex'}}>
@@ -16,7 +26,8 @@ const Navigation = () => {
                     <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1}}>
                         Visual Project Management
                     </Typography>
-                    <Button component={Link} to="/" size="medium" variant="contained" sx={{ backgroundColor: "#689f38"}}>
+                    <Chip icon={<PersonIcon />} color='primary' label="User" sx={{ backgroundColor: '#009999', mr: 3, width: 100}} />
+                    <Button onClick={handleLogOut} size="small" variant="contained" color='success' sx={{ backgroundColor: "#689f38"}}>
                         Log Out
                     </Button>
                 </Toolbar>

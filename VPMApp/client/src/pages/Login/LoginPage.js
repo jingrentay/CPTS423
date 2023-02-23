@@ -35,7 +35,7 @@ function LoginPage() {
                </div>
                
                <p className="link">
-                <a href="/">Forgot password ?</a> Or<a href="/">  Sign Up</a>
+                <a href="/">Forgot password ?</a> Or<a href="/signup">  Sign Up</a>
               </p>
             
             </div>

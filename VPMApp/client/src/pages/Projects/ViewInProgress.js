@@ -20,7 +20,7 @@ const ViewInProgressPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { project, loadingOne } = useSelector((store) => store.projects)
+    const { project, loadingOne } = useSelector((store) => ({...store.projects}))
     let allTasks = []
     
     project?.tasks?.length > 0 && project?.tasks?.forEach(element => {
@@ -36,6 +36,7 @@ const ViewInProgressPage = () => {
     )
     let resultArr = allTasks.map((obj, i) => ({...obj, newTime: result[i]}))
     console.log('in progress', resultArr)
+
     const [dialogOpen, setDialogOpen] = useState(false)
 
     // For getting single project based on id 
@@ -97,7 +98,7 @@ const ViewInProgressPage = () => {
 
     const handleCloseTaskInfoDialog = () => {
         setInfoDialogOpen(false);
-    }                                                                                                                                                                                     
+    }        
 
     const handleCompleteTask = (task) => {
         // record the new date and get the start date
@@ -123,7 +124,6 @@ const ViewInProgressPage = () => {
     const handleCloseTaskDialog = () => {
         setDialogOpen(false);
     }
-
 
     if (loadingOne) {
         return (
@@ -155,8 +155,15 @@ const ViewInProgressPage = () => {
                     <div key='chart-padding' style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <div key='chart-contain' style={{ position: 'relative', width: '40vw' }}>
                             <FeverChart 
-                                plotData={project.chartData} 
-                                labelData={project?.completedTasks.map((task) => task.taskName? task.taskName : "Null")}
+                                plotData={project.chartData.map((point) => {
+                                    if (point.y > 100) { 
+                                        return {x: point.x, y: 100} 
+                                    } 
+                                    if (point.y < 0) { 
+                                        return {x: point.x, y: 0} 
+                                    } 
+                                    return point 
+                                })} labelData={project?.completedTasks.map((task) => task.taskName? task.taskName : "Null")}
                             />
                         </div>
                     </div>
@@ -220,7 +227,7 @@ const ViewInProgressPage = () => {
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
-                                        <DialogTitle>Task Info</DialogTitle>
+                                        <DialogTitle>Task Details</DialogTitle>
                                         <DialogContent>
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>

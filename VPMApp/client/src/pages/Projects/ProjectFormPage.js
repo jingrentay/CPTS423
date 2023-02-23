@@ -16,7 +16,14 @@ const ProjectFormPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+
+    // State variables
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+    const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
+    const [taskToDelete, setTaskToDelete] = useState('')
+    const [totalDuration, setTotalDuration ] = useState(null)
+
     // Set the unique task IDs and projectIDs 
     // TODO: make this not random and truly unique
     const setProjectID = () => {
@@ -26,12 +33,6 @@ const ProjectFormPage = () => {
         return Math.floor(Math.random() * 20);
     } 
 
-    // State variables
-    const [dialogOpen, setDialogOpen] = useState(false)
-    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
-    const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
-    const [taskToDelete, setTaskToDelete] = useState('')
-    const [totalDuration, setTotalDuration ] = useState(null)
 
     // Data object to hold new input for project
     const [newProject, setNewProject] = useState({ 
@@ -53,7 +54,7 @@ const ProjectFormPage = () => {
 
     // Data object for a new task
     const [newTask, setNewTask] = useState({
-        taskID: setTaskID(), 
+        taskID: 0, 
         taskName: '', 
         taskDescription: '',
         taskDuration: 0,

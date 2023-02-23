@@ -15,11 +15,11 @@ import { deleteProject } from '../../features/projectSlice'
 const InPlanningTab = () => {
     const dispatch = useDispatch();
     
-    const { projects, loadingAll } = useSelector((store) => store.projects)
+    const { projects, loadingAll } = useSelector((store) => ({...store.projects}))
 
     useEffect(() => {
         dispatch(getPlanningProjects());
-    }, []);
+    }, [dispatch]);
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))
@@ -47,6 +47,9 @@ const InPlanningTab = () => {
             <Button key='new-project-button' component={Link} to="/projects/create" size="medium" variant="contained">
                 New Project
             </Button>
+                {projects.length === 0 &&
+                    <Typography variant="h6" sx={{ mt: 3  }}> You have no projects currently in planning. </Typography>
+                }
                 {projects.map((project) => (
                     <Card key={project.projectName} sx={{ mt: 3, width: 700, height: 85, backgroundColor: '#A0A0A0' }}>
                         <CardContent>

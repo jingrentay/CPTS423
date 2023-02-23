@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
 import Project from '../models/project.js'
 
-import { taskCalculations } from './task.js'
+import { taskCalculations } from './completeTask.js'
+import { filterTasks, sortProjects } from './taskPriorityList.js'
 
 // Get all projects 
 export const getProjects = async (req, res) => {
@@ -27,7 +28,9 @@ export const getPlanningProjects = async (req, res) => {
 export const getProgressProjects = async (req, res) => {
     try {
         const projects = await Project.find({ projectStage: 1 })
-        res.status(200).json(projects)
+        const sortedProjects = await sortProjects(projects)
+        const taskList = await filterTasks(projects)
+        res.status(200).json({projects: projects, taskList: taskList})
     } catch (error) {
         res.status(404).json({ message: error.message })
     }

@@ -6,6 +6,7 @@ import Chart from "chart.js/auto";
 // ensures the graph's size/ratio is correct and adjusts correctly
 const options = {
   responsive: true,
+  clip: false,
   maintainAspectRatio: true,
   aspectRatio: 2,
   plugins: {
@@ -26,6 +27,11 @@ const options = {
   },
   animation: {
     duration: 0
+  },
+  scales: {
+    yAxis: {
+      max: 100
+    }
   }
 };
 
