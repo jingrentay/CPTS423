@@ -71,13 +71,13 @@ const SignUpPage = () => {
                     <Box sx={{ ml: 2, mr: 2, height: '75vh' }}
 
                     >   
-                        <TextField error={nameError} defaultValue={accountInfo.name} name='name' variant='outlined' label='Name*' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, name: e.target.value })}/>
-                        <TextField error={emailError} defaultValue={accountInfo.email} name='email' variant='outlined' label='Email*' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, email: e.target.value })}/>
+                        <TextField error={nameError} defaultValue={accountInfo.name} name='name' variant='outlined' label='Name *' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, name: e.target.value })}/>
+                        <TextField error={emailError} defaultValue={accountInfo.email} name='email' variant='outlined' label='Email *' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, email: e.target.value })}/>
                         <TextField 
                             error={passwordError}
                             defaultValue={accountInfo.password} 
                             name='password' variant='outlined' 
-                            label='Password*' 
+                            label='Password *' 
                             type={showPassword ? "text" : "password"}
                             style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} 
                             onChange={(e) => setAccountInfo({ ...accountInfo, password: e.target.value })}
@@ -92,8 +92,8 @@ const SignUpPage = () => {
                                 </InputAdornment>)
                             }}
                         /> 
-                        <TextField error={phoneError} defaultValue={accountInfo.phone} name='phone-number' variant='outlined' label='Phone Number*' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, phone: e.target.value })}/>   
-                        <TextField error={orgError} defaultValue={accountInfo.organization} name='org' variant='outlined' label='Organization*' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, organization: e.target.value })}/>
+                        <TextField error={phoneError} defaultValue={accountInfo.phone} name='phone-number' variant='outlined' label='Phone Number *' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, phone: e.target.value })}/>   
+                        <TextField error={orgError} defaultValue={accountInfo.organization} name='org' variant='outlined' label='Organization' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, organization: e.target.value })}/>
                         { inputError &&
                             <Typography variant='body2' color='#DF4338'> Required field(s) missing. </Typography>
                         }

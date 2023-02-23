@@ -6,7 +6,6 @@ import PersonIcon from '@mui/icons-material/Person';
 
 import theme from '../theme.js'
 import Sidebar from './Sidebar';
-import { Person } from '@mui/icons-material';
 
 const drawerWidth = 200;
 
@@ -28,7 +27,7 @@ const Navigation = () => {
                         Visual Project Management
                     </Typography>
                     <Chip icon={<PersonIcon />} color='primary' label="User" sx={{ backgroundColor: '#009999', mr: 3, width: 100}} />
-                    <Button onClick={handleLogOut} size="small" variant="contained" sx={{ backgroundColor: "#689f38"}}>
+                    <Button onClick={handleLogOut} size="small" variant="contained" color='success' sx={{ backgroundColor: "#689f38"}}>
                         Log Out
                     </Button>
                 </Toolbar>
