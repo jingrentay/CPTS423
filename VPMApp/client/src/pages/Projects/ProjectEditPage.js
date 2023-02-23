@@ -22,7 +22,7 @@ const ProjectEditPage = () => {
         dispatch(getProject(id));
     }, [dispatch, id]);
 
-    const { project, loadingOne } = useSelector((store) => store.projects)
+    const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
     const [updatedProject, setUpdatedProject] = useState(project);
 

@@ -15,7 +15,7 @@ const ViewArchiveProjectPage = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    const { project, loadingOne } = useSelector((store) => store.projects)
+    const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
     // For getting single project based on id 
     useEffect( () => {

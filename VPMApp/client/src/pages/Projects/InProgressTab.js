@@ -15,7 +15,7 @@ const InProgressTab = () => {
 
     const dispatch = useDispatch();
 
-    const { projects, loadingAll, taskList } = useSelector((store) => store.projects)
+    const { projects, loadingAll, taskList } = useSelector((store) => ({...store.projects}))
 
     useEffect(() => {
         dispatch(getProgressProjects());
@@ -70,7 +70,7 @@ const InProgressTab = () => {
         <ThemeProvider key='theme-provider' theme={theme} >
             <Navigation key='nav' />
             { projects.length === 0 &&
-                <Typography sx={{ mt: 2 }} variant='h5'> You have no projects currently in progress. </Typography>
+                <Typography sx={{ mt: 2 }} variant='h6'> You have no projects currently in progress. </Typography>
             }
             { projects.length > 0 && 
             <div key='chart-padding' style={{ paddingBottom: '10px', paddingTop: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
