@@ -44,22 +44,22 @@ const ViewInProgressPage = () => {
     }, [dispatch, id, dialogOpen]);
     const showAlert = () => {
         let completedTasks = 0;
-        for(let i=0; i<resultArr.length; i++){
-            const task= allTasks[i];
-            setTimeout(() => {
-                <Modal show={true}>
-                    <div>{`Time exceeded for ${task.task}`}</div>
-                </Modal>
-                completedTasks++;
-                // if(completedTasks === resultArr.length){
-                //     alert("All tasks has been finished!")
-                // }
-            }, task.newTime)
-        }
+        resultArr?.length > 0 && resultArr.forEach(element => {
+            console.log('time', element)
+            if(!isNaN(element.newTime)){
+                setTimeout(() => {
+                    alert(`Time exceeded for ${element.task}`)
+                    completedTasks++;
+                    // if(completedTasks === resultArr.length){
+                    //     alert("All tasks has been finished!")
+                    // }
+                }, element.newTime)
+            }
+        })
     }
     useEffect(() => {
         showAlert()
-    }, [])
+    }, [allTasks])
 
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 

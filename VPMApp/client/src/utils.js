@@ -3,19 +3,19 @@ export function getDate(date, value, name, isBuffer) {
     const currentDate = date;
     if (name === "Weeks") {
       return (new Date(
-        currentDate.getTime() + (isBuffer ? value * 1.5 : value) * 7.0 * 24.0 * 60.0 * 60.0 * 1000.0
+        currentDate.getTime() + ( value * 1.5 ) * 7.0 * 24.0 * 60.0 * 60.0 * 1000.0
       ));
     }
     if (name === "Days") {
       return (new Date(
-        currentDate.getTime() + (isBuffer ? value * 1.5 : value) * 24.0 * 60.0 * 60.0 * 1000.0
+        currentDate.getTime() + ( value * 1.5 ) * 24.0 * 60.0 * 60.0 * 1000.0
       ));
     }
     if (name === "Hours") {
-      return new Date(currentDate.getTime() + (isBuffer ? value * 1.5 : value) * 60.0 * 60.0 * 1000.0);
+      return new Date(currentDate.getTime() + ( value * 1.5 ) * 60.0 * 60.0 * 1000.0);
     }
     if (name === "Minutes") {
-      return new Date(currentDate.getTime() + (isBuffer ? value * 1.5 : value) * 60.0 * 1000.0);
+      return new Date(currentDate.getTime() + ( value * 1.5 ) * 60.0 * 1000.0);
     }
 }
 
