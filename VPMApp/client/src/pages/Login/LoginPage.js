@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
-import { Button, TextField, InputAdornment, IconButton, Grid } from '@mui/material'
+import { ThemeProvider } from '@mui/material/styles'
+import { Button, TextField, InputAdornment, IconButton } from '@mui/material'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockIcon from '@mui/icons-material/Lock';
 
 import profile from "../Login/assets/profile.jpeg";
-import email from "../Login/assets/email.jpg";
-import pass from "../Login/assets/password.png";
-
+import theme from '../../theme.js';
 import "../Login/LoginPage.css";
 
 function LoginPage() {
@@ -25,9 +24,10 @@ function LoginPage() {
     }
 
     return (
+        <ThemeProvider key='theme-provider' theme={theme}>
         <div className='main'>
             <div className="sub-main">
-                <div style={{ width: '60%' }}>
+                <div style={{ width: '60%', maxWidth: '300px' }}>
                     <div className="imgs">
                         <div className='container-image'>
                         <img src={profile} alt="profile" className="profile"/>
@@ -47,7 +47,7 @@ function LoginPage() {
                         <div className="second-input">
                             <TextField 
                                 defaultValue={accountInfo.password} 
-                                style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} 
+                                style={{ display: 'flex', justifyContent: 'center'}} 
                                 variant='outlined' 
                                 label='Password' 
                                 type={showPassword ? "text" : "password"}
@@ -66,20 +66,20 @@ function LoginPage() {
                             /> 
                         </div>
                         <div className="login-button">
-                            <Button onClick={handleLogin} size="medium" variant="contained">
+                            <Button onClick={handleLogin} color='primary' size="medium" variant="contained">
                                 Log in
                             </Button>
                         </div>
                         <p className="link">
                             <a href="/signup"> Don't have an account? Sign up </a> 
-                        </p>
-                        <p className="link">
+                            <br />
                             <a href="/"> Forgot password? </a> 
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+        </ThemeProvider>
     );
 }
 
