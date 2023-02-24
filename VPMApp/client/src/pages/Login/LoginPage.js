@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockIcon from '@mui/icons-material/Lock';
 
-import profile from "../Login/assets/profile.jpeg";
+import logo from "../Login/assets/logo.png";
 import theme from '../../theme.js';
 import "../Login/LoginPage.css";
 
@@ -30,11 +30,11 @@ function LoginPage() {
                 <div style={{ width: '60%', maxWidth: '300px' }}>
                     <div className="imgs">
                         <div className='container-image'>
-                        <img src={profile} alt="profile" className="profile"/>
+                        <img src={logo} alt="logo" className="profile"/>
                         </div>
                     </div>
                     <div>
-                        <h1>Log In</h1>
+                        <h1 style={{ color: '#505050' }}>Log In</h1>
                         <div>
                             <TextField defaultValue={accountInfo.email} variant='outlined' label='Email' 
                                 style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} 

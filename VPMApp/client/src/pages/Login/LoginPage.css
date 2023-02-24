@@ -10,7 +10,7 @@
 .sub-main {
     display: flex;
     justify-content: center;
-    height: 85%;
+    height: 90%;
     width: 35%;
     box-shadow: 11px 12px 13px 12px rgb(178, 193, 195);
     padding-top: 30px;
@@ -25,7 +25,6 @@
 }
 
 .container-image {
-    background-color: rgb(223, 221, 221); 
     border-radius: 150px;
     align-items: center;
     display: flex;
@@ -37,7 +36,6 @@
 .profile {
     height: 100px;
     width: 100px;
-    border-radius: 130px;
 } 
 
 .email {
