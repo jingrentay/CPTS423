@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ThemeProvider } from '@mui/material/styles'
-import { Button, TextField, InputAdornment, IconButton } from '@mui/material'
+import { Button, TextField, InputAdornment, IconButton, Typography } from '@mui/material'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
@@ -17,10 +17,28 @@ function LoginPage() {
     const [accountInfo, setAccountInfo] = useState({ email: '', password: ''})
     const [showPassword, setShowPassword] = useState(false);
 
+    const [emailError, setEmailError] = useState(false)
+    const [passwordError, setPasswordError] = useState(false)
+
     const handleShowPassword = () => setShowPassword((show) => !show)
 
+    const handleTestInput = async() => {
+        // make sure the fields are all full, display error msg if not
+        if (accountInfo.email === '' || accountInfo.password === '') { 
+            setEmailError(true); setPasswordError(true);
+            return true;
+        } else { 
+            setEmailError(false); setPasswordError(false);
+        }
+        return false;
+    }
+
     const handleLogin = () => {
-        navigate('/projects')
+        handleTestInput().then((error) => {
+            if (!error) {
+                navigate('/projects'); 
+            }
+        })
     }
 
     return (
@@ -36,7 +54,9 @@ function LoginPage() {
                     <div>
                         <h1 style={{ color: '#505050' }}>Log In</h1>
                         <div>
-                            <TextField defaultValue={accountInfo.email} variant='outlined' label='Email' 
+                            <TextField 
+                                error={emailError}
+                                defaultValue={accountInfo.email} variant='outlined' label='Email' 
                                 style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} 
                                 onChange={(e) => setAccountInfo({ ...accountInfo, email: e.target.value })}
                                 InputProps={{
@@ -46,6 +66,7 @@ function LoginPage() {
                         </div>
                         <div className="second-input">
                             <TextField 
+                                error={passwordError}
                                 defaultValue={accountInfo.password} 
                                 style={{ display: 'flex', justifyContent: 'center'}} 
                                 variant='outlined' 
@@ -66,6 +87,9 @@ function LoginPage() {
                             /> 
                         </div>
                         <div className="login-button">
+                            { (emailError || passwordError) &&
+                                <Typography sx={{ mb: 2 }} variant='body2' color='#DF4338'> Missing or incorrect field(s) </Typography>
+                            }
                             <Button onClick={handleLogin} color='primary' size="medium" variant="contained">
                                 Log in
                             </Button>
