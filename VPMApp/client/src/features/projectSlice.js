@@ -112,6 +112,18 @@ export const deleteProject = createAsyncThunk(
     }
 )
 
+export const updateProjectTask = createAsyncThunk(
+    'projects/updateProjectTask',
+    async ({project, taskList}) => {
+        try{
+            const {data} = await api.updateProjectTask(project.projectID, taskList)
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
 const projectSlice = createSlice({
     name: 'projects',
     initialState: {
@@ -198,6 +210,9 @@ const projectSlice = createSlice({
             })
             .addCase(deleteProject.rejected, (store, action) => {
                 store.loadingAll = false
+            })
+            .addCase(updateProjectTask.fulfilled , (store,action) => {
+                console.log(action.payload)
             })
     },
 });

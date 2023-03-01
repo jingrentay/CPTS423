@@ -11,6 +11,7 @@ import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getProject } from '../../features/projectSlice'
 import { updateProject } from '../../features/projectSlice'
+import { updateProjectTask } from '../../features/projectSlice';
 
 const ProjectEditPage = () => {
     const { id } = useParams()
@@ -25,6 +26,7 @@ const ProjectEditPage = () => {
     const { project, loadingOne } = useSelector((store) => store.projects)
 
     const [updatedProject, setUpdatedProject] = useState(project);
+    const [updatedProjectTasks, setUpdatedProjectTasks] = useState({...project.tasks});
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -58,7 +60,17 @@ const ProjectEditPage = () => {
             taskDuration: task[0].taskDuration,
         })
         setInfoDialogOpen(true);
+        
     }
+
+    const [updatedTask, setUpdateTask] = useState({
+        taskID: 0, 
+        taskName: '', 
+        taskDescription: '',
+        taskDuration: 0,
+        complete: false,
+        taskStatus: '#56AB2B',  // green,
+    })
 
     const handleCloseTaskInfoDialog = () => {
         setInfoDialogOpen(false);
@@ -75,6 +87,15 @@ const ProjectEditPage = () => {
         setUpdatedProject({...updatedProject, tasks: updatedProject.tasks.filter((task) => task.taskName !== taskToDelete)})
         console.log(updatedProject.tasks)
         handleCloseDeleteDialog()
+    }
+
+    const handleSaveTask = (e) => {
+        e.preventDefault()
+        console.log(taskPopup)
+        var taskList =  updatedProject.tasks.filter((task) => task.taskID !== taskPopup.taskID)
+        taskList.push(taskPopup)
+        dispatch(updateProjectTask({project, taskPopup}))
+        handleCloseTaskInfoDialog()
     }
 
     if (loadingOne) {
@@ -140,12 +161,14 @@ const ProjectEditPage = () => {
                                             <InfoIcon fontSize='large' /> 
                                         </IconButton>
                                         <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
-                                        <DialogTitle>Task Info</DialogTitle>
+                                        <DialogTitle>Edit Task</DialogTitle>
                                         <DialogContent>
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
-                                            <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} onChange={(e) => setTaskPopup({...taskPopup, taskName: e.target.value })}/>
+                                            <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth defaultValue={taskPopup.taskDescription} onChange={(e) => setTaskPopup({...taskPopup,  taskDescription: e.target.value })}/>
+                                            <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth defaultValue={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                            <Button variant="contained" sx={{ mb: 1, width: 100, height: 35 }} onClick={handleSaveTask} > Save </Button>
+                                            <Button variant="outlined" sx={{ mb: 1, ml: 2, width: 100, height: 35 }} onClick={handleCloseTaskInfoDialog} > Cancel </Button>
                                         </DialogContent>
                                         </Dialog> 
                                     </Grid>

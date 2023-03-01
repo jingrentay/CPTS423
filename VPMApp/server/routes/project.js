@@ -1,5 +1,5 @@
 import express from 'express';
-import { getProjects, getProject, createProject, updateProject, deleteProject, getPlanningProjects, getProgressProjects, getArchivedProjects, completeTask } from '../controllers/project.js'
+import { getProjects, getProject, createProject, updateProject, deleteProject, getPlanningProjects, getProgressProjects, getArchivedProjects, completeTask, updateProjectTask } from '../controllers/project.js'
 
 const router = express.Router();
 
@@ -14,5 +14,6 @@ router.patch('/:id', updateProject)
 router.delete('/:id', deleteProject)
 
 router.patch('/task/:id', completeTask)
+router.patch('/edit/task/:id', updateProjectTask)
 
 export default router;

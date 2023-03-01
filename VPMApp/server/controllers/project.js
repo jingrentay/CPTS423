@@ -106,3 +106,15 @@ export const deleteProject = async (req, res) => {
         res.status(409).json({ message: error.message })
     }
 }
+
+//Update project task
+export const updateProjectTask = async (req, res) => {
+    const { id } = req.params
+    const taskList = req.body
+    try {
+        const updatedProject = await Project.findOneAndUpdate({ projectID: id }, {tasks: taskList})
+        res.status(201).json(updatedProject);
+    } catch (error) {
+        res.status(409).json({ message: error.message })
+    }
+}

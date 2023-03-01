@@ -13,3 +13,4 @@ export const updateProject = (id, project) => axios.patch(`${url}/${id}`, projec
 export const deleteProject = (id) => axios.delete(`${url}/${id}`) 
 
 export const completeTask = (id, project, task, timeDifference) => axios.patch(`${url}/task/${id}`, { project, task, timeDifference })
+export const updateProjectTask = (id, taskList) => axios.patch(`${url}/edit/task/${id}`, taskList)
