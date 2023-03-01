@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { ThemeProvider } from '@mui/material/styles'
 import { Button, TextField, InputAdornment, IconButton, Typography } from '@mui/material'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
@@ -9,10 +10,12 @@ import LockIcon from '@mui/icons-material/Lock';
 import logo from "../Login/assets/logo.png";
 import theme from '../../theme.js';
 import "../Login/LoginPage.css";
+import { authUser } from '../../features/accountSlice'
 
 function LoginPage() {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const [accountInfo, setAccountInfo] = useState({ email: '', password: ''})
     const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +39,7 @@ function LoginPage() {
     const handleLogin = () => {
         handleTestInput().then((error) => {
             if (!error) {
-                navigate('/projects'); 
+                dispatch(authUser({account: accountInfo, navigate: navigate }))
             }
         })
     }

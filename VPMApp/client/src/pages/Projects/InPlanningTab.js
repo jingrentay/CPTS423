@@ -9,8 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { getPlanningProjects } from '../../features/projectSlice'
-import { deleteProject } from '../../features/projectSlice'
+import { deleteProject, getPlanningProjects } from '../../features/projectSlice'
 
 const InPlanningTab = () => {
     const dispatch = useDispatch();

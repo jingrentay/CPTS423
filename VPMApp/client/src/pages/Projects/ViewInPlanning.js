@@ -7,9 +7,8 @@ import InfoIcon from '@mui/icons-material/Info';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { getProject, updateProject } from '../../features/projectSlice'
+import { getProject, updateProject, createProject } from '../../features/projectSlice'
 import { getDate } from '../../utils.js'
-import { createProject } from '../../features/projectSlice'
 
 const ViewInPlanningPage = () => {
 
