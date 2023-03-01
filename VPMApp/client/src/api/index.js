@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+// Projects
+
 const url = 'http://localhost:5000/projects'
 
 export const getAllProjects = () => axios.get(url)
@@ -14,3 +16,9 @@ export const deleteProject = (id) => axios.delete(`${url}/${id}`)
 
 export const completeTask = (id, project, task, timeDifference) => axios.patch(`${url}/task/${id}`, { project, task, timeDifference })
 export const updateProjectTask = (id, taskList) => axios.patch(`${url}/edit/task/${id}`, taskList)
+
+// Accounts
+
+const accUrl = 'http://localhost:5000/accounts'
+
+export const createAccount = (account) => axios.post(accUrl, account)

@@ -18,7 +18,7 @@ const ArchivePage = () => {
         dispatch(getArchivedProjects());
     }, [dispatch]);
 
-    const { projects, loadingAll } = useSelector((store) => store.projects)
+    const { projects, loadingAll } = useSelector((store) => ({...store.projects}))
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))

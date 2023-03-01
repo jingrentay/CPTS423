@@ -18,7 +18,7 @@ const ViewInProgressPage = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const { project, loadingOne } = useSelector((store) => store.projects)
+    const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
     const [dialogOpen, setDialogOpen] = useState(false)
 
