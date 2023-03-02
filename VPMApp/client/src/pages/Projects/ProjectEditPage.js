@@ -37,9 +37,11 @@ const ProjectEditPage = () => {
         navigate('/projects')
     };
 
-    const setTaskID = () => {
+    const setTaskID = () => { 
         return Math.floor(Math.random() * 20);
     } 
+
+    
 
     const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
     const [taskToDelete, setTaskToDelete] = useState('')
