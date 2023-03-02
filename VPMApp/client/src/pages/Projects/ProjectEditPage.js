@@ -12,6 +12,8 @@ import Navigation from '../../components/Navigation'
 import { getProject } from '../../features/projectSlice'
 import { updateProject } from '../../features/projectSlice'
 import { updateProjectTask } from '../../features/projectSlice';
+import { getDate } from '../../utils.js';
+import { current } from '@reduxjs/toolkit';
 
 const ProjectEditPage = () => {
     const { id } = useParams()
@@ -35,9 +37,15 @@ const ProjectEditPage = () => {
         navigate('/projects')
     };
 
+    const setTaskID = () => {
+        return Math.floor(Math.random() * 20);
+    } 
+
     const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
     const [taskToDelete, setTaskToDelete] = useState('')
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+    const [totalDuration, setTotalDuration ] = useState(null);
+    const [dialogOpen, setDialogOpen] = useState(false)
 
     // Open and close the dialog for deleting a task
     const handleOpenDeleteDialog = (name) => {
@@ -47,6 +55,13 @@ const ProjectEditPage = () => {
     const handleCloseDeleteDialog = () => {
         setDeleteWarningOpen(false);
         setTaskToDelete('')
+    }
+
+    const handleOpenTaskDialog = () => {
+        setDialogOpen(true);
+    }
+    const handleCloseTaskDialog = () => {
+        setDialogOpen(false);
     }
 
      //Open and close for showing info/description of a created task
@@ -63,14 +78,22 @@ const ProjectEditPage = () => {
         
     }
 
-    const [updatedTask, setUpdateTask] = useState({
-        taskID: 0, 
-        taskName: '', 
-        taskDescription: '',
-        taskDuration: 0,
-        complete: false,
-        taskStatus: '#56AB2B',  // green,
-    })
+    // Data object to hold new input for project
+    const [newUpdatedProject, setNewUpdatedProject] = useState({ 
+        projectName: '', 
+        projDescription: '', 
+        projectDuration: 0,
+        projectTimeUnits: '',
+        predictedCompletion: new Date(),
+        projectStage: 0,   // in planning
+        tasks: [], 
+        chartData: [ { x: 0, y: 0 } ],
+        lastKnownCompletion: { x: 0, y: 0 },
+        completedTasks: [],
+        numTasks: 0, 
+        projectStatus: '#56AB2B',  // green
+        projectDateCreated: new Date()
+    });
 
     const handleCloseTaskInfoDialog = () => {
         setInfoDialogOpen(false);
@@ -97,6 +120,41 @@ const ProjectEditPage = () => {
         dispatch(updateProjectTask({project, taskPopup}))
         handleCloseTaskInfoDialog()
     }
+
+    const [newTask, setNewTask] = useState({
+        taskID: 0, 
+        taskName: '', 
+        taskDescription: '',
+        taskDuration: 0,
+        complete: false,
+        taskStatus: '#56AB2B',  // green,
+    });
+
+     // Add the task durations for the aggressive duration 
+     let taskDurations = []
+
+     // Handle the saving of a new task in the project
+     // Update the aggressive duration and predicted completion in the UI
+     const handleSaveNewTask = () => {
+         // push new task to project task list and reset task object to empty
+         console.log(newTask)
+         var currentTaskList = updatedProject.tasks.filter((task) => task.taskID !== newTask.taskID)
+         currentTaskList.push(newTask)
+         setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0, complete: false })
+ 
+         // calculate aggressive duration and predicted completion 
+         updatedProject?.tasks?.forEach(element => { taskDurations?.push(parseInt(element.taskDuration)) })
+         const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
+         setTotalDuration(totalTaskDuration)
+         let predCompletion = getDate(totalTaskDuration, updatedProject?.projectTimeUnits)
+         
+         // update project 
+         setUpdatedProject({...updatedProject, projectDuration: totalTaskDuration, predictedCompletion: predCompletion, numTasks: updatedProject.numTasks + 1})
+         handleCloseTaskDialog()
+        
+     }
+     
+     useEffect(() => {}, [totalDuration])
 
     if (loadingOne) {
         return (
@@ -137,9 +195,23 @@ const ProjectEditPage = () => {
                     
                     <Box sx={{ display: 'flex', mt: 3, mb: 2 }}>
                         <Typography variant='h6'> Tasks </Typography>
-                        <Button sx={{ ml: 2 }} size="small" variant="contained" color="success" startIcon={<AddCircleOutlineIcon/>}> 
+                        <Button sx={{ ml: 2 }} size="small" variant="contained" color="success" startIcon={<AddCircleOutlineIcon/>} onClick={handleOpenTaskDialog}> 
                             New Task 
                         </Button>
+                        <Dialog open={dialogOpen} onClose={handleCloseTaskDialog} >
+                            <DialogTitle> Add Task </DialogTitle>
+                            <DialogContent>
+                                <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth value={newTask.taskName} onChange={(e) => setNewTask({ ...newTask, taskName: e.target.value })} />
+                                <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={newTask.taskDescription} onChange={(e) => setNewTask({ ...newTask, taskDescription: e.target.value })} />
+                                <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='outlined' label='Aggressive Duration' fullWidth value={newTask.taskDuration} onChange={(e) => setNewTask({ ...newTask, taskDuration: e.target.value })} />
+                            </DialogContent>
+                            <DialogActions>
+                                <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Button variant="contained" sx={{ mb: 2, width: 185, height: 40 }} onClick={handleSaveNewTask} > Save </Button>
+                                    <Button variant="outlined" sx={{ mb: 2, ml: 2, width: 185, height: 40  }} onClick={handleCloseTaskDialog} > Cancel </Button>
+                                 </Container>
+                            </DialogActions>
+                        </Dialog>
                     </Box>
                     {project.tasks.map((task) => (
                         <Card key={task.taskName} sx={{ mb: 3, width: 550, height: 85, backgroundColor: '#C0C0C0' }}>
