@@ -25,7 +25,7 @@ const ViewInPlanningPage = () => {
     const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
     // Display the correct predicted completion 
-    let predCompletion = getDate(project?.projectDuration, project?.projectTimeUnits)
+    let predCompletion = getDate( new Date(), project?.projectDuration, project?.projectTimeUnits, true)
 
     // State for the info of tasks 
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
@@ -60,7 +60,7 @@ const ViewInPlanningPage = () => {
             ...project, 
             projectStage: 1, 
             projectStartDate: new Date(),
-            predictedCompletion: getDate(project?.projectDuration, project?.projectTimeUnits) 
+            predictedCompletion: getDate( new Date(), project?.projectDuration, project?.projectTimeUnits, true) 
         }
         dispatch(updateProject(editedProject))
         navigate('/projects');
@@ -83,7 +83,6 @@ const ViewInPlanningPage = () => {
     }
 
     const handleDuplicateProject = () => {
-        console.log('project', project)
         const reqData = {
             projectID: project?.projectID + 100, 
             projectName: project?.projectName + " (Duplicate)", 
