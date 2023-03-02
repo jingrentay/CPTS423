@@ -1,8 +1,6 @@
 import express from 'express';
 import { getProject, createProject, updateProject, deleteProject, getPlanningProjects, getProgressProjects, getArchivedProjects, completeTask } from '../controllers/project.js'
 
-import auth from '../middleware/auth.js'
-
 const router = express.Router();
 
 router.get('/inplanning', getPlanningProjects)
