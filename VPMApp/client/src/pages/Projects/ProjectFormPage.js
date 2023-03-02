@@ -131,7 +131,7 @@ const ProjectFormPage = () => {
         newProject?.tasks?.forEach(element => { taskDurations?.push(parseInt(element.taskDuration)) })
         const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
         setTotalDuration(totalTaskDuration)
-        let predCompletion = getDate(totalTaskDuration, newProject?.projectTimeUnits)
+        let predCompletion = getDate( new Date(), totalTaskDuration, newProject?.projectTimeUnits, true)
         
         // update project 
         setNewProject({...newProject, projectDuration: totalTaskDuration, predictedCompletion: predCompletion, numTasks: newProject.numTasks + 1})

@@ -1,9 +1,8 @@
 import express from 'express';
-import { getProjects, getProject, createProject, updateProject, deleteProject, getPlanningProjects, getProgressProjects, getArchivedProjects, completeTask, updateProjectTask } from '../controllers/project.js'
+import { getProject, createProject, updateProject, deleteProject, getPlanningProjects, getProgressProjects, getArchivedProjects, completeTask, updateProjectTask } from '../controllers/project.js'
 
 const router = express.Router();
 
-router.get('/', getProjects)
 router.get('/inplanning', getPlanningProjects)
 router.get('/inprogress', getProgressProjects)
 router.get('/archived', getArchivedProjects)

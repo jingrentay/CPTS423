@@ -85,9 +85,7 @@ export const updateProject = async (req, res) => {
 export const completeTask = async (req, res) => {
     const { id } = req.params
     const { project, task, timeDifference } = req.body
-
     const updatedProject = await taskCalculations(project, task, timeDifference)
-
     try {
         const data = await Project.findOneAndUpdate({ projectID: id }, updatedProject)
         res.status(201).json(data);

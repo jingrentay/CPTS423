@@ -1,18 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import * as api from '../api'
 
-export const getProjects = createAsyncThunk(
-    'projects/getProjects', 
-    async () => {
-        try {
-            const { data } = await api.getAllProjects();
-            return data;
-        } catch (error) {
-            console.log(error.message)
-        }
-    }
-)
-
 export const getPlanningProjects = createAsyncThunk(
     'projects/getPlanningProjects', 
     async () => {
@@ -53,7 +41,7 @@ export const getProject = createAsyncThunk(
     'projects/getProject', 
     async (id) => {
         try {
-            const { data } = await api.fetchProject(id);
+            const { data } = await api.getProject(id);
             return data;
         } catch (error) {
             console.log(error.message)
@@ -136,16 +124,6 @@ const projectSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getProjects.pending, (store, action) => {              // get all projects
-                store.loadingAll = true
-            })
-            .addCase(getProjects.fulfilled, (store, action) => {
-                store.loadingAll = false
-                store.projects = action.payload
-            })
-            .addCase(getProjects.rejected, (store, action) => {
-                store.loadingAll = false
-            })
             .addCase(getPlanningProjects.pending, (store, action) => {      // get "in planning" projects
                 store.loadingAll = true
             })
@@ -196,7 +174,7 @@ const projectSlice = createSlice({
             .addCase(deleteProject.pending, (store, action) => {            // delete a project
                 store.loadingAll = true
             })
-            .addCase(deleteProject.fulfilled, (store, action) => {          // delete a project
+            .addCase(deleteProject.fulfilled, (store, action) => {         
                 store.loadingAll = false
                 const id = action.meta.arg
                 console.log(id)
