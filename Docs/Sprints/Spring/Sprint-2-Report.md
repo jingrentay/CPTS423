@@ -24,7 +24,7 @@ Here are links to the issues that we completed in this sprint:
 ## Incomplete Issues/User Stories
 Here are links to issues we worked on but did not complete in this sprint:
 
-* We did not get to this issue because we focused on warnings, editing tasks, and login: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/issues/90
+* We did not get to this issue because we focused on warnings and login: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/issues/90
 * We ran into an unexpected complication regarding authorization: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/issues/87
 * We did not get to this issue because it will first require authentication and more research to implement: https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/issues/88
 
@@ -33,7 +33,7 @@ Please review the following code files, which were actively developed during thi
 
  * [accountSlice.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/client/src/features/accountSlice.js)
  * [account.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/server/controllers/account.js)
- * [ProjectEditPage.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/client/src/pages/Projects/ProjectEditPage.js)
+ * [ProjectFormPage.js](https://github.com/WSUCptSCapstone-Fall2022Spring2023/wsuetm-pmwebapp/blob/main/VPMApp/client/src/pages/Projects/ProjectFormPage.js)
 
 ## Retrospective Summary
 
