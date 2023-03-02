@@ -67,7 +67,7 @@ const SignUpPage = () => {
                 sx={{ display: 'flex', flexWrap: 'wrap', '& > :not(style)': { m: 1, width: 400,  height: '75vh', minHeight: 600, maxHeight:600 } 
             }}>
                 <Paper elevation={3} >
-                    <Typography variant='h4' sx={{ mt: 4, mb: 3 }} style={{ color: '#036e8f', display: 'flex', alignItems: 'center', justifyContent: 'center'}} >Sign Up</Typography>
+                    <Typography variant='h4' sx={{ mt: 4, mb: 3 }} style={{ color: '#404040', display: 'flex', alignItems: 'center', justifyContent: 'center'}} >Sign Up</Typography>
                     <Box sx={{ ml: 2, mr: 2, height: '75vh' }}
 
                     >   

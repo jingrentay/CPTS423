@@ -9,9 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
-import { getProject } from '../../features/projectSlice'
-import { updateProject } from '../../features/projectSlice'
-import { updateProjectTask } from '../../features/projectSlice';
+import { getProject, updateProject, updateProjectTask } from '../../features/projectSlice'
 import { getDate } from '../../utils.js';
 import { current } from '@reduxjs/toolkit';
 

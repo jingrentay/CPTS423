@@ -8,14 +8,8 @@ import Navigation from '../../components/Navigation'
 
 const SettingsPage = () => {
 
-    const [accountInfo, setAccountInfo] = useState({
-        name: 'Jane',
-        email: 'jane@wsu.edu',
-        password: '',
-        phone: '80978632837',
-        userID: 0,
-        organization: 'Students',
-    })
+    // eslint-disable-next-line
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [passwordError, setPasswordError] = useState(false)
@@ -28,8 +22,9 @@ const SettingsPage = () => {
         setDialogOpen(false);
     }
     const handleShowPassword = () => setShowPassword((show) => !show)
+
     const handleChangePassword = () => {
-        if (accountInfo.password === '') { setPasswordError(true); } else { setPasswordError(false); }
+        if (user.result.password === '') { setPasswordError(true); } else { setPasswordError(false); }
         // handleClosePasswordDialog()
     }
 
@@ -44,9 +39,9 @@ const SettingsPage = () => {
                         <Card key='user details' style={{ backgroundColor: '#F0F0F0', maxWidth: '500px'}} >
                             <CardContent>
                                 <Typography variant="h6" sx={{ mb: 2 }} > User Details </Typography>
-                                <TextField sx={{ mb: 2 }} defaultValue={accountInfo.name} name='name' variant='outlined' label='Name' InputProps={{ readOnly: true }} fullWidth />
-                                <TextField sx={{ mb: 2 }} defaultValue={accountInfo.email} name='email' variant='outlined' label='Email' InputProps={{ readOnly: true }} fullWidth  />
-                                <TextField sx={{ mb: 2 }} defaultValue={accountInfo.phone} name='phone' variant='outlined' label='Phone' InputProps={{ readOnly: true }} fullWidth  />
+                                <TextField sx={{ mb: 2 }} defaultValue={user?.result.name} name='name' variant='outlined' label='Name' InputProps={{ readOnly: true }} fullWidth />
+                                <TextField sx={{ mb: 2 }} defaultValue={user?.result.email} name='email' variant='outlined' label='Email' InputProps={{ readOnly: true }} fullWidth  />
+                                <TextField sx={{ mb: 2 }} defaultValue={user?.result.phone} name='phone' variant='outlined' label='Phone' InputProps={{ readOnly: true }} fullWidth  />
                                 <Button onClick={handleOpenPasswordDialog} fullWidth size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38" }}>Change Password</Button>
                             </CardContent>
                          </Card>
@@ -55,7 +50,8 @@ const SettingsPage = () => {
                         <Card key='organization' style={{ backgroundColor: '#F0F0F0', maxWidth: '500px'}} >
                             <CardContent>
                                 <Typography variant="h6" sx={{ mb: 2 }} > Organization </Typography>
-                                <TextField defaultValue={accountInfo.organization} name='org' variant='outlined' label='Organization' InputProps={{ readOnly: true }} fullWidth />
+                                <TextField defaultValue={user?.result.organization} sx={{ mb: 2 }} name='org' variant='outlined' label='Organization' InputProps={{ readOnly: true }} fullWidth />
+                                <TextField defaultValue='tbd' name='role' variant='outlined' label='Role' InputProps={{ readOnly: true }} fullWidth />
                             </CardContent>
                          </Card>
                     </Grid>
