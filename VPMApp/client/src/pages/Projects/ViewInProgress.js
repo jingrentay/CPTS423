@@ -11,8 +11,7 @@ import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getProject, completeTask } from '../../features/projectSlice'
 import FeverChart from '../../components/FeverChart'
-import { getDate, getTimeDiff } from '../../utils.js'
-import { Modal } from 'react-bootstrap'
+import { getTimeDiff } from '../../utils.js'
 
 const ViewInProgressPage = () => {
 
@@ -21,6 +20,16 @@ const ViewInProgressPage = () => {
     const navigate = useNavigate()
 
     const { project, loadingOne } = useSelector((store) => ({...store.projects}))
+
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+
+    const [taskPopup, setTaskPopup] = useState({
+        taskName: '', 
+        taskDescription: '',
+        taskID: 0,
+        taskDuration: 0,
+    })
+
     let allTasks = []
     
     project?.tasks?.length > 0 && project?.tasks?.forEach(element => {
@@ -43,14 +52,16 @@ const ViewInProgressPage = () => {
     useEffect( () => {
         dispatch(getProject(id));
     }, [dispatch, id, dialogOpen]);
+
     const showAlert = () => {
+        // eslint-disable-next-line 
         let completedTasks = 0;
         resultArr?.length > 0 && resultArr.forEach(element => {
             console.log('time', element)
             if(!isNaN(element.newTime)){
                 setTimeout(() => {
                     alert(`Time exceeded for ${element.task}`)
-                    completedTasks++;
+                    completedTasks += 1;
                     // if(completedTasks === resultArr.length){
                     //     alert("All tasks has been finished!")
                     // }
@@ -58,18 +69,11 @@ const ViewInProgressPage = () => {
             }
         })
     }
+
     useEffect(() => {
         showAlert()
+        // eslint-disable-next-line 
     }, [allTasks])
-
-    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
-
-    const [taskPopup, setTaskPopup] = useState({
-        taskName: '', 
-        taskDescription: '',
-        taskID: 0,
-        taskDuration: 0,
-    })
 
     //Open and close for showing info/description of a created task
     const handleOpenTaskInfoDialog = (id) => {

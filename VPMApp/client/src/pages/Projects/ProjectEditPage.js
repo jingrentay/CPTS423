@@ -11,7 +11,6 @@ import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { getProject, updateProject, updateProjectTask } from '../../features/projectSlice'
 import { getDate } from '../../utils.js';
-import { current } from '@reduxjs/toolkit';
 
 const ProjectEditPage = () => {
     const { id } = useParams()
@@ -26,7 +25,6 @@ const ProjectEditPage = () => {
     const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
     const [updatedProject, setUpdatedProject] = useState(project);
-    const [updatedProjectTasks, setUpdatedProjectTasks] = useState({...project.tasks});
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -75,24 +73,7 @@ const ProjectEditPage = () => {
         setInfoDialogOpen(true);
         
     }
-
-    // Data object to hold new input for project
-    const [newUpdatedProject, setNewUpdatedProject] = useState({ 
-        projectName: '', 
-        projDescription: '', 
-        projectDuration: 0,
-        projectTimeUnits: '',
-        predictedCompletion: new Date(),
-        projectStage: 0,   // in planning
-        tasks: [], 
-        chartData: [ { x: 0, y: 0 } ],
-        lastKnownCompletion: { x: 0, y: 0 },
-        completedTasks: [],
-        numTasks: 0, 
-        projectStatus: '#56AB2B',  // green
-        projectDateCreated: new Date()
-    });
-
+    
     const handleCloseTaskInfoDialog = () => {
         setInfoDialogOpen(false);
     }
