@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Skeleton, Grid, Card, CardContent, Typography, IconButton, Box, TextField, Dialog, DialogTitle, DialogContent, Divider } from '@mui/material'
+import { InputAdornment, Skeleton, Grid, Card, CardContent, Typography, IconButton, Box, TextField, Dialog, DialogTitle, DialogContent, Divider } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useSelector, useDispatch } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
@@ -32,16 +32,19 @@ const InProgressTab = () => {
         taskDescription: '',
         taskID: 0,
         taskDuration: 0,
+        projectTimeUnits: '',
     })
 
     const handleOpenTaskInfoDialog = (id, projID) => {
         let task = taskList?.filter((task) => task.taskID === id && task.projectID === projID)
+        let project = projects?.filter((proj) => proj.projectID === projID)
         setTaskPopup({
             taskName: task[0].taskName,
             taskDescription: task[0].taskDescription,
             taskID: task[0].taskID,
             taskDuration: task[0].taskDuration,
             projectID: task[0].projectID,
+            projectTimeUnits: project[0].projectTimeUnits,
         })
         setInfoDialogOpen(true);
     }
@@ -91,8 +94,8 @@ const InProgressTab = () => {
                                 <Typography sx={{ mt: 2 }} variant='h5'> Projects </Typography>
                             }
                             {projects.map((project) => (
-                                <Grid item>
-                                <Card key={project.projectID} style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: project.projectStatus }}>
+                                <Grid key={project._id} item>
+                                <Card key={project._id} style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: project.projectStatus }}>
                                     <CardContent style={{display: 'flex', width: '100%'}}>
                                         <Grid container >
                                             <Grid item xs={9}>
@@ -125,7 +128,7 @@ const InProgressTab = () => {
                                 <Typography sx={{ mt: 2 }} variant='h5'> Task Priority List </Typography>
                             }
                             {taskList.map((task) => (
-                                <Grid item>
+                                <Grid key={task.taskID} item>
                                 <Card key={task.taskID} style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: task.status }}>
                                     <CardContent style={{display: 'flex', width: '100%'}}>
                                         <Grid container >
@@ -145,8 +148,8 @@ const InProgressTab = () => {
                                                         <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
                                                         <TextField sx={{ mb: 2 }} name='project name' variant='filled' label='Project ID' fullWidth defaultValue={taskPopup.projectID} InputProps={{readOnly:true}} margin='dense'/>
                                                         <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
-                                                        <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
-                                                        <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                                        <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{ readOnly: true }} margin='dense'/>
+                                                        <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{taskPopup.projectTimeUnits.toLowerCase()}</InputAdornment>)}} margin='dense'/>
                                                     </DialogContent>
                                                 </Dialog>
                                             </Grid>

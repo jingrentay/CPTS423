@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockIcon from '@mui/icons-material/Lock';
 
-import logo from "../Login/assets/logo.png";
-import theme from '../../theme.js';
-import "../Login/LoginPage.css";
+import logo from './assets/logo.png'
+import theme from '../../theme.js'
+import '../Login/LoginPage.css'
 import { authUser } from '../../features/accountSlice'
 
 function LoginPage() {

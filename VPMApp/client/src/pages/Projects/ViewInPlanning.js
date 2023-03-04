@@ -84,20 +84,10 @@ const ViewInPlanningPage = () => {
 
     const handleDuplicateProject = () => {
         const reqData = {
+            ...project,
             projectID: project?.projectID + 100, 
             projectName: project?.projectName + " (Duplicate)", 
             projDescription: project?.projectDescription, 
-            projectDuration: project?.projectDuration,
-            projectTimeUnits: project?.projectTimeUnits,
-            predictedCompletion: project?.predictedCompletion,
-            projectStage: project?.projectStage,   // in planning
-            tasks: project?.tasks, 
-            chartData: project?.chartData,
-            lastKnownCompletion: project?.lastKnownCompletion,
-            completedTasks: project?.completedTasks,
-            numTasks: project?.numTasks, 
-            projectStatus: project?.projectStatus,  // green
-            projectDateCreated: project?.projectDateCreated
         }
         dispatch(createProject(reqData))
         navigate('/projects');
@@ -126,8 +116,8 @@ const ViewInPlanningPage = () => {
                 <TextField sx={{ mt: 2 }} id="project-name" label="Name" variant="filled" defaultValue={project.projectName} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project-id" label="ID" variant="filled" defaultValue={project.projectID} InputProps={{ readOnly: true }} fullWidth margin='dense' />
                 <TextField sx={{ mt: 2 }} id="project-description" label="Description" variant="filled" defaultValue={project.projDescription} InputProps={{ readOnly: true }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="aggressive-duration" disabled label="Aggressive Duration" variant="filled" defaultValue={project.projectDuration} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
-                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(predCompletion)} disabled InputLabelProps={{ shrink: true }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="aggressive-duration" label="Aggressive Duration" variant="filled" defaultValue={project.projectDuration} InputProps={{ readOnly: true, endAdornment: (<InputAdornment sx={{ mr: 2, }} position='end'>{project.projectTimeUnits.toLowerCase()}</InputAdornment>) }} fullWidth margin='dense' />
+                <TextField sx={{ mt: 2 }} id="predicted-completion" label="Predicted Completion" variant="filled" defaultValue={new Date(predCompletion)} InputProps={{ readOnly: true }} InputLabelProps={{ shrink: true }} fullWidth margin='dense' />
                 {project.tasks.length !== 0 &&
                     <Typography variant='h6' sx={{ mt: 2, mb: 1 }}> Tasks </Typography>
                 } 

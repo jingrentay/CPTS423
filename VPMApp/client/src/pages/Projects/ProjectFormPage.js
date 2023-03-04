@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Box, Button, Container, Dialog, DialogContent, DialogTitle, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton, Grid, Card, CardContent } from '@mui/material'
@@ -17,13 +17,6 @@ const ProjectFormPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    // State variables
-    const [dialogOpen, setDialogOpen] = useState(false)
-    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
-    const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
-    const [taskToDelete, setTaskToDelete] = useState('')
-    const [totalDuration, setTotalDuration ] = useState(null)
-
     // Set the unique task IDs and projectIDs 
     // TODO: make this not random and truly unique
     const setProjectID = () => {
@@ -33,6 +26,14 @@ const ProjectFormPage = () => {
         return Math.floor(Math.random() * 20);
     } 
 
+    // Add the task durations for the aggressive duration 
+    let taskDurations = []
+
+    // State variables
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+    const [deleteWarningOpen, setDeleteWarningOpen] = useState(false)
+    const [taskToDelete, setTaskToDelete] = useState('')
 
     // Data object to hold new input for project
     const [newProject, setNewProject] = useState({ 
@@ -62,12 +63,12 @@ const ProjectFormPage = () => {
         taskStatus: '#56AB2B',  // green,
     });
 
-    // Handle the creation of a project in the database
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        dispatch(createProject(newProject))
-        navigate('/projects');
-    };
+    const [taskPopup, setTaskPopup] = useState({
+        taskName: '', 
+        taskDescription: '',
+        taskID: 0,
+        taskDuration: 0,
+    })
 
     // Open and close the dialog for creating a new task
     const handleOpenTaskDialog = () => {
@@ -94,13 +95,6 @@ const ProjectFormPage = () => {
         setInfoDialogOpen(false);
     }
 
-    const [taskPopup, setTaskPopup] = useState({
-        taskName: '', 
-        taskDescription: '',
-        taskID: 0,
-        taskDuration: 0,
-    })
-
     // Open and close the dialog for deleting a task
     const handleOpenDeleteDialog = (name) => {
         setTaskToDelete(name)
@@ -111,34 +105,34 @@ const ProjectFormPage = () => {
         setTaskToDelete('')
     }
 
+    // Handle the creation of a project in the database
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(createProject(newProject))
+        navigate('/projects');
+    };
+
     // Handle the deletion of a task from the working task list 
     const handleDeleteTask = () => {
         setNewProject({...newProject, tasks: newProject.tasks.filter((task) => task.taskName !== taskToDelete)})
         handleCloseDeleteDialog()
     }
 
-    // Add the task durations for the aggressive duration 
-    let taskDurations = []
-
-    // Handle the saving of a new task in the project
-    // Update the aggressive duration and predicted completion in the UI
+    // Handle the saving of a new task in the project, update the aggressive duration and predicted completion in the UI
     const handleSaveNewTask = () => {
         // push new task to project task list and reset task object to empty
         newProject.tasks.push(newTask)
-        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0, complete: false })
+        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0, complete: false, taskStatus: '#56AB2B' })
 
         // calculate aggressive duration and predicted completion 
         newProject?.tasks?.forEach(element => { taskDurations?.push(parseInt(element.taskDuration)) })
         const totalTaskDuration = taskDurations?.reduce((a, b) => a + b, 0)
-        setTotalDuration(totalTaskDuration)
         let predCompletion = getDate( new Date(), totalTaskDuration, newProject?.projectTimeUnits, true)
         
         // update project 
         setNewProject({...newProject, projectDuration: totalTaskDuration, predictedCompletion: predCompletion, numTasks: newProject.numTasks + 1})
         handleCloseTaskDialog()
     }
-    
-    useEffect(() => {}, [totalDuration])
 
     // Render the UI
     return (
@@ -206,7 +200,7 @@ const ProjectFormPage = () => {
                                                     <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task ID' fullWidth defaultValue={taskPopup.taskID} InputProps={{readOnly:true}} margin='dense'/>
                                                     <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
                                                     <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
-                                                    <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                                    <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' InputLabelProps={{ shrink: true }} fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
                                                 </DialogContent>
                                             </Dialog>
                                         </Grid>
