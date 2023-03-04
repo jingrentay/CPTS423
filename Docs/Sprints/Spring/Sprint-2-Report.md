@@ -56,7 +56,7 @@ Here's what we'd like to improve:
 
 * Testing and figuring out unit test cases
 * Figure out user authentications, roles and organizations
-*Figure out hosting plans
+* Figure out hosting plans
 
  Here are changes we plan to implement in the next sprint:
  
