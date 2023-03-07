@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import { createProject } from '../../features/projectSlice'
-import { getDate } from '../../utils.js';
+import { getDate } from '../../utils.js'; 
 
 const ProjectFormPage = () => {
 
@@ -37,7 +37,7 @@ const ProjectFormPage = () => {
 
     // Data object to hold new input for project
     const [newProject, setNewProject] = useState({ 
-        projectID: setProjectID(), 
+        projectID: 0, 
         projectName: '', 
         projDescription: '', 
         projectDuration: 0,

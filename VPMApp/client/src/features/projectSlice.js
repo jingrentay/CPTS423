@@ -55,6 +55,7 @@ export const createProject = createAsyncThunk(
         try {
             const { data } = await api.createProject(project)
             return data;
+            
         } catch (error) {
             console.log(error.message)
         }
