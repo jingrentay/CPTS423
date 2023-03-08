@@ -16,7 +16,7 @@ const Navigation = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-     // eslint-disable-next-line
+    // eslint-disable-next-line
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
     const handleLogOut = () => {
@@ -35,7 +35,7 @@ const Navigation = () => {
                         Visual Project Management
                     </Typography>
                     {user &&
-                        <Chip icon={<PersonIcon />} color='primary' label={user.result.name} sx={{ backgroundColor: '#009999', mr: 3, width: 100}} />
+                        <Chip icon={<PersonIcon />} color='primary' label={user.result.name} sx={{ backgroundColor: '#009999', mr: 3 }} />
                     }
                     <Button onClick={handleLogOut} size="small" variant="contained" color='success' sx={{ backgroundColor: "#689f38"}}>
                         Log Out

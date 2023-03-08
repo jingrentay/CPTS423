@@ -21,6 +21,9 @@ const ViewInProgressPage = () => {
 
     const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
+    // eslint-disable-next-line
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
 
     const [taskPopup, setTaskPopup] = useState({
@@ -28,6 +31,7 @@ const ViewInProgressPage = () => {
         taskDescription: '',
         taskID: 0,
         taskDuration: 0,
+        completedBy: '',
     })
 
     let allTasks = []
@@ -96,6 +100,7 @@ const ViewInProgressPage = () => {
             taskDescription: task[0].taskDescription,
             taskID: task[0].taskID,
             taskDuration: task[0].taskDuration,
+            completedBy: task[0].completedBy,
         })
         setInfoDialogOpen(true);
     }
@@ -110,9 +115,10 @@ const ViewInProgressPage = () => {
         var currentDate = moment().utcOffset('+8:00')
         var timeDifference = currentDate.diff(startDate, project.projectTimeUnits.toLowerCase(), true)
         console.log('diff', timeDifference)
+        var name = user.result.name
 
         // complete the task and update project with new data
-        dispatch(completeTask({project, task, timeDifference}))
+        dispatch(completeTask({project, task, timeDifference, name}))
         handleOpenTaskDialog()
 
         if (project.completedTasks.length + 1 === project.numTasks) {
@@ -237,6 +243,7 @@ const ViewInProgressPage = () => {
                                             <TextField sx={{ mb: 2 }} name='task name' variant='filled' label='Task Name' fullWidth defaultValue={taskPopup.taskName} InputProps={{readOnly:true}} margin='dense'/>
                                             <TextField name='task description' variant='filled' multiline maxRows={4} label='Task Description' fullWidth value={taskPopup.taskDescription} InputProps={{readOnly:true}} margin='dense'/>
                                             <TextField sx={{ mt: 3 }} name='task aggressive duration' variant='filled' label='Aggressive Duration' fullWidth value={taskPopup.taskDuration} InputProps={{readOnly:true}} margin='dense'/>
+                                            <TextField sx={{ mt: 3 }} name='completed-by' variant='filled' label='Completed By' fullWidth value={taskPopup.completedBy} InputProps={{readOnly:true}} margin='dense'/>
                                         </DialogContent>
                                     </Dialog>
                                 </Grid>
