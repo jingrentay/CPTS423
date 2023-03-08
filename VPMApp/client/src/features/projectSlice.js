@@ -77,10 +77,10 @@ export const updateProject = createAsyncThunk(
 
 export const completeTask = createAsyncThunk(
     'projects/completeTask', 
-    async ({project, task, timeDifference}) => {
+    async ({project, task, timeDifference, name}) => {
         try {
             console.log(project, task, timeDifference)
-            const { data } = await api.completeTask(project.projectID, project, task, timeDifference)
+            const { data } = await api.completeTask(project.projectID, project, task, timeDifference, name)
             return data;
         } catch (error) {
             console.log(error.message)

@@ -13,7 +13,7 @@ export const createProject = (project) => axios.post(url, project)
 export const updateProject = (id, project) => axios.patch(`${url}/${id}`, project)
 export const deleteProject = (id) => axios.delete(`${url}/${id}`) 
 
-export const completeTask = (id, project, task, timeDifference) => axios.patch(`${url}/task/${id}`, { project, task, timeDifference })
+export const completeTask = (id, project, task, timeDifference, name) => axios.patch(`${url}/task/${id}`, { project, task, timeDifference, name })
 export const updateProjectTask = (id, taskList) => axios.patch(`${url}/edit/task/${id}`, taskList)
 
 // Accounts
