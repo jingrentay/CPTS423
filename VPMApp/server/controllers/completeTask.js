@@ -1,5 +1,5 @@
 
-export const taskCalculations = async (project, task, timeDifference) => {
+export const taskCalculations = async (project, task, timeDifference, name) => {
 
     var { percentComplete, bufferConsumed } = await calculatePercentages(project, task, timeDifference)
 
@@ -13,7 +13,8 @@ export const taskCalculations = async (project, task, timeDifference) => {
             taskID: task.taskID,
             taskDuration: task.taskDuration,
             taskCompletion: new Date(),
-            taskStatus: await findStatus(percentComplete, bufferConsumed)
+            taskStatus: await findStatus(percentComplete, bufferConsumed),
+            completedBy: name,
         }],
         tasks: project.tasks.filter((t) => t.taskID !== task.taskID),
         lastKnownCompletion: { x: percentComplete * 100.0, y: bufferConsumed * 100.0 },

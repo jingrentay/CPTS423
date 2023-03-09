@@ -84,10 +84,20 @@ const ViewInPlanningPage = () => {
 
     const handleDuplicateProject = () => {
         const reqData = {
-            ...project,
-            projectID: project?.projectID,
-            projectName: project?.projectName + "(Duplicate)", 
+            projectID: project?.projectID + 100, 
+            projectName: project?.projectName + " (Duplicate)", 
             projDescription: project?.projectDescription, 
+            projectDuration: project?.projectDuration,
+            projectTimeUnits: project?.projectTimeUnits,
+            predictedCompletion: project?.predictedCompletion,
+            projectStage: project?.projectStage,   // in planning
+            tasks: project?.tasks, 
+            chartData: project?.chartData,
+            lastKnownCompletion: project?.lastKnownCompletion,
+            completedTasks: project?.completedTasks,
+            numTasks: project?.numTasks, 
+            projectStatus: project?.projectStatus,  // green
+            projectDateCreated: project?.projectDateCreated
         }
         dispatch(createProject(reqData))
         navigate('/projects');
