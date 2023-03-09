@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import Project from '../models/project.js'
+import Counter from '../models/counter.js'
 
 import { taskCalculations } from './completeTask.js'
 import { filterTasks, sortProjects } from './taskPriorityList.js'
@@ -59,14 +60,36 @@ export const getProject = async (req, res) => {
 
 // Create a single project
 export const createProject = async (req, res) => {
-    const project = req.body
-    const newProject = new Project(project)
-    try {
-        await newProject.save()
-        res.status(201).json(newProject);
-    } catch (error) {
-        res.status(409).json({ message: error.message })
-    }
+    Counter.findOneAndUpdate(
+        {id: "autoval"},
+        {"$inc" : {"seq": 1}},
+        {new:true}, (error,cd) => {
+
+            let seqId;
+
+            if(cd === null)
+            {
+                const newval = new Counter({id:"autoval", seq: 1})
+                newval.save()
+                seqId = 1
+
+            }else {
+                seqId = cd.seq
+               
+            }
+
+            const project = req.body;
+            const newProject = new Project(project, project.projectID = seqId)
+            try {
+                newProject.save()
+                res.status(201).json(newProject);
+            } catch (error) {
+                res.status(409).json({ message: error.message })
+            }
+        }
+    )
+
+    
 }
 
 // Update a single project
