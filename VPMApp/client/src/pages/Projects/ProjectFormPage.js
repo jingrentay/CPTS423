@@ -19,9 +19,6 @@ const ProjectFormPage = () => {
 
     // Set the unique task IDs and projectIDs 
     // TODO: make this not random and truly unique
-    const setProjectID = () => {
-        return Math.floor(Math.random() * 20);
-    } 
     const setTaskID = () => {
         return Math.floor(Math.random() * 20);
     } 
