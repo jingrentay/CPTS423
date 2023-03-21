@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Skeleton, Button, Grid, Card, CardContent, Typography, IconButton, Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
@@ -15,9 +15,11 @@ const InPlanningTab = () => {
     const dispatch = useDispatch();
     
     const { projects, loadingAll } = useSelector((store) => ({...store.projects}))
+    // eslint-disable-next-line
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem('profile')).result)
 
     useEffect(() => {
-        dispatch(getPlanningProjects());
+        dispatch(getPlanningProjects(account.currOrganization));
     }, [dispatch]);
 
     const handleDeleteProject = (id) => {

@@ -3,9 +3,9 @@ import * as api from '../api'
 
 export const getPlanningProjects = createAsyncThunk(
     'projects/getPlanningProjects', 
-    async () => {
+    async (org) => {
         try {
-            const { data } = await api.getPlanningProjects();
+            const { data } = await api.getPlanningProjects(org);
             return data;
         } catch (error) {
             console.log(error.message)
@@ -15,9 +15,9 @@ export const getPlanningProjects = createAsyncThunk(
 
 export const getProgressProjects = createAsyncThunk(
     'projects/getProgressProjects', 
-    async () => {
+    async (org) => {
         try {
-            const { data } = await api.getProgressProjects();
+            const { data } = await api.getProgressProjects(org);
             return { projects: data.projects, taskList: data.taskList };
         } catch (error) {
             console.log(error.message)
@@ -27,9 +27,9 @@ export const getProgressProjects = createAsyncThunk(
 
 export const getArchivedProjects = createAsyncThunk(
     'projects/getArchivedProjects', 
-    async () => {
+    async (org) => {
         try {
-            const { data } = await api.getArchivedProjects();
+            const { data } = await api.getArchivedProjects(org);
             return data;
         } catch (error) {
             console.log(error.message)
@@ -51,11 +51,11 @@ export const getProject = createAsyncThunk(
 
 export const createProject = createAsyncThunk(
     'projects/createProject', 
-    async (project) => {
+    async ({newProject, navigate}) => {
         try {
-            const { data } = await api.createProject(project)
+            const { data } = await api.createProject(newProject)
+            navigate('/projects')
             return data;
-            
         } catch (error) {
             console.log(error.message)
         }

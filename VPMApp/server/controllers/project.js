@@ -16,8 +16,9 @@ export const getProjects = async (req, res) => {
 
 // Get all projects "in planning"
 export const getPlanningProjects = async (req, res) => {
+    const { organization } = req.params
     try {
-        const projects = await Project.find({ projectStage: 0 })
+        const projects = await Project.find({ projectStage: 0, organization: organization })
         res.status(200).json(projects)
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -26,8 +27,9 @@ export const getPlanningProjects = async (req, res) => {
 
 // Get all projects "in progress"
 export const getProgressProjects = async (req, res) => {
+    const { organization } = req.params
     try {
-        const projects = await Project.find({ projectStage: 1 })
+        const projects = await Project.find({ projectStage: 1, organization: organization })
         const sortedProjects = await sortProjects(projects)
         const taskList = await filterTasks(projects)
         res.status(200).json({projects: projects, taskList: taskList})
@@ -38,8 +40,9 @@ export const getProgressProjects = async (req, res) => {
 
 // Get all archived projects
 export const getArchivedProjects = async (req, res) => {
+    const { organization } = req.params
     try {
-        const projects = await Project.find({ projectStage: 2 })
+        const projects = await Project.find({ projectStage: 2, organization: organization })
         res.status(200).json(projects)
     } catch (error) {
         res.status(404).json({ message: error.message })

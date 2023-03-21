@@ -26,10 +26,47 @@ export const authUser = createAsyncThunk(
     }
 )
 
+export const getOrganization = createAsyncThunk(
+    'accounts/getOrganization', 
+    async (orgName) => {
+        try {
+            const { data } = await api.getOrganization(orgName)
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
+export const createOrganization = createAsyncThunk(
+    'accounts/createOrganization', 
+    async ({newOrg, accountID}) => {
+        try {
+            const { data } = await api.createOrganization(newOrg, accountID)
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
+export const changeOrganization = createAsyncThunk(
+    'accounts/changeOrganization', 
+    async ({email, orgname}) => {
+        try {
+            const { data } = await api.changeOrganization(email, orgname)
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
 const accountSlice = createSlice({
     name: 'accounts',
     initialState: {
         account: {},
+        organization: {},
         loading: true,
     },
     reducers: {
@@ -53,6 +90,22 @@ const accountSlice = createSlice({
             })
             .addCase(authUser.rejected, (store, action) => {        
                 console.log(action.payload)
+                store.loading = false
+            })
+            .addCase(createOrganization.fulfilled, (store, action) => {          // create an organization 
+                console.log(action.payload)
+            })
+            .addCase(changeOrganization.fulfilled, (store, action) => {          // change an organization 
+                console.log(action.payload)
+            })
+            .addCase(getOrganization.pending, (store, action) => {          // get an organization
+                store.loading = true
+            })
+            .addCase(getOrganization.fulfilled, (store, action) => {       
+                store.loading = false
+                store.organization = action.payload
+            })
+            .addCase(getOrganization.rejected, (store, action) => {    
                 store.loading = false
             })
     },

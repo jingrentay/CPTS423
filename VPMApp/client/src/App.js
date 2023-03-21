@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import LoginPage from './pages/Login/LoginPage'
 import SignUpPage from './pages/Login/SignUpPage'
 import SettingsPage from './pages/Settings/SettingsPage'
+import ViewOrganizationPage from './pages/Settings/Organization'
 
 import ProjectHomePage from './pages/Projects/ProjectHomePage'
 import ProjectFormPage from './pages/Projects/ProjectFormPage'
@@ -34,6 +35,7 @@ const App = () => {
                 <Route path="projects/edit/:id" element={<ProjectEditPage/>}/>
                 <Route path="archive" element={<ArchivePage />}/>
                 <Route path="/settings" element={<SettingsPage />}/>
+                <Route path="/settings/organization/:name" element={<ViewOrganizationPage />}/>
                 <Route path="*" element={<ErrorPage />}/>
             </Routes>
         </BrowserRouter>

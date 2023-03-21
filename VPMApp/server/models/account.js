@@ -6,8 +6,9 @@ const accountSchema = mongoose.Schema({
     phone: String,
     password: String,
     userID: Number,
-
-    organization: String,
+    currOrganization: String,
+    organizations: [],
+    roles: [],
 });
 
 const Account = mongoose.model('Account', accountSchema);

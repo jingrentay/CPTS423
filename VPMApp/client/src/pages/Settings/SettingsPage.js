@@ -2,17 +2,23 @@ import React, { useState, useEffect } from 'react'
 import { Container, Grid, Typography, Card, MenuItem, CardContent, TextField, Button, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
+import { createOrganization, changeOrganization } from '../../features/accountSlice'
 
 const SettingsPage = () => {
 
+    const dispatch = useDispatch()
+
     // eslint-disable-next-line
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-    const [currentOrg, setCurrentOrg] = useState('')
     // eslint-disable-next-line
-    const [orgList, setOrgList] = useState(['student', 'stud1', 'new'])
+    const [orgList, setOrgList] = useState((JSON.parse(localStorage.getItem('profile'))).result.organizations)
+    // eslint-disable-next-line
+    const [changeOrgDisabled, setChangeOrgDisabled] = useState(orgList.length < 2)
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [orgDialogOpen, setOrgDialogOpen] = useState(false);
@@ -23,16 +29,13 @@ const SettingsPage = () => {
     const [newOrganization, setNewOrganization] = useState({
         orgname: '',
         address: '', 
-        phonenumber: '',
-        owner: user.results.name,
-        membercount: 0,
+        phone: '',
+        owner: '',
         members: [],
     })
 
-    console.log(currentOrg)
-
     useEffect(() => {
-        setCurrentOrg(user.result.organization)
+        setNewOrganization(newOrganization => ({...newOrganization, owner: user.result._id, members: [{ user: user.result._id, name: user.result.name, role: 'Owner' }] }))
     }, [user]);
 
     const handleOpenOrgDialog = () => {
@@ -53,18 +56,27 @@ const SettingsPage = () => {
         setNewOrgDialogOpen(true);
     }
     const handleCloseNewOrgDialog = () => {
+        setNewOrganization({ orgname: '', address: '', phone: '', owner: '', members: [] })
         setNewOrgDialogOpen(false);
     }
 
     const handleShowPassword = () => setShowPassword((show) => !show)
 
     const handleChangePassword = () => {
-        if (user.result.password === '') { setPasswordError(true); } else { setPasswordError(false); }
-        // handleClosePasswordDialog()
+        setPasswordError(true);
+        // TODO: handleClosePasswordDialog()
     }
 
     const handleSaveOrg = () => {
-        // save organization in db
+        // Create a new organization
+        dispatch(createOrganization({newOrg: newOrganization, accountID: user.result._id}))
+        handleCloseNewOrgDialog()
+    }
+
+    const handleChangeOrg = () => {
+        localStorage.setItem('profile', JSON.stringify(user))
+        setUser(JSON.parse(localStorage.getItem('profile')))
+        dispatch(changeOrganization({email: user.result.email, orgname: user.result.currOrganization}))
         handleCloseOrgDialog()
     }
 
@@ -90,9 +102,9 @@ const SettingsPage = () => {
                         <Card key='organization' style={{ backgroundColor: '#F0F0F0', maxWidth: '500px'}} >
                             <CardContent>
                                 <Typography variant="h6" sx={{ mb: 2 }} > Current Organization </Typography>
-                                <TextField defaultValue={user?.result.organization} sx={{ mb: 2 }} name='org' variant='outlined' label='Organization' InputProps={{ readOnly: true }} fullWidth />
-                                <TextField sx={{ mb: 2 }} defaultValue='tbd' name='role' variant='outlined' label='Role' InputProps={{ readOnly: true }} fullWidth />
-                                <Button onClick={handleOpenOrgDialog} fullWidth size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38", mt: 2 }}>Change Organization</Button>
+                                <TextField value={user.result.currOrganization} sx={{ mb: 1 }} name='org' variant='outlined' InputProps={{ readOnly: true }} fullWidth />
+                                <Button component={Link} to={`/settings/organization/${user.result.currOrganization}`} fullWidth size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38", mt: 2 }}>View Organization</Button>
+                                <Button onClick={handleOpenOrgDialog} fullWidth size='large' variant='contained' color='success' disabled={changeOrgDisabled} sx={{ backgroundColor: "#689f38", mt: 2 }}>Change Organization</Button>
                                 <Button onClick={handleOpenNewOrgDialog} fullWidth size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38", mt: 2 }}>Create New Organization</Button>
                             </CardContent>
                          </Card>
@@ -146,12 +158,12 @@ const SettingsPage = () => {
                 <Dialog open={orgDialogOpen} onClose={handleCloseOrgDialog} PaperProps={{ sx: { width: "30%", height: "240px", minWidth: '300px' } }}>
                     <DialogTitle>Change Organization</DialogTitle>
                         <DialogContent>
-                            <TextField fullWidth margin='dense' select sx={{ mt: 1 }} value={currentOrg} labelId="org-select" label="Organization" onChange={(e) => setCurrentOrg(e.target.value)}>
+                            <TextField fullWidth margin='dense' select sx={{ mt: 1 }} value={user?.result.currOrganization} label="Organization" onChange={(e) => setUser({...user, result: {...user.result, currOrganization: e.target.value}})}>
                                 {orgList.map((org) => (
                                     <MenuItem key={org} value={org} >{org}</MenuItem>
                                 ))}
                             </TextField>
-                            <Button onClick={handleSaveOrg} fullWidth margin='dense' size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38", mt: 2 }}>Save</Button>
+                            <Button onClick={handleChangeOrg} fullWidth margin='dense' size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38", mt: 2 }}>Save</Button>
                         </DialogContent>
                 </Dialog>
                 <Dialog open={newOrgDialogOpen} onClose={handleCloseNewOrgDialog} PaperProps={{ sx: { width: "30%", height: "375px", minWidth: '300px' } }}>
@@ -160,7 +172,7 @@ const SettingsPage = () => {
                             <TextField defaultValue={newOrganization.orgname} sx={{ mb: 2, mt: 1 }} name='orgname' variant='outlined' label='Name' fullWidth onChange={(e) => setNewOrganization({ ...newOrganization, orgname: e.target.value })}/>
                             <TextField defaultValue={newOrganization.address} sx={{ mb: 2 }} name='address' variant='outlined' label='Address' fullWidth onChange={(e) => setNewOrganization({ ...newOrganization, address: e.target.value })}/>
                             <TextField defaultValue={newOrganization.phonenumber} sx={{ mb: 2 }} name='phonenum' variant='outlined' label='Phone Number' fullWidth onChange={(e) => setNewOrganization({ ...newOrganization, phonenumber: e.target.value })} />
-                            <Button fullWidth size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38" }}>Save New Organization</Button>
+                            <Button onClick={handleSaveOrg} fullWidth size='large' variant='contained' color='success' sx={{ backgroundColor: "#689f38" }}>Save New Organization</Button>
                         </DialogContent>
                 </Dialog>
             </Container>

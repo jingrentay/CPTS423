@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Skeleton, Grid, Card, CardContent, Typography, IconButton, Box } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
@@ -14,11 +14,13 @@ const ArchivePage = () => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(getArchivedProjects());
-    }, [dispatch]);
-
     const { projects, loadingAll } = useSelector((store) => ({...store.projects}))
+    // eslint-disable-next-line
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem('profile')).result)
+
+    useEffect(() => {
+        dispatch(getArchivedProjects(account.currOrganization));
+    }, [dispatch]);
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))

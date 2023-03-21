@@ -16,9 +16,11 @@ const InProgressTab = () => {
     const dispatch = useDispatch();
 
     const { projects, loadingAll, taskList } = useSelector((store) => ({...store.projects}))
+    // eslint-disable-next-line
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem('profile')).result)
 
     useEffect(() => {
-        dispatch(getProgressProjects());
+        dispatch(getProgressProjects(account.currOrganization));
     }, [dispatch]);
 
     const handleDeleteProject = (id) => {

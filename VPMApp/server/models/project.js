@@ -17,6 +17,7 @@ const projectSchema = mongoose.Schema({
     projectStatus: String,              // red, green, black 
     projectDateCreated: Date,   
     dateCompleted: Date,
+    organization: '',
 });
 
 const Project = mongoose.model('Project', projectSchema);

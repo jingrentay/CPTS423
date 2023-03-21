@@ -3,9 +3,9 @@ import { getProject, createProject, updateProject, deleteProject, getPlanningPro
 
 const router = express.Router();
 
-router.get('/inplanning', getPlanningProjects)
-router.get('/inprogress', getProgressProjects)
-router.get('/archived', getArchivedProjects)
+router.get('/inplanning/:organization', getPlanningProjects)
+router.get('/inprogress/:organization', getProgressProjects)
+router.get('/archived/:organization', getArchivedProjects)
 
 router.get('/:id', getProject)
 router.post('/', createProject)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Box, Button, Container, Dialog, DialogContent, DialogTitle, DialogActions, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton, Grid, Card, CardContent } from '@mui/material'
@@ -16,6 +16,9 @@ const ProjectFormPage = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    // eslint-disable-next-line
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem('profile')).result)
 
     // Set the unique task IDs and projectIDs 
     // TODO: make this not random and truly unique
@@ -47,8 +50,15 @@ const ProjectFormPage = () => {
         completedTasks: [],
         numTasks: 0, 
         projectStatus: '#56AB2B',  // green
-        projectDateCreated: new Date()
+        projectDateCreated: new Date(),
+        organization: '',
     });
+
+    useEffect(() => {
+        setNewProject(newProject => ({...newProject, organization: account.currOrganization}))
+    }, [account]);
+
+    console.log(newProject)
 
     // Data object for a new task
     const [newTask, setNewTask] = useState({
@@ -105,8 +115,7 @@ const ProjectFormPage = () => {
     // Handle the creation of a project in the database
     const handleSubmit = (e) => {
         e.preventDefault()
-        dispatch(createProject(newProject))
-        navigate('/projects');
+        dispatch(createProject({newProject: newProject, navigate: navigate}))
     };
 
     // Handle the deletion of a task from the working task list 

@@ -14,7 +14,7 @@ const ViewInPlanningPage = () => {
 
     const { id } = useParams()
     const dispatch = useDispatch()
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     // For getting single project based on id 
     useEffect( () => {

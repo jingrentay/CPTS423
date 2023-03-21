@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
 import theme from '../../theme.js';
-import { createAccount } from '../../features/accountSlice'
+import { createAccount, createOrganization } from '../../features/accountSlice'
 
 const SignUpPage = () => {
 
@@ -19,7 +19,17 @@ const SignUpPage = () => {
         password: '',
         phone: '',
         userID: 0,
-        organization: '',
+        currOrganization: '',
+        organizations: [],
+        roles: [],
+    })
+
+    const [orgInfo, setOrgInfo] = useState({
+        orgname: '',
+        address: '',
+        phone: '',
+        owner: '',
+        members: [],
     })
 
     const [showPassword, setShowPassword] = useState(false);
@@ -43,7 +53,7 @@ const SignUpPage = () => {
         } else { setPasswordError(false); setInputError(false); }
         if (accountInfo.phone === '') { setPhoneError(true);  setInputError(true); return true;
         } else { setPhoneError(false); setInputError(false); }
-        if (accountInfo.organization === '') { setOrgError(true);  setInputError(true); return true;
+        if (orgInfo.orgname === '') { setOrgError(true);  setInputError(true); return true;
         } else { setOrgError(false); setInputError(false); }
 
         return false;
@@ -54,6 +64,7 @@ const SignUpPage = () => {
             console.log(error, accountInfo); 
             if (!error) {
                 dispatch(createAccount(accountInfo))
+                dispatch(createOrganization(orgInfo))
                 navigate('/'); 
             }
         })
@@ -93,7 +104,7 @@ const SignUpPage = () => {
                             }}
                         /> 
                         <TextField error={phoneError} defaultValue={accountInfo.phone} name='phone-number' variant='outlined' label='Phone Number *' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, phone: e.target.value })}/>   
-                        <TextField error={orgError} defaultValue={accountInfo.organization} name='org' variant='outlined' label='Organization' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => setAccountInfo({ ...accountInfo, organization: e.target.value })}/>
+                        <TextField error={orgError} defaultValue={orgInfo.orgname} name='org' variant='outlined' label='Organization' style={{ paddingBottom: '15px', display: 'flex', justifyContent: 'center'}} onChange={(e) => { setOrgInfo({ ...orgInfo, orgname: e.target.value }); setAccountInfo({ ...accountInfo, organizations: [e.target.value], currOrganization: e.target.value}) } }/>
                         { inputError &&
                             <Typography variant='body2' color='#DF4338'> Required field(s) missing. </Typography>
                         }
