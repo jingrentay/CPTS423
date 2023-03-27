@@ -20,7 +20,7 @@ const ArchivePage = () => {
 
     useEffect(() => {
         dispatch(getArchivedProjects(account.currOrganization));
-    }, [dispatch]);
+    }, [dispatch, account]);
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))
@@ -45,13 +45,14 @@ const ArchivePage = () => {
         <div>
             <Navigation/>
             {projects.length === 0 &&
-                <Typography variant="h6" sx={{ mt: 11, ml: 28 }}> You have no archived projects. </Typography>
+                <Typography variant="h6" sx={{ mt: 11, ml: 29 }}> You have no archived projects. </Typography>
             }
             {projects.length > 0 && 
                  <Typography variant="h5" sx={{ mt: 11, ml: 29 }}> Archived Projects </Typography>
             }
+            <Typography variant="h6" sx={{ mt: 2, ml: 29 }}> Organization: {account.currOrganization} </Typography>
             {projects.map((project) => (
-                    <Card key={project.projectName} sx={{ml: 28, mt: 3, width: 550, height: 85, backgroundColor: project.projectStatus? project.projectStatus : '#A0A0A0' }} >
+                    <Card key={project.projectName} sx={{ml: 29, mt: 3, width: 550, height: 85, backgroundColor: project.projectStatus? project.projectStatus : '#A0A0A0' }} >
                         <CardContent>
                             <Grid container>
                                 <Grid item xs={9.5}>

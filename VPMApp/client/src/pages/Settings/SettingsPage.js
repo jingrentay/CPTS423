@@ -35,7 +35,7 @@ const SettingsPage = () => {
     })
 
     useEffect(() => {
-        setNewOrganization(newOrganization => ({...newOrganization, owner: user.result._id, members: [{ user: user.result._id, name: user.result.name, role: 'Owner' }] }))
+        setNewOrganization(newOrganization => ({...newOrganization, owner: user.result._id, members: [{ userID: user.result._id, name: user.result.name, role: 'Owner' }] }))
     }, [user]);
 
     const handleOpenOrgDialog = () => {

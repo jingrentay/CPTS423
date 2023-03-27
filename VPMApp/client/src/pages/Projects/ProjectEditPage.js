@@ -32,10 +32,6 @@ const ProjectEditPage = () => {
         setUpdatedProject(project)
     }, [project]);
 
-    useEffect( () => {
-        setUpdatedProject({...updatedProject, predictedCompletion: getDate( new Date(), updatedProject?.projectDuration, updatedProject?.projectTimeUnits, true)})
-    }, [updatedProject]);
-
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log(updatedProject)

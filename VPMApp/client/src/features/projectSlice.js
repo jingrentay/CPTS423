@@ -122,6 +122,7 @@ const projectSlice = createSlice({
         loadingAll: true,
         loadingDelete: true, 
         taskList: [],
+        completingTask: false,
     },
     extraReducers: (builder) => {
         builder
@@ -192,6 +193,15 @@ const projectSlice = createSlice({
             })
             .addCase(updateProjectTask.fulfilled , (store,action) => {
                 console.log(action.payload)
+            })
+            .addCase(completeTask.pending, (store, action) => {      // complete a task
+                store.completingTask = true
+            })
+            .addCase(completeTask.fulfilled, (store, action) => {
+                store.completingTask = false
+            })
+            .addCase(completeTask.rejected, (store, action) => {
+                store.completingTask = false
             })
     },
 });

@@ -21,6 +21,7 @@ export const updateProjectTask = (id, taskList) => axios.patch(`${url}/edit/task
 const accUrl = 'http://localhost:5000/accounts'
 
 export const getOrganization = (orgName) => axios.get(`${accUrl}/${orgName}`)
+export const editRole = (id, newrole, orgname) => axios.post(`${accUrl}/editRole`, {id, newrole, orgname})
 
 export const createAccount = (account) => axios.post(accUrl, account)
 export const authUser = (account) => axios.post(`${accUrl}/authUser`, account)

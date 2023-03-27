@@ -20,7 +20,7 @@ const InPlanningTab = () => {
 
     useEffect(() => {
         dispatch(getPlanningProjects(account.currOrganization));
-    }, [dispatch]);
+    }, [dispatch, account]);
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))
@@ -48,6 +48,7 @@ const InPlanningTab = () => {
             <Button key='new-project-button' component={Link} to="/projects/create" size="medium" variant="contained">
                 New Project
             </Button>
+            <Typography variant="h6" sx={{ mt: 3 }}> Organization: {account.currOrganization} </Typography>
                 {projects.length === 0 &&
                     <Typography variant="h6" sx={{ mt: 3  }}> You have no projects currently in planning. </Typography>
                 }

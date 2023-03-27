@@ -62,6 +62,18 @@ export const changeOrganization = createAsyncThunk(
     }
 )
 
+export const editRole = createAsyncThunk(
+    'accounts/editRole', 
+    async ({id, newrole, orgname}) => {
+        try {
+            const { data } = await api.editRole(id, newrole, orgname)
+            return data;
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+)
+
 const accountSlice = createSlice({
     name: 'accounts',
     initialState: {
@@ -106,6 +118,16 @@ const accountSlice = createSlice({
                 store.organization = action.payload
             })
             .addCase(getOrganization.rejected, (store, action) => {    
+                store.loading = false
+            })
+            .addCase(editRole.pending, (store, action) => {          // change a role
+                store.loading = true
+            })
+            .addCase(editRole.fulfilled, (store, action) => {       
+                store.loading = false
+                store.organization = action.payload
+            })
+            .addCase(editRole.rejected, (store, action) => {    
                 store.loading = false
             })
     },

@@ -73,11 +73,33 @@ export const changeOrganization = async (req, res) => {
 // Get an organization
 export const getOrganization = async (req, res) => {
     const { orgName } = req.params
-    console.log(orgName)
     try {
         const organization = await Organization.findOne({ orgname: orgName })
         res.status(200).json(organization)
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
+}
+
+// Edit role
+export const editRole = async (req, res) => {
+    const { id, newrole, orgname } = req.body
+    try {
+        const orgToUpdate = await Organization.findOne({ orgname: orgname })
+        const newMembers = await editMembers(orgToUpdate.members, id, newrole)
+        const organization = await Organization.findOneAndUpdate({ orgname: orgname }, { members: newMembers })
+        const org = await Organization.findOne({ orgname: orgname })
+        res.status(200).json(org)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
+const editMembers= async (members, id, newrole) => {
+    for (let i = 0; i < members.length; i++) {
+        if (members[i].userID === id) {
+            members[i] = { userID: id, role: newrole, name: members[i].name }
+        }
+    } 
+    return members
 }

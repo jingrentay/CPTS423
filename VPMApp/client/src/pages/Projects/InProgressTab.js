@@ -21,7 +21,7 @@ const InProgressTab = () => {
 
     useEffect(() => {
         dispatch(getProgressProjects(account.currOrganization));
-    }, [dispatch]);
+    }, [dispatch, account]);
 
     const handleDeleteProject = (id) => {
         dispatch(deleteProject(id))
@@ -74,6 +74,7 @@ const InProgressTab = () => {
         <>
         <ThemeProvider key='theme-provider' theme={theme} >
             <Navigation key='nav' />
+            <Typography variant="h6" sx={{ mt: 1 }}> Organization: {account.currOrganization} </Typography>
             { projects.length === 0 &&
                 <Typography sx={{ mt: 2 }} variant='h6'> You have no projects currently in progress. </Typography>
             }

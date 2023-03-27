@@ -1,5 +1,5 @@
 import express from 'express';
-import { createAccount, authUser, createOrganization, changeOrganization, getOrganization } from '../controllers/account.js'
+import { createAccount, authUser, createOrganization, changeOrganization, getOrganization, editRole } from '../controllers/account.js'
 
 const router = express.Router();
 
@@ -9,5 +9,6 @@ router.post('/', createAccount);
 router.post('/authuser', authUser);
 router.post('/createOrganization', createOrganization);
 router.post('/changeOrganization', changeOrganization);
+router.post('/editRole', editRole);
 
 export default router;
