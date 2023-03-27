@@ -19,13 +19,8 @@ const ProjectFormPage = () => {
 
     // Set the unique task IDs and projectIDs 
     // TODO: make this not random and truly unique
-    const setProjectID = () => {
-        return Math.floor(Math.random() * 20);
-    } 
-    const setTaskID = () => {
-        return Math.floor(Math.random() * 20);
-    } 
 
+    
     // Add the task durations for the aggressive duration 
     let taskDurations = []
 
@@ -122,7 +117,7 @@ const ProjectFormPage = () => {
     const handleSaveNewTask = () => {
         // push new task to project task list and reset task object to empty
         newProject.tasks.push(newTask)
-        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0, complete: false, taskStatus: '#56AB2B' })
+        setNewTask({ taskID: newTask.taskID + 1, taskName: '', taskDescription: '', taskDuration: 0, complete: false, taskStatus: '#56AB2B' })
 
         // calculate aggressive duration and predicted completion 
         newProject?.tasks?.forEach(element => { taskDurations?.push(parseInt(element.taskDuration)) })
@@ -169,7 +164,7 @@ const ProjectFormPage = () => {
                             </DialogContent>
                             <DialogActions>
                                 <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Button variant="contained" sx={{ mb: 2, width: 185, height: 40 }} onClick={handleSaveNewTask} > Save </Button>
+                                    <Button variant="contained" sx={{ mb: 2, width: 185, height: 40 }} onClick ={handleSaveNewTask} > Save </Button>
                                     <Button variant="outlined" sx={{ mb: 2, ml: 2, width: 185, height: 40  }} onClick={handleCloseTaskDialog} > Cancel </Button>
                                  </Container>
                             </DialogActions>

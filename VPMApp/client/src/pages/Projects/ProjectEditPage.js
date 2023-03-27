@@ -62,7 +62,7 @@ const ProjectEditPage = () => {
     })
 
     const [newTask, setNewTask] = useState({
-        taskID: 0, 
+        taskID: project.tasks.length, 
         taskName: '', 
         taskDescription: '',
         taskDuration: 0,
@@ -104,7 +104,7 @@ const ProjectEditPage = () => {
         setDialogOpen(true);
     }
     const handleCloseNewTaskDialog = () => {
-        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0, complete: false, taskStatus: '#56AB2B' })
+        setNewTask({ taskID: newTask.taskID + 1, taskName: '', taskDescription: '', taskDuration: 0, complete: false, taskStatus: '#56AB2B' })
         setDialogOpen(false);
     }
 
@@ -133,7 +133,7 @@ const ProjectEditPage = () => {
 
         // update project 
         setUpdatedProject({...updatedProject, predictedCompletion: predCompletion, tasks: [...updatedProject.tasks, {...newTask}], projectDuration: totalTaskDuration, numTasks: updatedProject.numTasks + 1})
-        setNewTask({ taskID: setTaskID(), taskName: '', taskDescription: '', taskDuration: 0, complete: false, taskStatus: '#56AB2B' })
+        setNewTask({ taskID: newTask.taskID + 1, taskName: '', taskDescription: '', taskDuration: 0, complete: false, taskStatus: '#56AB2B' })
         handleCloseNewTaskDialog()
     }
 

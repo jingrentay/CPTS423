@@ -115,10 +115,10 @@ const ViewInProgressPage = () => {
         var currentDate = moment().utcOffset('+8:00')
         var timeDifference = currentDate.diff(startDate, project.projectTimeUnits.toLowerCase(), true)
         console.log('diff', timeDifference)
-        var name = user.result.name
+       
 
         // complete the task and update project with new data
-        dispatch(completeTask({project, task, timeDifference, name}))
+        dispatch(completeTask({project, task, timeDifference}))
         handleOpenTaskDialog()
 
         if (project.completedTasks.length + 1 === project.numTasks) {
