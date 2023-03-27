@@ -36,6 +36,7 @@ export const filterTasks = async(projects) => {
                 ...task, 
                 projectID: project.projectID, 
                 status: project.projectStatus,
+                projectName: project.projectName,
                 _id: project._id,
             })
         })

@@ -196,12 +196,12 @@ const ViewInProgressPage = () => {
                             <Grid container>
                                 <Grid item xs={9.5}>
                                     <Box sx={{ display: 'flex' }}>
-                                        <Typography variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
+                                        <Typography variant='h6' color={(project.projectStatus === '#404040')? 'white' : '#303030'} sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
                                      </Box>
-                                    <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
+                                    <Typography variant='subtitle1' color={(project.projectStatus === '#404040')? 'white' : '#303030'}> Task ID: {task.taskID} </Typography>
                                 </Grid>
                                 <Grid item xs={1.25}>
-                                    <IconButton key='view-task-button' onClick={() => handleOpenTaskInfoDialog(task.taskID)}> 
+                                    <IconButton sx={{ color: (project.projectStatus === '#404040')? 'white' : '#303030' }} key='view-task-button' onClick={() => handleOpenTaskInfoDialog(task.taskID)}> 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
@@ -215,7 +215,7 @@ const ViewInProgressPage = () => {
                                     </Dialog>
                                 </Grid>
                                 <Grid item xs={1.25}>
-                                    <IconButton key='complete-task' onClick={() => { handleCompleteTask(task)}}> 
+                                    <IconButton key='complete-task' sx={{ color: (project.projectStatus === '#404040')? 'white' : '#303030' }} onClick={() => { handleCompleteTask(task)}}> 
                                         <CheckIcon fontSize='large' /> 
                                     </IconButton>
                                 </Grid>
@@ -232,12 +232,12 @@ const ViewInProgressPage = () => {
                             <Grid container>
                                 <Grid item xs={10.5}>
                                     <Box sx={{ display: 'flex' }}>
-                                        <Typography variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
+                                        <Typography variant='h6' color={(project.projectStatus === '#404040')? 'white' : '#303030'} sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
                                      </Box>
-                                    <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
+                                    <Typography color={(project.projectStatus === '#404040')? 'white' : '#303030'} variant='subtitle1'> Task ID: {task.taskID} </Typography>
                                 </Grid>
                                 <Grid item xs={1.5}>
-                                    <IconButton key='view-task-button' onClick={() => handleOpenCompletedTaskInfoDialog(task.taskID)}> 
+                                    <IconButton sx={{ color: (project.projectStatus === '#404040')? 'white' : '#303030' }} key='view-task-button' onClick={() => handleOpenCompletedTaskInfoDialog(task.taskID)}> 
                                         <InfoIcon fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>

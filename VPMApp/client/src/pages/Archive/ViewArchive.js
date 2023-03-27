@@ -17,6 +17,8 @@ const ViewArchiveProjectPage = () => {
 
     const { project, loadingOne } = useSelector((store) => ({...store.projects}))
 
+    console.log(project.completedTasks)
+
     // For getting single project based on id 
     useEffect( () => {
         dispatch(getProject(id));
@@ -87,11 +89,20 @@ const ViewArchiveProjectPage = () => {
                             <FeverChart 
                                 plotData={project.chartData.map((point) => {
                                     if (point.y > 100) { 
+                                        if (point.x > 100) { 
+                                            return {x: 100, y: 100} 
+                                        }
                                         return {x: point.x, y: 100} 
                                     } 
                                     if (point.y < 0) { 
+                                        if (point.x > 100) { 
+                                            return {x: 100, y: 0} 
+                                        }
                                         return {x: point.x, y: 0} 
                                     } 
+                                    if (point.x > 100) { 
+                                        return {x: 100, y: point.y} 
+                                    }
                                     return point 
                                 })} 
                                 labelData={project?.completedTasks.map((task) => task.taskName? task.taskName : "Null")}
@@ -115,13 +126,13 @@ const ViewArchiveProjectPage = () => {
                             <Grid container>
                                 <Grid item xs={10.5}>
                                     <Box sx={{ display: 'flex' }}>
-                                        <Typography variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
+                                        <Typography color={(task.taskStatus === '#404040')? 'white' : '#303030'} variant='h6' sx={{ flexGrow: 1 }}> {task.taskName} </Typography>
                                      </Box>
-                                    <Typography variant='subtitle1'> Task ID: {task.taskID} </Typography>
+                                    <Typography color={(task.taskStatus === '#404040')? 'white' : '#303030'} variant='subtitle1'> Task ID: {task.taskID} </Typography>
                                 </Grid>
                                 <Grid item xs={1.5}>
                                     <IconButton key='view-task-button'  onClick={() => handleOpenTaskInfoDialog(task.taskID)}> 
-                                        <InfoIcon fontSize='large' /> 
+                                        <InfoIcon sx={{ color: (task.taskStatus === '#404040')? 'white' : '#303030' }} fontSize='large' /> 
                                     </IconButton>
                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
                                         <DialogTitle>Task Details</DialogTitle>

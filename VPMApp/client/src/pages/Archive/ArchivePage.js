@@ -47,7 +47,7 @@ const ArchivePage = () => {
             <ThemeProvider theme={theme}>
                 <Navigation/>
                 <Box sx={{ mt: 11, ml: 30 }}>
-                    <Box sx={{ display: 'flex', mb: 3 }}>
+                    <Box sx={{ display: 'flex', mb: 4 }}>
                         <Breadcrumbs sx={{ flexGrow: 1 }} separator={<NavigateNextIcon fontSize="medium" />}>
                             <Typography fontSize='25px' underline='hover' color='secondary'> Projects </Typography>
                             <Typography fontSize='25px' color='secondary' noWrap sx={{ flexGrow: 1 }}> Archive </Typography> 
@@ -55,26 +55,26 @@ const ArchivePage = () => {
                         </Breadcrumbs>
                     </Box>
                     {projects.length === 0 &&
-                        <Typography variant="h6" sx={{ mt: 11, ml: 29 }}> You have no archived projects. </Typography>
+                        <Typography variant="h6" > You have no archived projects. </Typography>
                     }
                     {projects.map((project) => (
-                            <Card key={project.projectName} sx={{mt: 1, width: 550, height: 85, backgroundColor: project.projectStatus? project.projectStatus : '#A0A0A0' }} >
+                            <Card key={project.projectName} sx={{mb: 2, width: 550, height: 85, backgroundColor: project.projectStatus? project.projectStatus : '#A0A0A0' }} >
                                 <CardContent>
                                     <Grid container>
                                         <Grid item xs={9.5}>
                                             <Box sx={{ display: 'flex'}}>
-                                                <Typography variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
+                                                <Typography variant='h6' color={(project.projectStatus === '#404040')? 'white' : '#303030'} sx={{ flexGrow: 1 }}> {project.projectName} </Typography>
                                             </Box>
-                                            <Typography> Project ID: {project.projectID} </Typography>
+                                            <Typography color={(project.projectStatus === '#404040')? 'white' : '#303030'} > Project ID: {project.projectID} </Typography>
                                             </Grid>
                                         <Grid item xs={1.25}>
                                             <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
-                                                <DeleteIcon fontSize='large' /> 
+                                                <DeleteIcon sx={{ color: (project.projectStatus === '#404040')? 'white' : '#303030' }} fontSize='large' /> 
                                             </IconButton>
                                         </Grid>
                                         <Grid item xs={1.25}>
                                             <IconButton key='view-project-button' component={Link} to={`/projects/view/archive/${project.projectID}`} > 
-                                                <InfoIcon fontSize='large' /> 
+                                                <InfoIcon sx={{ color: (project.projectStatus === '#404040')? 'white' : '#303030' }} fontSize='large' /> 
                                             </IconButton>
                                         </Grid>
                                     </Grid>

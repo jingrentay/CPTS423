@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { InputAdornment, Breadcrumbs, Chip, Skeleton, Grid, Card, CardContent, Typography, IconButton, Box, TextField, Dialog, DialogTitle, DialogContent, Divider } from '@mui/material'
+import { Link, useNavigate } from 'react-router-dom'
+import { InputAdornment, Container, Button, DialogActions, Breadcrumbs, Chip, Skeleton, Grid, Card, CardContent, Typography, IconButton, Box, TextField, Dialog, DialogTitle, DialogContent, Divider } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useSelector, useDispatch } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import CheckIcon from '@mui/icons-material/Check';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
 import MultiFeverChart from '../../components/MultiFeverChart'
-import { getProgressProjects, deleteProject } from '../../features/projectSlice'
+import { getProgressProjects, deleteProject, getProject, completeTask } from '../../features/projectSlice'
+import moment from 'moment'
 
 const InProgressPage = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const { projects, loadingAll, taskList } = useSelector((store) => ({...store.projects}))
+    const { projects, loadingAll, taskList, project } = useSelector((store) => ({...store.projects}))
     // eslint-disable-next-line
     const [account, setAccount] = useState(JSON.parse(localStorage.getItem('profile')).result)
 
@@ -29,6 +32,7 @@ const InProgressPage = () => {
     }
 
     const [infoDialogOpen, setInfoDialogOpen] = useState(false);
+    const [dialogOpen, setDialogOpen] = useState(false)
 
     const [taskPopup, setTaskPopup] = useState({
         taskName: '', 
@@ -54,6 +58,48 @@ const InProgressPage = () => {
 
     const handleCloseTaskInfoDialog = () => {
         setInfoDialogOpen(false);
+    }
+
+    // Open and close the dialog for completing a task
+    const handleOpenTaskDialog = () => {
+        setDialogOpen(true);
+    }
+    const handleCloseTaskDialog = () => {
+        setDialogOpen(false);
+    }
+
+    const handleCompleteTask = async(task) => {
+        // record the new date and get the start date
+        var name = account.name
+        // eslint-disable-next-line
+        const proj = await getProjectFromDb(task.projectID)
+        var timeDifference = await dataForCompleteTask()
+        await completeTaskDispatch(timeDifference, name, task)
+        await changeLocation()
+    }
+
+    const changeLocation = async() => {
+        if (project?.completedTasks.length + 1 === project?.numTasks) {
+            navigate('/archive')
+            alert('Project moved to archive.')
+        }
+        dispatch(getProgressProjects(account.currOrganization));
+    }
+
+    const completeTaskDispatch = async(timeDifference, name, task) => {
+        // complete the task and update project with new data
+        dispatch(completeTask({project, task, timeDifference, name}))
+        handleOpenTaskDialog()
+    }
+
+    const dataForCompleteTask = async() => {
+        var startDate = moment(project?.projectStartDate)
+        var currentDate = moment().utcOffset('+8:00')
+        return currentDate.diff(startDate, project?.projectTimeUnits.toLowerCase(), true)
+    }
+
+    const getProjectFromDb = async(projectID) => {
+        dispatch(getProject(projectID))
     }
 
     if (loadingAll) {
@@ -117,22 +163,22 @@ const InProgressPage = () => {
                                 }
                                 {projects.map((project) => (
                                     <Grid key={project._id} item>
-                                    <Card key={project._id} style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: project.projectStatus }}>
+                                    <Card style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: project.projectStatus }}>
                                         <CardContent style={{display: 'flex', width: '100%'}}>
                                             <Grid container >
                                                 <Grid item xs={9}>
                                                     <Box sx={{ display: 'flex'}}>
-                                                        <Typography variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
+                                                        <Typography color={(project.projectStatus === '#404040')? 'white' : '#303030'} variant='h6' sx={{ flexGrow: 1}}> {project.projectName} </Typography>
                                                     </Box>
-                                                    <Typography> Project ID: {project.projectID} </Typography>
+                                                    <Typography color={(project.projectStatus === '#404040')? 'white' : '#303030'} > Project ID: {project.projectID} </Typography>
                                                     </Grid>
                                                 <Grid item xs={1.5}>
-                                                    <IconButton key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
+                                                    <IconButton sx={{ color: (project.projectStatus === '#404040')? 'white' : '#303030' }} key='delete-project-button' onClick={() => handleDeleteProject(project._id)} > 
                                                         <DeleteIcon fontSize='large' /> 
                                                     </IconButton>
                                                 </Grid>
                                                 <Grid item xs={1.5}>
-                                                    <IconButton key='view-project-button' component={Link} to={`/projects/view/progress/${project.projectID}`} > 
+                                                    <IconButton sx={{ color: (project.projectStatus === '#404040')? 'white' : '#303030' }} key='view-project-button' component={Link} to={`/projects/view/progress/${project.projectID}`} > 
                                                         <InfoIcon fontSize='large' /> 
                                                     </IconButton>
                                                 </Grid>
@@ -156,14 +202,19 @@ const InProgressPage = () => {
                                     <Card key={task.taskID} style={{display: 'flex', width: '100%', maxWidth: 500}} sx={{ mt: 2, height: 85, backgroundColor: task.status }}>
                                         <CardContent style={{display: 'flex', width: '100%'}}>
                                             <Grid container >
-                                                <Grid item xs={10}>
+                                                <Grid item xs={9}>
                                                     <Box sx={{ display: 'flex'}}>
-                                                        <Typography variant='h6' sx={{ flexGrow: 1}}> {task.taskName} </Typography>
+                                                        <Typography color={(task.status === '#404040')? 'white' : '#303030'} variant='h6' sx={{ flexGrow: 1}}> {task.taskName} </Typography>
                                                     </Box>
-                                                    <Typography> Project ID: {task.projectID}, Task ID: {task.taskID} </Typography>
-                                                    </Grid>
-                                                <Grid item xs={2}>
-                                                    <IconButton key='view-project-button' onClick={() => handleOpenTaskInfoDialog(task.taskID, task.projectID)} > 
+                                                    <Typography color={(task.status === '#404040')? 'white' : '#303030'}> {task.projectName} ({task.projectID}), Task ID: {task.taskID} </Typography>
+                                                </Grid>
+                                                <Grid item xs={1.5}>
+                                                    <IconButton sx={{ color: (task.status === '#404040')? 'white' : '#303030' }} key='complete-button' onClick={async() => { await handleCompleteTask(task); }} > 
+                                                        <CheckIcon fontSize='large' /> 
+                                                    </IconButton>
+                                                </Grid>
+                                                <Grid item xs={1.5}>
+                                                    <IconButton sx={{ color: (task.status === '#404040')? 'white' : '#303030' }} key='view-project-button' onClick={() => handleOpenTaskInfoDialog(task.taskID, task.projectID)} > 
                                                         <InfoIcon fontSize='large' /> 
                                                     </IconButton>
                                                     <Dialog open={infoDialogOpen} onClose={handleCloseTaskInfoDialog}>
@@ -184,6 +235,14 @@ const InProgressPage = () => {
                                 ))}
                             </Grid>
                             <Grid item xs={1}/>
+                            <Dialog open={dialogOpen} onClose={handleCloseTaskDialog} >
+                                <DialogTitle> Task marked as complete. </DialogTitle>
+                                <DialogActions>
+                                    <Container style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <Button variant="contained" sx={{ mb: 1, width: 100, height: 35 }} onClick={handleCloseTaskDialog} > Close </Button>
+                                    </Container>
+                                </DialogActions>
+                            </Dialog>   
                         </Grid>
                     </Grid>
                 </Box>

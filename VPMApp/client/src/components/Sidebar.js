@@ -10,13 +10,13 @@ const Sidebar = () => {
     return (
         <Box sx={{ overflow: 'auto' }}>
             <List>
-                <ListItem key="Projects">
+                <ListItem key="InPlanning">
                     <ListItemButton component={Link} to="/projects/planning">
                         <ListItemIcon sx={{ color: 'white' }}> <CalendarMonthIcon/> </ListItemIcon>
                         <ListItemText sx={{ color: 'white' }}> In Planning </ListItemText>
                     </ListItemButton>
                 </ListItem>
-                <ListItem key="Projects">
+                <ListItem key="InProgress">
                     <ListItemButton component={Link} to="/projects/progress">
                         <ListItemIcon sx={{ color: 'white' }}> <FolderIcon/> </ListItemIcon>
                         <ListItemText sx={{ color: 'white' }}> In Progress </ListItemText>
