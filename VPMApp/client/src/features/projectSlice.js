@@ -54,7 +54,7 @@ export const createProject = createAsyncThunk(
     async ({newProject, navigate}) => {
         try {
             const { data } = await api.createProject(newProject)
-            navigate('/projects')
+            navigate('/projects/planning')
             return data;
         } catch (error) {
             console.log(error.message)

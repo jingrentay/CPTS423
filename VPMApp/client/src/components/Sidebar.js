@@ -4,15 +4,22 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import FolderIcon from '@mui/icons-material/Folder';
 import { Link } from 'react-router-dom';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const Sidebar = () => {
     return (
         <Box sx={{ overflow: 'auto' }}>
             <List>
                 <ListItem key="Projects">
-                    <ListItemButton component={Link} to="/projects">
+                    <ListItemButton component={Link} to="/projects/planning">
+                        <ListItemIcon sx={{ color: 'white' }}> <CalendarMonthIcon/> </ListItemIcon>
+                        <ListItemText sx={{ color: 'white' }}> In Planning </ListItemText>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key="Projects">
+                    <ListItemButton component={Link} to="/projects/progress">
                         <ListItemIcon sx={{ color: 'white' }}> <FolderIcon/> </ListItemIcon>
-                        <ListItemText sx={{ color: 'white' }}> Projects </ListItemText>
+                        <ListItemText sx={{ color: 'white' }}> In Progress </ListItemText>
                     </ListItemButton>
                 </ListItem>
                 <ListItem key="Archive">

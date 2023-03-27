@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card, Dialog, DialogContent, DialogTitle } from '@mui/material'
+import { Skeleton, Box, Button, Container, Chip, Breadcrumbs, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card, Dialog, DialogContent, DialogTitle } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
+
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -63,7 +65,7 @@ const ViewInPlanningPage = () => {
             predictedCompletion: getDate( new Date(), project?.projectDuration, project?.projectTimeUnits, true) 
         }
         dispatch(updateProject(editedProject))
-        navigate('/projects');
+        navigate('/projects/progress');
     }
 
     // Render UI
@@ -100,7 +102,7 @@ const ViewInPlanningPage = () => {
             projectDateCreated: project?.projectDateCreated
         }
         dispatch(createProject(reqData))
-        navigate('/projects');
+        navigate('/projects/planning');
     }
 
     return(
@@ -108,7 +110,10 @@ const ViewInPlanningPage = () => {
             <ThemeProvider theme={theme}>
             <Navigation key='nav' />
             <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
-                <Typography variant='h5' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
+                <Breadcrumbs sx={{ flexGrow: 1 }} separator={<NavigateNextIcon fontSize="medium" />}>
+                    <Typography fontSize='25px' color='secondary' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
+                    <Chip label={project.projectName} />
+                </Breadcrumbs>
                 <Button onClick={() => handleDuplicateProject()} size="medium" variant="contained" sx={{ backgroundColor: '#fca72f', mr: 2 }}> 
                     Duplicate 
                 </Button>
@@ -118,7 +123,7 @@ const ViewInPlanningPage = () => {
                 <Button sx={{ mr: 2 }} key='edit-project-button' component={Link} to={`/projects/edit/${project.projectID}`} size="medium" variant="contained" >
                     Edit
                 </Button>
-                <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" >
+                <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects/planning" size="medium" variant="contained" >
                     Back
                 </Button>  
             </Box>

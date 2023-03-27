@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Dialog, DialogActions, DialogTitle, DialogContent, Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card } from '@mui/material'
+import { Dialog, DialogActions, DialogTitle, Chip, Breadcrumbs, DialogContent, Skeleton, Box, Button, Container, TextField, Typography, InputAdornment, IconButton, Grid, CardContent, Card } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { useDispatch, useSelector } from 'react-redux'
 import InfoIcon from '@mui/icons-material/Info';
 import CheckIcon from '@mui/icons-material/Check';
 import moment from 'moment';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -154,11 +155,14 @@ const ViewInProgressPage = () => {
         <>
             <ThemeProvider theme={theme}>
             <Navigation key='nav' />
-            <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
-                <Typography variant='h5' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
-                    <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects" size="medium" variant="contained" >
-                        Back
-                    </Button>
+            <Box sx={{ mt: 11, ml: 30, display: 'flex', mb: 3 }}>
+                <Breadcrumbs sx={{ flexGrow: 1 }} separator={<NavigateNextIcon fontSize="medium" />}>
+                    <Typography fontSize='25px' color='secondary' noWrap sx={{ flexGrow: 1 }}> Project Details </Typography> 
+                    <Chip label={project.projectName} />
+                </Breadcrumbs>
+                <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/projects/progress" size="medium" variant="contained" >
+                    Back
+                </Button>
             </Box>
             <Container sx={{ width: 600, ml: 27, mb: 6 }}>
                 {project.projectStage === 1 && 

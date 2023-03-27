@@ -145,7 +145,7 @@ const ProjectFormPage = () => {
         <>
             <ThemeProvider theme={theme}>
             <Navigation/>
-            <Container sx={{ width: 700, ml: 25, mt: 10 }}>
+            <Container sx={{ width: 700, ml: 28, mt: 10 }}>
                 <Box component="form" autoComplete='off' noValidate>
                     <Typography variant='h5'> Create a Project </Typography>
                     <TextField sx={{ mt: 3 }} name='project name' variant='filled' label='Project Name' fullWidth value={newProject.projectName} onChange={(e) => setNewProject({ ...newProject, projectName: e.target.value })}/>

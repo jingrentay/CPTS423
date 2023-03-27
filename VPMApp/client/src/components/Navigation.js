@@ -9,7 +9,7 @@ import theme from '../theme.js'
 import Sidebar from './Sidebar';
 import { logout } from '../features/accountSlice'
 
-const drawerWidth = 200;
+const drawerWidth = 210;
 
 const Navigation = () => {
 

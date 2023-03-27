@@ -65,14 +65,14 @@ const ViewOrganizationPage = () => {
             <Navigation/>
             <Box sx={{ mt: 11, ml: 30, display: 'flex' }}>
                 <Breadcrumbs sx={{ flexGrow: 1 }} separator={<NavigateNextIcon fontSize="medium" />}>
-                    <Typography variant='h5' underline='hover' color='black' component={Link} to="/settings"> Settings </Typography>
-                    <Typography variant='h5' color='black' noWrap sx={{ flexGrow: 1 }}> Organization Details </Typography> 
+                    <Typography fontSize='28px' underline='hover' color='secondary' component={Link} to="/settings"> Settings </Typography>
+                    <Typography fontSize='28px' color='secondary' noWrap sx={{ flexGrow: 1 }}> Organization Details </Typography> 
                 </Breadcrumbs>
                 <Button sx={{ mr: 3 }} key='back-project-button' component={Link} to="/settings" size="medium" variant="contained" >
                     Back
                 </Button>  
             </Box>
-            <Container sx={{ width: 500, ml: 27, mb: 6 }}>
+            <Container sx={{ width: 500, ml: 27, mb: 6, mt: 2 }}>
                 <TextField label='Name' value={organization?.orgname} sx={{ mb: 2, mt: 3 }} name='org' variant='outlined' InputProps={{ readOnly: true }} fullWidth />                  
                 <TextField label='Phone Number' value={organization?.phone} sx={{ mb: 2, mt: 1 }} name='address' variant='outlined' InputProps={{ readOnly: true }} fullWidth />                  
                 <TextField label='Address' value={organization?.address} sx={{ mb: 2, mt: 1 }} name='phone' variant='outlined' InputProps={{ readOnly: true }} fullWidth />                  

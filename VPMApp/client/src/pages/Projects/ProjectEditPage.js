@@ -36,7 +36,7 @@ const ProjectEditPage = () => {
         e.preventDefault()
         console.log(updatedProject)
         dispatch(updateProject(updatedProject))
-        navigate('/projects')
+        navigate('/progress/planning')
     };
 
     const setTaskID = () => {

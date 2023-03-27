@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Grid, Typography, Card, MenuItem, CardContent, TextField, Button, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent } from '@mui/material'
+import { Container, Box, Grid, Typography, Card, MenuItem, CardContent, TextField, Button, IconButton, InputAdornment, Dialog, DialogTitle, DialogContent } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { VisibilityOff, Visibility } from '@mui/icons-material'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import theme from '../../theme.js'
 import Navigation from '../../components/Navigation'
@@ -84,8 +85,11 @@ const SettingsPage = () => {
         <div>
             <ThemeProvider theme={theme}>
             <Navigation/>
-            <Container sx={{ mt: 10, ml: 25}}>
-                <Typography variant="h5" sx={{ mb: 3 }} > Settings </Typography>
+            <Container sx={{ mt: 11, ml: 27}}>
+                <Box sx={{ display: 'flex' }}> 
+                    <Typography fontSize='30px' color='secondary' sx={{ mb: 3, mr: 1 }} > Settings </Typography>
+                    <SettingsIcon color='secondary' fontSize='large' />
+                </Box>
                 <Grid container item spacing={4}>
                     <Grid item xs={5.5}>
                         <Card key='user details' style={{ backgroundColor: '#F0F0F0', maxWidth: '500px'}} >

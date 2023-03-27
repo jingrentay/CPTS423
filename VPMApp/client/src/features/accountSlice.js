@@ -18,7 +18,7 @@ export const authUser = createAsyncThunk(
     async ({account, navigate}) => {
         try {
             const { data } = await api.authUser(account)
-            navigate('/projects')
+            navigate('/projects/progress')
             return data;
         } catch (error) {
             console.log(error.message)
